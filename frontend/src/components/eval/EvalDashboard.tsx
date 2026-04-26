@@ -362,7 +362,7 @@ export function EvalDashboard() {
           </section>
 
           <footer className="border-t border-border pt-6 flex items-center justify-between text-[11px] font-mono text-ink-dim">
-            <span>HomoDeus · Labor Agent · Evaluation Harness</span>
+            <span>HomoDeus Challenge - Pedro Soler · Evaluation Harness</span>
             <span>v1 vs v2 · {v2.n} cases</span>
           </footer>
         </div>

@@ -15,9 +15,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HomoDeus · Labor Law Agent",
+  title: "HomoDeus Challenge - Pedro Soler",
   description:
-    "Production-grade Q&A agent for Portuguese labor law and payroll, built by HomoDeus.",
+    "HomoDeus Challenge submission by Pedro Soler: labor law & payroll Q&A with citations and deterministic calculators.",
 };
 
 export default function RootLayout({
