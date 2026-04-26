@@ -1,0 +1,55 @@
+"""Semantic search over the Código do Trabalho vector index.
+
+Wraps `vector_store.query` and converts hits into citation Source records.
+This is the FIRST stop for `labor_code` questions because it returns the
+exact article number — which we then expose to the user.
+"""
+from __future__ import annotations
+
+from app.agent.state import Source
+from app.agent.tools import ToolResult
+from app.retrieval.vector_store import vector_store
+
+
+def search_labor_code(query: str, k: int = 5) -> ToolResult:
+    try:
+        hits = vector_store.query(query, k=k)
+    except Exception as exc:
+        return ToolResult(ok=False, data=[], sources=[], summary="", error=str(exc))
+
+    if not hits:
+        return ToolResult(
+            ok=True,
+            data=[],
+            sources=[],
+            summary="(Índice vazio. Execute python -m app.retrieval.indexer.)",
+            error=None,
+        )
+
+    sources: list[Source] = []
+    summary_lines: list[str] = []
+    for h in hits:
+        meta = h.get("metadata", {}) or {}
+        article = meta.get("article", "?")
+        url = meta.get("url", "")
+        text = h.get("text", "")
+        title = f"Código do Trabalho — Artigo {article}.º"
+        sources.append(
+            Source(
+                url=url,
+                title=title,
+                snippet=text[:400],
+                domain="portal.act.gov.pt",
+                score=h.get("score", 0.0),
+                source_type="labor_code_index",
+            )
+        )
+        summary_lines.append(f"[Art. {article}.º] {text[:300]}")
+
+    return ToolResult(
+        ok=True,
+        data=hits,
+        sources=sources,
+        summary="\n\n".join(summary_lines),
+        error=None,
+    )
