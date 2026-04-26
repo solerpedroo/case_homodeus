@@ -1,60 +1,65 @@
-import { Sparkles, Scale, Calculator, Globe2 } from "lucide-react";
-
 export function WelcomeHero() {
   return (
-    <div className="text-center py-10 animate-fade-in">
-      <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-accent to-accent-glow shadow-[0_0_28px_rgba(124,92,255,0.55)] mb-5 animate-pulse-glow">
-        <Sparkles className="w-7 h-7 text-white" strokeWidth={2.2} />
-      </div>
-      <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
-        Direito laboral português,
+    <div className="py-12 animate-fade-in">
+      <div className="marker mb-6">/00 — Labor Agent</div>
+
+      <h1 className="text-3xl md:text-5xl font-semibold tracking-tightest text-ink leading-[1.05] max-w-3xl">
+        Direito laboral português
         <br />
-        <span className="bg-gradient-to-r from-accent-glow to-success bg-clip-text text-transparent">
-          com fontes oficiais.
-        </span>
+        <span className="text-ink-muted">com citações ao artigo.</span>
       </h1>
-      <p className="mt-3 text-sm text-ink-muted max-w-xl mx-auto leading-relaxed">
-        Q&amp;A em tempo real sobre Código do Trabalho, IRS e Segurança Social.
-        Cada afirmação suportada por uma fonte oficial; cálculos
-        determinísticos; recusa graciosa quando faltam dados.
+
+      <p className="mt-6 text-[15px] text-ink-muted max-w-2xl leading-relaxed">
+        Q&amp;A sobre Código do Trabalho, IRS e Segurança Social. Cada
+        afirmação suportada por fonte oficial. Cálculos determinísticos. Recusa
+        graciosa quando faltam dados.
       </p>
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2 max-w-2xl mx-auto text-left">
-        <Feature
-          icon={<Scale className="w-4 h-4" />}
-          title="Código do Trabalho"
-          subtitle="Indexado por artigo"
+
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-x-12 max-w-3xl">
+        <Column
+          marker="/01"
+          title="Fontes verificadas"
+          lines={[
+            "portal.act.gov.pt",
+            "info.portaldasfinancas.gov.pt",
+            "diariodarepublica.pt",
+          ]}
         />
-        <Feature
-          icon={<Calculator className="w-4 h-4" />}
-          title="Cálculos exatos"
-          subtitle="TSU · IRS · Subsídios"
+        <Column
+          marker="/02"
+          title="Cálculos determinísticos"
+          lines={["TSU 11% · 23,75%", "IRS — Despacho 236-A/2025", "Subsídios — Lei 7/2009"]}
         />
-        <Feature
-          icon={<Globe2 className="w-4 h-4" />}
-          title="Fontes ao vivo"
-          subtitle="ACT · DRE · Finanças"
+        <Column
+          marker="/03"
+          title="Recusa graciosa"
+          lines={["Sem alucinações", "Confiança medida", "Citação obrigatória"]}
         />
       </div>
     </div>
   );
 }
 
-function Feature({
-  icon,
+function Column({
+  marker,
   title,
-  subtitle,
+  lines,
 }: {
-  icon: React.ReactNode;
+  marker: string;
   title: string;
-  subtitle: string;
+  lines: string[];
 }) {
   return (
-    <div className="rounded-xl border border-border bg-bg-panel/60 p-3 hover:border-accent/40 transition">
-      <div className="flex items-center gap-2 text-accent">
-        {icon}
-        <span className="text-sm font-medium text-ink">{title}</span>
+    <div>
+      <div className="marker mb-3">{marker}</div>
+      <div className="text-sm font-semibold text-ink tracking-tight mb-2">
+        {title}
       </div>
-      <div className="mt-0.5 text-[11px] text-ink-dim">{subtitle}</div>
+      <ul className="space-y-1 text-[13px] text-ink-muted font-mono">
+        {lines.map((l) => (
+          <li key={l}>{l}</li>
+        ))}
+      </ul>
     </div>
   );
 }

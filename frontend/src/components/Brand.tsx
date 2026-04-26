@@ -1,23 +1,26 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
 
 export function Brand() {
   return (
     <Link
       href="/chat"
-      className="flex items-center gap-2 group"
+      className="group flex items-center gap-3"
+      aria-label="HomoDeus Labor Agent"
     >
-      <span className="grid place-items-center w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-accent-glow shadow-[0_0_18px_rgba(124,92,255,0.45)] group-hover:shadow-[0_0_24px_rgba(124,92,255,0.7)] transition">
-        <Sparkles className="w-4 h-4 text-white" strokeWidth={2.4} />
+      <span
+        className="grid place-items-center w-7 h-7 border border-border-strong text-[11px] font-mono font-semibold tracking-[0.05em] text-ink group-hover:border-ink transition-colors"
+        aria-hidden
+      >
+        HD
       </span>
-      <div className="leading-tight">
-        <div className="text-sm font-semibold tracking-tight text-ink">
+      <span className="flex items-baseline gap-2 leading-none">
+        <span className="text-sm font-semibold tracking-tightest text-ink">
           HomoDeus
-        </div>
-        <div className="text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-          Labor Agent
-        </div>
-      </div>
+        </span>
+        <span className="hidden sm:inline text-[11px] font-mono text-ink-dim">
+          /labor
+        </span>
+      </span>
     </Link>
   );
 }

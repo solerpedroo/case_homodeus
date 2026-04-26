@@ -128,15 +128,15 @@ export function ChatContainer() {
             {showHero ? (
               <WelcomeHero />
             ) : (
-              <div className="space-y-2">
-                {messages.map((m) => (
-                  <MessageBubble key={m.id} message={m} />
+              <div>
+                {messages.map((m, i) => (
+                  <MessageBubble key={m.id} message={m} index={i} />
                 ))}
               </div>
             )}
           </div>
         </div>
-        <div className="sticky bottom-0 bg-gradient-to-t from-bg via-bg/90 to-transparent pt-4">
+        <div className="sticky bottom-0 bg-bg border-t border-border pt-4">
           <div className="container max-w-3xl pb-4">
             <div className="flex items-center justify-between mb-2">
               <button

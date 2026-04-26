@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUp, Square } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -13,7 +11,13 @@ interface Props {
   suggestions?: string[];
 }
 
-export function ChatInput({ onSend, onStop, isStreaming, disabled, suggestions }: Props) {
+export function ChatInput({
+  onSend,
+  onStop,
+  isStreaming,
+  disabled,
+  suggestions,
+}: Props) {
   const [value, setValue] = useState("");
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -30,29 +34,38 @@ export function ChatInput({ onSend, onStop, isStreaming, disabled, suggestions }
   };
 
   return (
-    <div className="space-y-2">
+    <div>
       {suggestions && suggestions.length > 0 && !value && !isStreaming && (
-        <div className="flex flex-wrap gap-2">
-          {suggestions.map((s) => (
-            <button
-              key={s}
-              onClick={() => onSend(s)}
-              className="px-3 py-1.5 text-xs rounded-full border border-border bg-bg-elevated/40 hover:bg-bg-elevated hover:border-accent/40 text-ink-muted hover:text-ink transition"
-            >
-              {s}
-            </button>
-          ))}
+        <div className="mb-4">
+          <div className="marker mb-2">/sugestões</div>
+          <ul className="space-y-1.5">
+            {suggestions.map((s) => (
+              <li key={s}>
+                <button
+                  onClick={() => onSend(s)}
+                  className="group text-left text-[14px] text-ink-muted hover:text-ink transition-colors"
+                >
+                  <span className="text-ink-dim mr-2">·</span>
+                  <span className="group-hover:underline underline-offset-4 decoration-ink-dim">
+                    {s}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-      <motion.div
-        layout
+
+      <div
         className={cn(
-          "relative flex items-end gap-2 rounded-2xl border border-border",
-          "bg-bg-panel focus-within:border-accent/60 transition",
-          "shadow-[0_8px_32px_rgba(0,0,0,0.35)]",
-          "px-3 py-2.5"
+          "flex items-end gap-3 border-b border-border-strong",
+          "focus-within:border-ink transition-colors",
+          "py-2"
         )}
       >
+        <span className="font-mono text-ink-dim text-sm pb-1.5 select-none">
+          &gt;
+        </span>
         <textarea
           ref={ref}
           rows={1}
@@ -64,40 +77,40 @@ export function ChatInput({ onSend, onStop, isStreaming, disabled, suggestions }
               submit();
             }
           }}
-          placeholder="Pergunte sobre direito laboral português ou processamento salarial…"
+          placeholder="Pergunte sobre direito laboral português ou processamento salarial."
           disabled={disabled}
           className={cn(
             "flex-1 resize-none bg-transparent outline-none",
-            "text-sm text-ink placeholder:text-ink-dim",
-            "max-h-[200px] py-1.5"
+            "text-[15px] text-ink placeholder:text-ink-dim",
+            "max-h-[200px] py-1"
           )}
         />
         {isStreaming ? (
           <button
             onClick={onStop}
-            className="grid place-items-center w-9 h-9 rounded-xl bg-danger text-white hover:opacity-90 transition shrink-0"
+            className="font-mono text-[13px] text-ink-muted hover:text-danger transition-colors pb-1.5"
             title="Parar"
           >
-            <Square className="w-4 h-4" fill="currentColor" />
+            esc ⨯
           </button>
         ) : (
           <button
             onClick={submit}
             disabled={!value.trim() || disabled}
             className={cn(
-              "grid place-items-center w-9 h-9 rounded-xl shrink-0 transition",
+              "font-mono text-base pb-1 transition-colors",
               value.trim() && !disabled
-                ? "bg-accent text-white shadow-[0_0_14px_rgba(124,92,255,0.45)] hover:shadow-[0_0_22px_rgba(124,92,255,0.65)]"
-                : "bg-bg-elevated text-ink-dim cursor-not-allowed"
+                ? "text-ink hover:text-accent"
+                : "text-ink-dim cursor-not-allowed"
             )}
-            title="Enviar"
+            title="Enviar (Enter)"
           >
-            <ArrowUp className="w-4 h-4" strokeWidth={2.4} />
+            ↵
           </button>
         )}
-      </motion.div>
-      <div className="text-[10px] text-ink-dim text-center">
-        Shift+Enter para nova linha · Respostas geradas por IA — verifica sempre as fontes oficiais.
+      </div>
+      <div className="mt-2 text-[10px] font-mono text-ink-dim">
+        shift+enter — nova linha
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import type { Source } from "@/lib/types";
-import { domainFromUrl, faviconFor, cn } from "@/lib/utils";
-import { ExternalLink, Database, Calculator, Globe } from "lucide-react";
+import { domainFromUrl } from "@/lib/utils";
 
 interface Props {
   sources: Source[];
@@ -9,7 +8,6 @@ interface Props {
 export function SourceList({ sources }: Props) {
   if (!sources?.length) return null;
 
-  // Deduplicate by URL
   const seen = new Set<string>();
   const unique = sources.filter((s) => {
     const k = s.url || s.title;
@@ -19,68 +17,59 @@ export function SourceList({ sources }: Props) {
   });
 
   return (
-    <div className="mt-4 pt-3 border-t border-border">
-      <div className="text-[11px] uppercase tracking-[0.18em] text-ink-dim mb-2">
-        Fontes ({unique.length})
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div className="mt-6 pt-4 border-t border-border">
+      <div className="marker mb-3">/sources · {unique.length}</div>
+      <ol className="space-y-1.5 text-[12.5px] leading-snug">
         {unique.map((s, idx) => (
-          <SourceChip key={`${s.url}-${idx}`} source={s} />
+          <SourceRow key={`${s.url}-${idx}`} source={s} index={idx + 1} />
         ))}
-      </div>
+      </ol>
     </div>
   );
 }
 
-function SourceChip({ source }: { source: Source }) {
-  const domain = source.domain || domainFromUrl(source.url);
-  const Icon =
+function SourceRow({ source, index }: { source: Source; index: number }) {
+  const domain = source.domain || domainFromUrl(source.url) || "";
+  const label =
     source.source_type === "labor_code_index"
-      ? Database
+      ? "código do trabalho"
       : source.source_type === "calculator"
-      ? Calculator
-      : Globe;
+      ? "cálculo determinístico"
+      : domain;
+
+  const title = source.title || source.url || "(sem título)";
+
+  const Tag = source.url ? "a" : "div";
+  const tagProps = source.url
+    ? { href: source.url, target: "_blank", rel: "noreferrer" }
+    : {};
 
   return (
-    <a
-      href={source.url}
-      target="_blank"
-      rel="noreferrer"
-      className={cn(
-        "group flex items-start gap-2 p-2.5 rounded-lg",
-        "bg-bg-elevated/60 border border-border hover:border-accent/50",
-        "hover:bg-bg-elevated transition"
-      )}
-    >
-      <div className="shrink-0 mt-0.5">
-        {source.source_type === "web" && domain ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={faviconFor(domain)}
-            alt=""
-            className="w-4 h-4 rounded"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
-          />
-        ) : (
-          <Icon className="w-4 h-4 text-accent" />
+    <li className="flex items-baseline gap-2">
+      <span className="font-mono text-ink-dim tabular shrink-0 text-[11px] pt-0.5">
+        [{String(index).padStart(2, "0")}]
+      </span>
+      <Tag
+        {...tagProps}
+        className="group min-w-0 flex-1 block"
+      >
+        <span className="font-mono text-[11px] text-ink-dim mr-2">
+          {label}
+        </span>
+        <span className="text-ink group-hover:underline underline-offset-4 decoration-ink-dim">
+          {title}
+        </span>
+        {source.url && (
+          <span className="ml-1 text-ink-dim opacity-0 group-hover:opacity-100 transition-opacity">
+            →
+          </span>
         )}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 text-[11px] text-ink-dim mb-0.5">
-          <span className="font-mono truncate">{domain}</span>
-          <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition" />
-        </div>
-        <div className="text-xs font-medium text-ink line-clamp-2 leading-snug">
-          {source.title || source.url}
-        </div>
         {source.snippet && (
-          <div className="mt-1 text-[11px] text-ink-muted line-clamp-2 leading-relaxed">
+          <span className="block mt-0.5 text-[11.5px] text-ink-muted line-clamp-2">
             {source.snippet}
-          </div>
+          </span>
         )}
-      </div>
-    </a>
+      </Tag>
+    </li>
   );
 }

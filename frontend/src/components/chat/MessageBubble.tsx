@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Bot, User } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ToolCallCard } from "./ToolCallCard";
@@ -13,102 +12,85 @@ import { PhaseIndicator } from "./PhaseIndicator";
 
 interface Props {
   message: ChatMessage;
+  index?: number;
 }
 
-export function MessageBubble({ message }: Props) {
+export function MessageBubble({ message, index }: Props) {
   const isUser = message.role === "user";
+
+  if (isUser) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
+        className="py-6"
+      >
+        <div className="marker mb-2">
+          /you {typeof index === "number" ? formatIndex(index) : ""}
+        </div>
+        <div className="text-[15px] text-ink leading-relaxed font-medium tracking-tight">
+          {message.content}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-      className={cn(
-        "flex gap-3 px-1 py-3",
-        isUser ? "justify-end" : "justify-start"
-      )}
+      transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+      className="py-6 border-t border-border"
     >
-      {!isUser && (
-        <Avatar variant="assistant" />
-      )}
-      <div className={cn("max-w-[78%] min-w-0", isUser && "text-right")}>
-        <div
-          className={cn(
-            "inline-block text-left rounded-2xl px-4 py-3 border",
-            isUser
-              ? "bg-accent text-white border-accent/40 shadow-[0_4px_24px_rgba(124,92,255,0.25)]"
-              : "bg-bg-panel border-border"
-          )}
-        >
-          {!isUser && message.category && (
-            <div className="mb-2 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-              <span className="w-1 h-1 rounded-full bg-accent inline-block" />
-              {message.category}
-            </div>
-          )}
-
-          {!isUser && message.toolCalls && message.toolCalls.length > 0 && (
-            <div className="mb-3 space-y-1.5">
-              {message.toolCalls.map((t, i) => (
-                <ToolCallCard key={`${t.tool_name}-${i}`} trace={t} />
-              ))}
-            </div>
-          )}
-
-          <div
-            className={cn(
-              "prose-chat text-sm",
-              isUser && "text-white/95"
-            )}
-          >
-            {message.content ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {message.content}
-              </ReactMarkdown>
-            ) : message.streaming && message.phase ? (
-              <PhaseIndicator phase={message.phase} />
-            ) : null}
-            {message.streaming && message.content && (
-              <span className="inline-block w-1.5 h-4 ml-0.5 align-middle bg-accent-glow animate-pulse rounded-sm" />
-            )}
-          </div>
-
-          {!isUser && message.sources && message.sources.length > 0 && (
-            <SourceList sources={message.sources} />
-          )}
-
-          {!isUser &&
-            (typeof message.confidence === "number" ||
-              message.refused) && (
-              <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
-                <ConfidenceBadge
-                  score={message.confidence ?? 0}
-                  refused={message.refused}
-                />
-                {message.agentVersion && (
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-ink-dim">
-                    {message.agentVersion}
-                  </span>
-                )}
-              </div>
-            )}
+      <div className="flex items-center justify-between mb-4">
+        <div className="marker">
+          /response {message.category ? `· ${message.category}` : ""}
         </div>
+        {message.agentVersion && (
+          <span className="font-mono text-[10px] uppercase tracking-marker text-ink-dim">
+            {message.agentVersion}
+          </span>
+        )}
       </div>
-      {isUser && <Avatar variant="user" />}
+
+      {message.toolCalls && message.toolCalls.length > 0 && (
+        <div className="mb-5 space-y-1">
+          {message.toolCalls.map((t, i) => (
+            <ToolCallCard key={`${t.tool_name}-${i}`} trace={t} />
+          ))}
+        </div>
+      )}
+
+      <div className={cn("prose-chat")}>
+        {message.content ? (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {message.content}
+          </ReactMarkdown>
+        ) : message.streaming && message.phase ? (
+          <PhaseIndicator phase={message.phase} />
+        ) : null}
+        {message.streaming && message.content && (
+          <span className="cursor-blink" />
+        )}
+      </div>
+
+      {message.sources && message.sources.length > 0 && (
+        <SourceList sources={message.sources} />
+      )}
+
+      {(typeof message.confidence === "number" || message.refused) && (
+        <div className="mt-5 pt-4 border-t border-border">
+          <ConfidenceBadge
+            score={message.confidence ?? 0}
+            refused={message.refused}
+          />
+        </div>
+      )}
     </motion.div>
   );
 }
 
-function Avatar({ variant }: { variant: "user" | "assistant" }) {
-  if (variant === "user") {
-    return (
-      <div className="w-8 h-8 rounded-full grid place-items-center bg-bg-elevated border border-border shrink-0">
-        <User className="w-4 h-4 text-ink-muted" />
-      </div>
-    );
-  }
-  return (
-    <div className="w-8 h-8 rounded-full grid place-items-center bg-gradient-to-br from-accent to-accent-glow shrink-0 shadow-[0_0_18px_rgba(124,92,255,0.45)]">
-      <Bot className="w-4 h-4 text-white" />
-    </div>
-  );
+function formatIndex(i: number): string {
+  return String(i + 1).padStart(2, "0");
 }
