@@ -23,42 +23,58 @@ interface Props {
 
 export function ComparisonChart({ data }: Props) {
   return (
-    <div className="rounded-xl border border-border bg-bg-panel/60 p-5">
-      <h3 className="text-sm font-medium mb-4">v1 vs v2 — métricas globais</h3>
+    <div className="border-t border-border pt-6">
+      <div className="marker mb-3">/chart · global metrics</div>
+      <h3 className="text-base font-semibold tracking-tight text-ink mb-5">
+        v1 vs v2 — métricas globais
+      </h3>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 5, right: 12, bottom: 0, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <CartesianGrid
+              strokeDasharray="0"
+              stroke="rgba(255,255,255,0.04)"
+              vertical={false}
+            />
             <XAxis
               dataKey="metric"
-              stroke="#6b6b7d"
+              stroke="#5d5f68"
               fontSize={11}
               tickLine={false}
               axisLine={{ stroke: "rgba(255,255,255,0.08)" }}
             />
             <YAxis
               domain={[0, 1]}
-              stroke="#6b6b7d"
+              stroke="#5d5f68"
               fontSize={11}
               tickLine={false}
               axisLine={{ stroke: "rgba(255,255,255,0.08)" }}
               tickFormatter={(v) => `${(v * 100).toFixed(0)}%`}
             />
             <Tooltip
+              cursor={{ fill: "rgba(255,255,255,0.03)" }}
               contentStyle={{
-                background: "#14141f",
+                background: "#0f0f12",
                 border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 8,
+                borderRadius: 2,
                 fontSize: 12,
+                fontFamily: "var(--font-jetbrains), monospace",
               }}
               formatter={(v: number) => `${(v * 100).toFixed(1)}%`}
             />
             <Legend
-              wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
-              iconType="circle"
+              wrapperStyle={{
+                fontSize: 11,
+                paddingTop: 12,
+                fontFamily: "var(--font-jetbrains), monospace",
+                textTransform: "uppercase",
+                letterSpacing: "0.14em",
+              }}
+              iconType="square"
+              iconSize={8}
             />
-            <Bar dataKey="v1" name="v1 (baseline)" fill="#6b6b7d" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="v2" name="v2 (production)" fill="#7c5cff" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="v1" name="v1" fill="rgba(255,255,255,0.18)" />
+            <Bar dataKey="v2" name="v2" fill="rgba(255,255,255,0.92)" />
           </BarChart>
         </ResponsiveContainer>
       </div>
