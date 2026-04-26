@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: #0a0a0f;
+  color: #e8e8ee;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 20% -10%, rgba(124,92,255,0.18), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(45,212,191,0.10), transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
+
+/* Selection */
+::selection {
+  background: rgba(124,92,255,0.40);
+  color: #fff;
+}
+
+/* Markdown */
+.prose-chat h1, .prose-chat h2, .prose-chat h3 {
+  color: #f3f3f8;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.prose-chat p { line-height: 1.7; margin: 0.5rem 0; }
+.prose-chat ul, .prose-chat ol { margin: 0.5rem 0 0.5rem 1.25rem; }
+.prose-chat li { margin: 0.2rem 0; }
+.prose-chat code {
+  background: rgba(255,255,255,0.06);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.prose-chat pre {
+  background: #0c0c14;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.prose-chat a {
+  color: #a385ff;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.prose-chat a:hover { color: #c8b6ff; }
+.prose-chat strong { color: #fff; }
+.prose-chat blockquote {
+  border-left: 2px solid rgba(124,92,255,0.5);
+  padding-left: 0.85rem;
+  color: #c1c1cf;
+  margin: 0.6rem 0;
+}
+
+/* Shimmer for loading text */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.30) 0%,
+    rgba(255,255,255,0.85) 50%,
+    rgba(255,255,255,0.30) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* Dotted thinking indicator */
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  margin: 0 2px;
+  opacity: 0.4;
+  animation: pulseGlow 1.4s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
