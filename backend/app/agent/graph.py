@@ -446,6 +446,19 @@ class LaborAgent:
 
             yield {"type": "sources", "sources": [s.model_dump() for s in state["sources"]]}
 
+        # ----- Phase: source recovery (v2 only) ----- #
+        # If the tool loop ended without any sources for a respondable
+        # question, try one extra deterministic recovery before we generate
+        # the answer. This dramatically reduces "sometimes refuses, sometimes
+        # answers" flakiness caused by intermittent web search failures.
+        if (
+            self.version == "v2"
+            and not state.get("sources")
+            and state.get("category") not in {"out_of_scope"}
+        ):
+            async for ev in self._recover_sources(state, messages):
+                yield ev
+
         # ----- Phase: generate (final answer with streaming) ----- #
         # If the loop terminated naturally with `final_answer`, stream nothing
         # because the LLM already produced text. Otherwise, force a final
@@ -500,7 +513,11 @@ class LaborAgent:
             state["confidence"] = confidence
             yield {"type": "confidence", "score": confidence}
 
-            if confidence < settings.confidence_threshold and not state.get("refused"):
+            if (
+                confidence < settings.confidence_threshold
+                and not state.get("refused")
+                and self._should_refuse(state)
+            ):
                 yield {"type": "phase", "phase": "refuse", "message": "Confiança baixa — a recusar graciosamente…"}
                 refusal = await self._compose_refusal(state)
                 state["final_answer"] = refusal
@@ -625,32 +642,70 @@ class LaborAgent:
         return trace, tool_msg, list(sources)
 
     async def _score_confidence(self, state: AgentState) -> float:
+        """Heuristic confidence with optional LLM cross-check.
+
+        The score is intentionally generous when there is real evidence to keep
+        the agent consistent across runs: a citation is recognised by URL,
+        domain or title — not only by literal URL match. We also treat the LLM
+        side-score as an *upper bound* (never as an additional veto), since
+        Llama judges occasionally output 0.4–0.5 even on solid grounded
+        answers, which used to flip a respondable answer into a refusal on
+        retries.
+        """
         sources = state.get("sources", [])
         answer = state.get("final_answer", "")
         if not answer:
             return 0.0
 
+        answer_low = answer.lower()
+
         source_score = 0.0
         if sources:
-            cited_count = sum(1 for s in sources if s.url and s.url in answer)
-            source_score = min(1.0, 0.4 + 0.15 * cited_count + 0.05 * len(sources))
+            cited_count = 0
+            for s in sources:
+                url = (getattr(s, "url", "") or "").lower()
+                domain = (getattr(s, "domain", "") or "").lower()
+                title = (getattr(s, "title", "") or "").lower()
+                if url and url in answer_low:
+                    cited_count += 1
+                    continue
+                if domain and domain in answer_low:
+                    cited_count += 1
+                    continue
+                if title and len(title) > 6 and title in answer_low:
+                    cited_count += 1
+            base = 0.45 if cited_count > 0 else 0.30
+            source_score = min(1.0, base + 0.12 * cited_count + 0.04 * len(sources))
 
-        # Specificity heuristic: presence of article numbers, percentages, EUR values
+        # Specificity heuristic: legal references, numbers, official entities.
         specificity = 0.0
-        signals = ["Art.", "art.", "%", "€", "EUR", "Lei n.", "Despacho", "/2024", "/2025"]
+        signals = (
+            "Art.", "art.",
+            "%", "€", "EUR",
+            "Lei n.", "Lei n.º",
+            "Decreto-Lei", "Despacho", "Portaria",
+            "Código do Trabalho", "CT",
+            "ACT", "DRE", "CITE",
+            "Segurança Social", "Portal das Finanças",
+            "/2024", "/2025", "/2026",
+        )
         for sig in signals:
             if sig in answer:
-                specificity += 0.05
+                specificity += 0.04
         specificity = min(0.3, specificity)
 
         length_score = 0.1 if 200 < len(answer) < 4000 else 0.0
         heuristic = round(min(1.0, source_score + specificity + length_score), 3)
 
-        # Optional LLM-side confidence as cross-check (cheap call).
+        # Optional LLM-side confidence as a *cross-check*: we average it in,
+        # but never let it drag the score below the heuristic floor when the
+        # answer already has cited official sources.
         try:
             from app.agent.prompts import CONFIDENCE_PROMPT
 
-            src_lines = "\n".join(f"- {s.title} ({s.url})" for s in sources[:6])
+            src_lines = "\n".join(
+                f"- {s.title} ({s.url})" for s in sources[:6]
+            )
             completion = await self.client.chat.completions.create(
                 model=self.model,
                 temperature=0.0,
@@ -671,9 +726,133 @@ class LaborAgent:
                 llm_score = max(0.0, min(1.0, float(raw.split()[0].replace(",", "."))))
             except (ValueError, IndexError):
                 llm_score = 0.5
-            return round((heuristic + llm_score) / 2.0, 3)
+            blended = (heuristic + llm_score) / 2.0
+            # Floor: if we have at least one official source AND the heuristic
+            # already passes the threshold, we don't let a stochastic LLM
+            # judge knock the answer below it.
+            if sources and heuristic >= settings.confidence_threshold:
+                blended = max(blended, settings.confidence_threshold)
+            return round(min(1.0, blended), 3)
         except Exception:
             return heuristic
+
+    async def _recover_sources(
+        self,
+        state: AgentState,
+        messages: list[dict[str, Any]],
+    ) -> AsyncIterator[dict[str, Any]]:
+        """Best-effort second pass to obtain at least one official source.
+
+        Strategy by category:
+        - labor_code / edge_case: search_labor_code first, then search_web.
+        - tax / social_security / salary_calc: search_web with category hint.
+        - everything else: a single search_web with a generic hint.
+
+        Each attempt that succeeds with sources is appended to the agent
+        state and the tool result is also fed back into `messages` so the
+        generation step can cite it.
+        """
+        category = state.get("category") or "edge_case"
+        query = state.get("user_query", "")
+        if not query:
+            return
+
+        attempts: list[tuple[str, dict[str, Any]]] = []
+        if category in {"labor_code", "edge_case"}:
+            attempts.append(("search_labor_code", {"query": query, "k": 5}))
+            attempts.append(("search_web", {"query": query, "category": category}))
+        elif category in {"tax", "social_security", "salary_calc"}:
+            attempts.append(("search_web", {"query": query, "category": category}))
+        else:
+            attempts.append(("search_web", {"query": query, "category": "edge_case"}))
+
+        yield {
+            "type": "phase",
+            "phase": "recover",
+            "message": "A tentar recuperar fontes oficiais…",
+        }
+
+        for i, (name, args) in enumerate(attempts):
+            trace, tool_msg, sources = await self._execute_tool_named(
+                name, args, f"recover-{i}"
+            )
+            state["tool_traces"].append(trace)
+            state["sources"].extend(sources)
+            yield {
+                "type": "tool_call",
+                "tool": trace.tool_name,
+                "args": trace.args,
+                "summary": trace.output_summary,
+                "duration_ms": trace.duration_ms,
+                "success": trace.success,
+                "error": trace.error,
+            }
+            messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        f"[Recuperação automática] Resultados de {name}:\n{tool_msg}"
+                    ),
+                }
+            )
+            if sources:
+                break
+
+        if state.get("sources"):
+            yield {
+                "type": "sources",
+                "sources": [s.model_dump() for s in state["sources"]],
+            }
+
+    def _should_refuse(self, state: AgentState) -> bool:
+        """Decide whether a low-confidence answer should be *replaced* by a
+        graceful refusal, or kept (possibly with a hedging note).
+
+        We refuse only when there is no real evidence behind the answer:
+        - empty / placeholder answer, or
+        - no sources at all, or
+        - all tool calls failed and the answer is short/generic.
+
+        For partially-supported answers (some official sources, substantive
+        content) we keep the answer to avoid the flaky behaviour where the
+        same question would sometimes refuse and sometimes respond.
+        """
+        answer = (state.get("final_answer") or "").strip()
+        if not answer or len(answer) < 40:
+            return True
+
+        sources = state.get("sources", []) or []
+        traces = state.get("tool_traces", []) or []
+
+        official_domains = {
+            "act.gov.pt",
+            "portal.act.gov.pt",
+            "info.portaldasfinancas.gov.pt",
+            "portaldasfinancas.gov.pt",
+            "diariodarepublica.pt",
+            "dre.pt",
+            "cite.gov.pt",
+            "seg-social.pt",
+            "www.seg-social.pt",
+        }
+        has_official_source = any(
+            (getattr(s, "domain", "") or "").lower() in official_domains
+            or any(d in (getattr(s, "url", "") or "").lower() for d in official_domains)
+            for s in sources
+        )
+        if has_official_source:
+            return False
+
+        if not sources:
+            return True
+
+        all_tools_failed = bool(traces) and all(
+            not getattr(t, "success", False) for t in traces
+        )
+        if all_tools_failed:
+            return True
+
+        return False
 
     async def _compose_refusal(self, state: AgentState) -> str:
         msg_history = (
