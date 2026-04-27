@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LocaleProvider } from "@/components/LocaleProvider";
+import { ClientRoot } from "@/components/ClientRoot";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +38,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg text-ink antialiased font-sans">
-        <LocaleProvider>{children}</LocaleProvider>
+        <ClientRoot>
+          <LocaleProvider>{children}</LocaleProvider>
+        </ClientRoot>
       </body>
     </html>
   );
