@@ -1,73 +1,78 @@
 # HomoDeus AI Engineer Challenge — Relatório técnico
 
-**Autor:** Pedro · **Data:** 2026-04 · **Repositório:** este repo · **Modelos default:** `llama-3.3-70b-versatile` via Groq (agent + judge), trocável para `gpt-4o-mini` / `gpt-4o` via `LLM_PROVIDER=openai`. Embeddings: ONNX MiniLM local (zero API keys).
+**Autor:** Pedro Soler · **Repositório:** este projeto · **Modelos default:** `llama-3.3-70b-versatile` via Groq (agente + juiz); alternativa `LLM_PROVIDER=openai` com `gpt-4o-mini` / `gpt-4o`. **Embeddings:** MiniLM local via ChromaDB por defeito (`EMBEDDINGS_PROVIDER=local`); opcional OpenAI `text-embedding-3-small` para ligeiro ganho de recall.
+
+*Documento alinhado ao briefing (PDF): arquitetura, avaliação, próximos passos ≤ 1 semana; máx. ~2 páginas em Markdown.*
 
 ---
 
 ## 1. Arquitetura
 
-O agente é um pipeline assíncrono com 4 ferramentas e estado tipado.
+Pipeline assíncrono v2 com estado tipado e eventos SSE:
 
 ```
-classify → plan (tool-calling) → execute_tools (parallel) → loop ≤ N → generate (stream) → confidence → refuse?
+classify → plan (tools) → execute_tools (paralelo, loop ≤ N) → generate (stream) → confidence → recusa opcional
 ```
 
-**Decisões-chave:**
+**Decisões principais**
 
-1. **Anti-alucinação por construção.** Toda a aritmética de IRS, TSU e subsídios passa por funções Python determinísticas em [`backend/app/agent/tools/calculator.py`](../backend/app/agent/tools/calculator.py). O LLM nunca calcula. As taxas (Lei 110/2009: 23,75% / 11%) e a tabela IRS 2025 (Despacho 236-A/2025) estão codificadas com a fonte oficial associada.
-2. **Encaminhamento por categoria.** Um classificador zero-shot (gpt-4o-mini) etiqueta a pergunta em `tax | social_security | labor_code | salary_calc | edge_case | out_of_scope`. A categoria propaga-se ao `web_search`, que filtra Tavily pelos domínios oficiais relevantes (`info.portaldasfinancas.gov.pt`, `diariodarepublica.pt`, `portal.act.gov.pt`, `cite.gov.pt`).
-3. **Híbrido vetor + web.** O Código do Trabalho é descarregado, partido por **artigo** (regex `Artigo \d+\.º`) e indexado em ChromaDB com `text-embedding-3-small`. Esta abordagem dá-nos citações com o `Art.º` exato, o que melhora drasticamente a `citation_quality`.
-4. **Tool calling estruturado.** Usamos a API nativa de tool calling da OpenAI; cada chamada é registada como `ToolCallTrace` (args + duração + sucesso) e exposta no UI. Quando há tools independentes, executam em paralelo via `asyncio.gather`.
-5. **Recusa graciosa.** Após cada resposta calculamos confiança híbrida (heurística — fontes citadas, especificidade lexical — combinada com self-evaluation do LLM). Abaixo de 0,55 → recusa explicada e cita o caminho oficial (ACT, Segurança Social, advogado).
-6. **Estado em Redis, API stateless.** Pronto para escalar horizontalmente. SSE streaming para tokens — UX como ChatGPT.
+1. **Anti-alucinação por construção.** IRS, TSU e subsídios passam por [`calculator.py`](../backend/app/agent/tools/calculator.py). O LLM não faz contas; taxas TSU (Lei 110/2009) e tabela IRS (Despacho 236-A/2025) vêm com `Source` oficial.
+2. **Encaminhamento por categoria.** Classificador etiqueta `tax | social_security | labor_code | salary_calc | edge_case | out_of_scope`; o `web_search` filtra domínios Tavily (Finanças, DRE, ACT, CITE, Seg. Social).
+3. **Híbrido vetor + web.** O CT é obtido do PDF oficial, partido por **marcadores de artigo** e indexado em ChromaDB com embeddings **locais** (default); isto devolve citações com `Art. N.º` explícito.
+4. **Tool calling.** API nativa em fornecedores compatíveis; em Groq usa-se plano JSON estável. Traces expostos na UI (`ToolCallTrace`).
+5. **Confiança e recusa (v2).** Score híbrido (heurística + autoavaliação LLM) com limiar configurável; recusa só quando não há evidência suficiente — ver README para recuperação de fontes e testes de consistência.
+6. **Estado em Redis** (fallback memória); API preparada para escalar horizontalmente.
+
+---
 
 ## 2. Suite de avaliação
 
-15 casos anotados em [`backend/app/evaluation/test_cases.py`](../backend/app/evaluation/test_cases.py): 3 básicos, 4 intermédios, 3 avançados, 3 edge, 2 refusal. Cada caso carrega `ground_truth_facts`, `expected_domains` e `expects_refusal`.
+Casos anotados em [`test_cases.py`](../backend/app/evaluation/test_cases.py) (perguntas do briefing + edge/refusal). Métricas agregadas pelo harness e, quando há chave, **LLM-as-judge** em JSON; senão, heurística em [`judge.py`](../backend/app/evaluation/judge.py).
 
-**Métricas:**
+| Métrica | Significado |
+|---------|-------------|
+| `correctness` | Alinhamento factual vs. factos de referência |
+| `coverage` | Cobertura dos `ground_truth_facts` |
+| `citation_quality` | Uso de domínios/URLs oficiais |
+| `refusal_accuracy` | Recusa adequada quando `expects_refusal` |
+| `tool_call_accuracy` | Coerência ferramentas ↔ domínios esperados |
+| Latência p50/p95 | Por caso |
 
-| Métrica | Como é medida |
-|---|---|
-| `correctness` | LLM-as-judge (gpt-4o, JSON-only) compara resposta vs factos esperados |
-| `coverage` | Quantos `ground_truth_facts` foram cobertos |
-| `citation_quality` | Domínios oficiais citados, URLs válidos |
-| `refusal_accuracy` | Recusou quando devia? Não recusou quando não devia? |
-| `tool_call_accuracy` | Foram chamadas as tools certas? |
-| `latency p50/p95` | Cronómetro async per-case |
+Correr: `python -m app.evaluation.harness --version both --concurrency 4` (pasta `backend`). Resultados em `backend/evaluation_results/`; UI em `/eval`.
 
-**Fallback heurístico** quando não há OPENAI_API_KEY para o juiz — torna o harness usável em CI.
+*Os números exemplo em `v1_vs_v2.json` podem ser placeholders — voltar a correr o harness para métricas reais.*
 
-## 3. v1 → v2 — melhorias mensuráveis
+---
 
-**v1 (baseline).** Único `web_search`, prompt curto, sem vector index, sem calculadoras, sem confiança.
+## 3. v1 → v2 (melhoria mensurável — bonus do briefing)
 
-**v2 (produção).** As 4 tools, vector index article-aware, prompt com regras não-negociáveis, scoring + recusa.
+- **v1:** só `search_web`, prompt mínimo, sem índice CT dedicado, sem calculadora determinística, sem gating de confiança completo.
+- **v2:** quatro ferramentas, índice por artigo, regras de fundamentação, scoring + política de recusa e recuperação de fontes.
 
-| Métrica | v1 | v2 | Δ |
-|---|---|---|---|
-| Correctness | 0,58 | 0,83 | **+25 pp** |
-| Coverage | 0,52 | 0,79 | **+27 pp** |
-| Citation Quality | 0,61 | 0,91 | **+30 pp** |
-| Refusal Accuracy | 0,40 | 0,93 | **+53 pp** |
-| Tool Call Accuracy | 0,66 | 0,93 | **+27 pp** |
-| Latency p95 | 11,2 s | 14,5 s | +3,3 s (trade-off aceitável) |
+Ganhos esperados: menos erros numéricos (calculator), melhor `citation_quality` (artigos CT + DRE/Finanças), melhor `refusal_accuracy` (recusa quando não há base). Trade-off típico: latência ligeiramente maior por mais passos e juiz.
 
-> Os números acima são as **expectativas medidas** (placeholder em `backend/evaluation_results/v1_vs_v2.json`); rode `python -m app.evaluation.harness --version both` para sobrescrever com métricas reais. A página `/eval` compara em tempo real.
+---
 
-**O que mais explica o salto:** (1) calculadoras determinísticas eliminam erros aritméticos em todas as 4 perguntas intermédias/avançadas com números; (2) o vector index permite citar o `Art.º` correto em vez de URLs genéricos do ACT; (3) o classificador + filtro de domínio reduz a 0 as citações de blogs/wikipedia que apareciam em v1.
+## 4. Escala (nota curta)
 
-## 4. Escala — 1000 utilizadores simultâneos
+Backend stateless + Redis partilhado; async end-to-end. Para tráfego muito alto, o Chroma em disco por réplica pode ser substituído por vector store gerido (Qdrant/Pinecone) e cache semântica — ver abaixo.
 
-Stateless backend (Redis para sessão, TTL 2 h). Async em todo o lado: FastAPI + httpx connection pool (200 conn). Tavily SDK assíncrono. SSE com `X-Accel-Buffering: no` para Nginx. Rate-limit `slowapi` por IP (120 rpm default). Para 1k concorrentes, basta escalar o serviço backend horizontalmente atrás de um LB (e o Redis é shared). O ChromaDB local pode tornar-se gargalo a essa escala — em produção real moveria para Pinecone ou Qdrant cluster (ver §5).
+---
 
-## 5. Próximos passos (com mais 1 semana)
+## 5. Próximos passos (com +1 semana)
 
-1. **Vector store gerido** — migrar de ChromaDB local para Qdrant/Pinecone, multi-tenant.
-2. **Cache semântica de respostas** — Redis com embedding hash, hits diretos para perguntas repetidas, latência p50 → ~300 ms para FAQ.
-3. **Re-ranker** — Cohere rerank-3 antes do contexto LLM, melhora citation_quality em ~5–8 pp.
-4. **Eval contínua em CI** — GitHub Action corre o harness em cada PR e quebra a build se `correctness_avg` regredir > 3 pp.
-5. **Adversarial evals** — gerar 100 casos sintéticos com gpt-4o que tentam fazer o agente alucinar (números falsos, fontes não-oficiais).
-6. **Auditoria humana** — anotação cega de 50 respostas por especialista jurídico, comparada com o juiz LLM, para calibrar bias do juiz.
-7. **Multi-modal** — aceitar fotos de contratos/folhas de pagamento via gpt-4o vision.
-8. **Streaming progressivo das fontes** — surface das fontes durante a pesquisa (parcialmente já temos).
+1. **Vector store gerido** e embeddings centralizados para múltiplas réplicas.
+2. **Cache de respostas** (Redis + hash de pergunta normalizada) para FAQ repetidas.
+3. **Re-ranker** (ex. Cohere) sobre hits web/vector antes do contexto LLM.
+4. **CI:** harness no PR com limiar de regressão em `correctness_avg`.
+5. **Casos adversariais** gerados para stressar recusa e citações.
+6. **Calibração do juiz** com amostra revista por especialista (opcional).
+
+---
+
+## 6. Conformidade com a submissão (PDF p. 8)
+
+| Entregável | Onde |
+|------------|------|
+| Repositório + README (< 5 min local) | Raiz: [`README.md`](../README.md) — clone, `.env`, Docker ou local, indexer, URLs. |
+| Relatório ≤ 2 páginas | Este ficheiro [`docs/report.md`](report.md). |
