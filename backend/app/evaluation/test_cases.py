@@ -40,7 +40,7 @@ TEST_CASES: list[TestCase] = [
         expected_category="labor_code",
         expected_domains=["dre.pt", "diariodarepublica.pt", "act.gov.pt"],
         ground_truth_facts=[
-            "Salário mínimo nacional em 2025 é 870 EUR/mês (continente)",
+            "Salário mínimo nacional (continente) em vigor: 920 EUR/mês (efeitos 1/1/2026, Decreto-Lei n.º 139/2025)",
             "Atualizado por Decreto-Lei publicado no DRE",
         ],
     ),

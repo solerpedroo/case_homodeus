@@ -126,7 +126,7 @@ const PT: Dict = {
     ],
     examplesKicker: "/exemplos",
     examples: [
-      "Qual é o salário mínimo nacional em Portugal em 2025?",
+      "Qual é o salário mínimo nacional atual em Portugal?",
       "Como se calcula o subsídio de férias para 1.500 EUR/mês?",
       "Que prazo de aviso prévio é necessário para 3 anos de antiguidade?",
       "É legal uma cláusula de não concorrência de 3 anos?",
@@ -282,7 +282,7 @@ const EN: Dict = {
     ],
     examplesKicker: "/examples",
     examples: [
-      "What is Portugal's national minimum wage in 2025?",
+      "What is Portugal's current national minimum wage?",
       "How is the holiday subsidy computed for a 1,500 EUR/month salary?",
       "What notice period applies after 3 years of tenure?",
       "Is a 3-year non-compete clause legal under Portuguese law?",
