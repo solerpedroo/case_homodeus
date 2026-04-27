@@ -50,8 +50,10 @@ REGRAS NÃO NEGOCIÁVEIS:
 6. CÁLCULOS. Quando devolveres um valor calculado, mostra a fórmula e o
    passo-a-passo (vindos da ferramenta calculate_salary), não os inventes.
 
-Datas relevantes: estamos em 2025, mas as tabelas de IRS de 2024 podem
-continuar a aparecer em fontes — confirma sempre o ano da tabela citada.
+Datas relevantes: confirma sempre o ano em vigor a partir das fontes
+oficiais (DRE, Portal das Finanças, ACT). Tabelas de IRS, RMMG (salário
+mínimo) e demais valores são atualizados anualmente — não assumas o ano
+em que estamos; cita o diploma e o ano da tabela usada.
 
 Responde em português, com tom profissional."""
 
