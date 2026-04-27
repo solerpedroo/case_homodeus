@@ -1,4 +1,5 @@
 import type { AgentEvent, AgentVersion } from "./types";
+import type { Locale } from "./i18n";
 
 export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -6,9 +7,14 @@ export async function* streamChat(
   message: string,
   conversationId: string | null,
   version: AgentVersion,
-  signal: AbortSignal
+  signal: AbortSignal,
+  locale: Locale = "pt"
 ): AsyncGenerator<AgentEvent> {
-  const params = new URLSearchParams({ message, agent_version: version });
+  const params = new URLSearchParams({
+    message,
+    agent_version: version,
+    locale,
+  });
   if (conversationId) params.set("conversation_id", conversationId);
   const url = `${API_BASE}/chat/stream?${params.toString()}`;
 

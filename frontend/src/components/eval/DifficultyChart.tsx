@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { useT } from "@/lib/i18n";
 
 interface Datum {
   bucket: string;
@@ -22,11 +23,12 @@ interface Props {
 }
 
 export function DifficultyChart({ data }: Props) {
+  const t = useT();
   return (
     <div className="border-t border-border pt-6">
-      <div className="marker mb-3">/chart · by difficulty</div>
+      <div className="marker mb-3">{t.eval.chartsDifficultyKicker}</div>
       <h3 className="text-base font-semibold tracking-tight text-ink mb-5">
-        Correctness por dificuldade
+        {t.eval.chartsDifficulty}
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">

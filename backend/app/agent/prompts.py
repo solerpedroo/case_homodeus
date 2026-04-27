@@ -116,6 +116,15 @@ Formato exacto:
 """
 
 
+LANGUAGE_HINT_EN = """LANGUAGE OVERRIDE: respond to the user in English.
+KEEP ALL SOURCE CITATIONS AND LEGAL REFERENCES IN PORTUGUESE VERBATIM
+(e.g. "Art. 238.º CT", "Lei 110/2009", "Decreto-Lei 73/2024", "Portaria",
+"IRS Jovem", "subsídio de férias", "TSU", "ACT", "DRE", "CITE"). Do not
+translate official document titles, article numbers, agency names, or
+Portuguese legal terms-of-art. Translate explanations only.
+If the user switches mid-conversation, mirror their language."""
+
+
 GROQ_JSON_PLAN_SUFFIX_V2 = """
 ---
 INSTRUÇÃO OBRIGATÓRIA (motor Groq): a tua resposta a esta mensagem tem de ser

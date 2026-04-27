@@ -1,12 +1,7 @@
-import { cn } from "@/lib/utils";
+"use client";
 
-const PHASE_LABELS: Record<string, string> = {
-  classify: "a classificar a pergunta",
-  plan: "a planear ferramentas",
-  generate: "a redigir a resposta",
-  score: "a avaliar confiança",
-  refuse: "a preparar recusa graciosa",
-};
+import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 interface Props {
   phase: string;
@@ -14,7 +9,15 @@ interface Props {
 }
 
 export function PhaseIndicator({ phase, className }: Props) {
-  const label = PHASE_LABELS[phase] || phase;
+  const t = useT();
+  const map: Record<string, string> = {
+    classify: t.phases.classify,
+    plan: t.phases.plan,
+    generate: t.phases.generate,
+    score: t.phases.score,
+    refuse: t.phases.refuse,
+  };
+  const label = map[phase] || phase;
   return (
     <span
       className={cn(

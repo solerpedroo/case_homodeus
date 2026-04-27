@@ -9,6 +9,7 @@ import { ToolCallCard } from "./ToolCallCard";
 import { SourceList } from "./SourceCard";
 import { ConfidenceBadge } from "./ConfidenceBadge";
 import { PhaseIndicator } from "./PhaseIndicator";
+import { useT } from "@/lib/i18n";
 
 interface Props {
   message: ChatMessage;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function MessageBubble({ message, index }: Props) {
+  const t = useT();
   const isUser = message.role === "user";
 
   if (isUser) {
@@ -27,7 +29,8 @@ export function MessageBubble({ message, index }: Props) {
         className="py-6"
       >
         <div className="marker mb-2">
-          /you {typeof index === "number" ? formatIndex(index) : ""}
+          {t.chat.youMarker}{" "}
+          {typeof index === "number" ? formatIndex(index) : ""}
         </div>
         <div className="text-[15px] text-ink leading-relaxed font-medium tracking-tight">
           {message.content}
@@ -45,7 +48,8 @@ export function MessageBubble({ message, index }: Props) {
     >
       <div className="flex items-center justify-between mb-4">
         <div className="marker">
-          /response {message.category ? `· ${message.category}` : ""}
+          {t.chat.responseMarker}{" "}
+          {message.category ? `· ${message.category}` : ""}
         </div>
         {message.agentVersion && (
           <span className="font-mono text-[10px] uppercase tracking-marker text-ink-dim">

@@ -2,22 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 interface Props {
   onSend: (text: string) => void;
   onStop: () => void;
   isStreaming: boolean;
   disabled?: boolean;
-  suggestions?: string[];
 }
 
-export function ChatInput({
-  onSend,
-  onStop,
-  isStreaming,
-  disabled,
-  suggestions,
-}: Props) {
+export function ChatInput({ onSend, onStop, isStreaming, disabled }: Props) {
+  const t = useT();
   const [value, setValue] = useState("");
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -35,27 +30,6 @@ export function ChatInput({
 
   return (
     <div>
-      {suggestions && suggestions.length > 0 && !value && !isStreaming && (
-        <div className="mb-4">
-          <div className="marker mb-2">/sugestões</div>
-          <ul className="space-y-1.5">
-            {suggestions.map((s) => (
-              <li key={s}>
-                <button
-                  onClick={() => onSend(s)}
-                  className="group text-left text-[14px] text-ink-muted hover:text-ink transition-colors"
-                >
-                  <span className="text-ink-dim mr-2">·</span>
-                  <span className="group-hover:underline underline-offset-4 decoration-ink-dim">
-                    {s}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <div
         className={cn(
           "flex items-end gap-3 border-b border-border-strong",
@@ -77,7 +51,7 @@ export function ChatInput({
               submit();
             }
           }}
-          placeholder="Pergunte sobre direito laboral português ou processamento salarial."
+          placeholder={t.chat.placeholder}
           disabled={disabled}
           className={cn(
             "flex-1 resize-none bg-transparent outline-none",
@@ -89,9 +63,9 @@ export function ChatInput({
           <button
             onClick={onStop}
             className="font-mono text-[13px] text-ink-muted hover:text-danger transition-colors pb-1.5"
-            title="Parar"
+            title={t.chat.stop}
           >
-            esc ⨯
+            {t.chat.stop}
           </button>
         ) : (
           <button
@@ -103,14 +77,14 @@ export function ChatInput({
                 ? "text-ink hover:text-accent"
                 : "text-ink-dim cursor-not-allowed"
             )}
-            title="Enviar (Enter)"
+            title="Enter ↵"
           >
             ↵
           </button>
         )}
       </div>
       <div className="mt-2 text-[10px] font-mono text-ink-dim">
-        shift+enter — nova linha
+        {t.chat.shiftHint}
       </div>
     </div>
   );

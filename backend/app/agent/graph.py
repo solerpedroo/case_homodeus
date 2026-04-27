@@ -29,6 +29,7 @@ from app.agent.prompts import (
     CLASSIFIER_PROMPT,
     GROQ_JSON_PLAN_SUFFIX_V1,
     GROQ_JSON_PLAN_SUFFIX_V2,
+    LANGUAGE_HINT_EN,
     REFUSAL_INSTRUCTION,
     SYSTEM_V1,
     SYSTEM_V2,
@@ -152,8 +153,10 @@ class LaborAgent:
         self,
         http_client: httpx.AsyncClient,
         version: str | None = None,
+        locale: str | None = None,
     ) -> None:
         self.version = (version or settings.agent_version).lower()
+        self.locale = "en" if (locale or "pt").strip().lower() == "en" else "pt"
         self.http = http_client
         llm = get_llm_client()
         self.client = llm.client
@@ -162,6 +165,14 @@ class LaborAgent:
         self.system_prompt = SYSTEM_V1 if self.version == "v1" else SYSTEM_V2
         self.tools = V1_TOOLS if self.version == "v1" else V2_TOOLS
         self.max_iterations = 1 if self.version == "v1" else settings.max_tool_iterations
+
+    def _build_system_messages(self) -> list[dict[str, Any]]:
+        msgs: list[dict[str, Any]] = [
+            {"role": "system", "content": self.system_prompt}
+        ]
+        if self.locale == "en":
+            msgs.append({"role": "system", "content": LANGUAGE_HINT_EN})
+        return msgs
 
     def _must_use_json_tool_plan(self) -> bool:
         """Native OpenAI-style tool_calls often break on Groq (Llama emits <function=...>).
@@ -243,7 +254,7 @@ class LaborAgent:
                 return
 
         # ----- Phase: plan + tool loop ----- #
-        messages: list[dict[str, Any]] = [{"role": "system", "content": self.system_prompt}]
+        messages: list[dict[str, Any]] = self._build_system_messages()
         for m in (history or []):
             if m.get("role") in ("user", "assistant") and m.get("content"):
                 messages.append({"role": m["role"], "content": m["content"]})
@@ -441,13 +452,20 @@ class LaborAgent:
         # answer using accumulated tool outputs.
         if not state.get("final_answer"):
             yield {"type": "phase", "phase": "generate", "message": "A redigir a resposta…"}
+            final_instruction = (
+                "Based on the tools executed, write the final answer in English, "
+                "citing the sources. Keep all legal references and source titles "
+                "verbatim in Portuguese (e.g. 'Art. 238.º CT', 'Lei 110/2009')."
+                if self.locale == "en"
+                else (
+                    "Com base nas ferramentas executadas, escreve a resposta "
+                    "final em português europeu, citando as fontes."
+                )
+            )
             messages.append(
                 {
                     "role": "user",
-                    "content": (
-                        "Com base nas ferramentas executadas, escreve a resposta "
-                        "final em português europeu, citando as fontes."
-                    ),
+                    "content": final_instruction,
                 }
             )
             try:

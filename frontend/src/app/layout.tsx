@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { LocaleProvider } from "@/components/LocaleProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,9 +25,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt" className={`${inter.variable} ${jetbrains.variable} dark`}>
+    <html
+      lang="pt"
+      className={`${inter.variable} ${jetbrains.variable} dark`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen bg-bg text-ink antialiased font-sans">
-        {children}
+        <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
   );

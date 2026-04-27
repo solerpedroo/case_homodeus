@@ -77,10 +77,17 @@ uvicorn app.main:app --reload --port 8000
 **Frontend:**
 ```bash
 cd frontend
-npm install --legacy-peer-deps
+npm install
 npm run dev
 # http://localhost:3000
 ```
+
+> Nota (Windows/PowerShell): não corras `npm install` na raiz do repo. O `package.json` do frontend está em `frontend/`, por isso o comando tem de ser executado dentro dessa pasta.
+
+### Idioma (PT/EN)
+
+- O switcher `PT / EN` fica no topo (header) e guarda a preferência em `localStorage`.
+- Quando o UI está em `EN`, o backend recebe `locale=en` e o agente responde em inglês, **mantendo citações legais e referências oficiais em português** (ex: `Art. 238.º CT`, `Lei 110/2009`).
 
 ---
 
@@ -148,7 +155,7 @@ Resultados em `backend/evaluation_results/{v1,v2}_results.json` e `v1_vs_v2.json
 | Método | Rota | O quê |
 |---|---|---|
 | POST | `/chat` | Pergunta + resposta JSON (não-stream). |
-| GET | `/chat/stream?message=...&conversation_id=...&agent_version=v2` | SSE com phases, tool calls, sources, tokens, confidence. |
+| GET | `/chat/stream?message=...&conversation_id=...&agent_version=v2&locale=pt` | SSE com phases, tool calls, sources, tokens, confidence. |
 | GET | `/chat/conversations/{id}` | Histórico de uma conversa. |
 | GET | `/eval/cases` | Casos de teste anotados. |
 | POST | `/eval/run` `{agent_version, concurrency}` | Corre o harness async. |

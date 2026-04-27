@@ -1,11 +1,15 @@
+"use client";
+
 import type { Source } from "@/lib/types";
 import { domainFromUrl } from "@/lib/utils";
+import { useLocale } from "@/lib/i18n";
 
 interface Props {
   sources: Source[];
 }
 
 export function SourceList({ sources }: Props) {
+  const { t } = useLocale();
   if (!sources?.length) return null;
 
   const seen = new Set<string>();
@@ -18,7 +22,9 @@ export function SourceList({ sources }: Props) {
 
   return (
     <div className="mt-6 pt-4 border-t border-border">
-      <div className="marker mb-3">/sources · {unique.length}</div>
+      <div className="marker mb-3">
+        {t.sources.marker} · {unique.length}
+      </div>
       <ol className="space-y-1.5 text-[12.5px] leading-snug">
         {unique.map((s, idx) => (
           <SourceRow key={`${s.url}-${idx}`} source={s} index={idx + 1} />
@@ -29,15 +35,28 @@ export function SourceList({ sources }: Props) {
 }
 
 function SourceRow({ source, index }: { source: Source; index: number }) {
+  const { locale } = useLocale();
   const domain = source.domain || domainFromUrl(source.url) || "";
+  const labelMap =
+    locale === "en"
+      ? {
+          labor_code_index: "labor code",
+          calculator: "deterministic calc",
+          fallback: "(untitled)",
+        }
+      : {
+          labor_code_index: "código do trabalho",
+          calculator: "cálculo determinístico",
+          fallback: "(sem título)",
+        };
   const label =
     source.source_type === "labor_code_index"
-      ? "código do trabalho"
+      ? labelMap.labor_code_index
       : source.source_type === "calculator"
-      ? "cálculo determinístico"
+      ? labelMap.calculator
       : domain;
 
-  const title = source.title || source.url || "(sem título)";
+  const title = source.title || source.url || labelMap.fallback;
 
   const Tag = source.url ? "a" : "div";
   const tagProps = source.url

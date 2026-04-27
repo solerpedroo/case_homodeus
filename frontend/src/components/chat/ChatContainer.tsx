@@ -8,6 +8,7 @@ import { ChatInput } from "./ChatInput";
 import { MessageBubble } from "./MessageBubble";
 import { WelcomeHero } from "./WelcomeHero";
 import { streamChat } from "@/lib/api";
+import { useLocale } from "@/lib/i18n";
 import type {
   AgentEvent,
   AgentVersion,
@@ -16,14 +17,8 @@ import type {
   ToolCallTrace,
 } from "@/lib/types";
 
-const STARTERS = [
-  "Qual é o salário mínimo nacional atual em Portugal?",
-  "Como se calcula o subsídio de férias para 1.500 EUR/mês?",
-  "Que prazo de aviso prévio é necessário para 3 anos de antiguidade?",
-  "É legal uma cláusula de não concorrência de 3 anos?",
-];
-
 export function ChatContainer() {
+  const { locale, t } = useLocale();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [version, setVersion] = useState<AgentVersion>("v2");
@@ -69,23 +64,22 @@ export function ChatContainer() {
           text,
           conversationId,
           version,
-          controller.signal
+          controller.signal,
+          locale
         )) {
           handleEvent(ev, assistantId, setMessages, setConversationId);
         }
       } catch (err) {
         const msg =
           err instanceof Error ? err.message : "Erro de comunicação.";
+        const host =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
         setMessages((prev) =>
           prev.map((m) =>
             m.id === assistantId
               ? {
                   ...m,
-                  content:
-                    m.content ||
-                    `**Erro de comunicação com o backend.**\n\n\`${msg}\`\n\nVerifique se o servidor está em execução em \`${
-                      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-                    }\`.`,
+                  content: m.content || t.chat.errorBackend(host, msg),
                   streaming: false,
                 }
               : m
@@ -101,7 +95,7 @@ export function ChatContainer() {
         );
       }
     },
-    [conversationId, isStreaming, version]
+    [conversationId, isStreaming, version, locale, t]
   );
 
   const stop = useCallback(() => {
@@ -120,13 +114,10 @@ export function ChatContainer() {
     <div className="flex flex-col min-h-screen">
       <Header version={version} onVersionChange={setVersion} />
       <main className="flex-1 flex flex-col">
-        <div
-          ref={scrollRef}
-          className="flex-1 overflow-y-auto"
-        >
+        <div ref={scrollRef} className="flex-1 overflow-y-auto">
           <div className="container max-w-3xl py-4 md:py-8">
             {showHero ? (
-              <WelcomeHero />
+              <WelcomeHero onPickExample={send} />
             ) : (
               <div>
                 {messages.map((m, i) => (
@@ -143,20 +134,15 @@ export function ChatContainer() {
                 onClick={newChat}
                 className="text-[11px] text-ink-dim hover:text-ink transition"
               >
-                + Nova conversa
+                {t.chat.newChat}
               </button>
               {conversationId && (
                 <span className="text-[10px] font-mono text-ink-dim">
-                  conv: {conversationId.slice(0, 8)}…
+                  {t.chat.convPrefix} {conversationId.slice(0, 8)}…
                 </span>
               )}
             </div>
-            <ChatInput
-              onSend={send}
-              onStop={stop}
-              isStreaming={isStreaming}
-              suggestions={showHero ? STARTERS : undefined}
-            />
+            <ChatInput onSend={send} onStop={stop} isStreaming={isStreaming} />
           </div>
         </div>
       </main>
@@ -196,7 +182,6 @@ function handleEvent(
         }
         case "sources": {
           const merged: Source[] = [...(m.sources || []), ...ev.sources];
-          // dedupe by url
           const seen = new Set<string>();
           const dedup = merged.filter((s) => {
             const k = s.url || s.title;

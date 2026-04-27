@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brand } from "./Brand";
+import { LangSwitcher } from "./LangSwitcher";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 import type { AgentVersion } from "@/lib/types";
 
 interface HeaderProps {
@@ -13,20 +15,35 @@ interface HeaderProps {
 
 export function Header({ version, onVersionChange }: HeaderProps) {
   const pathname = usePathname();
+  const t = useT();
   return (
     <header className="border-b border-border bg-bg sticky top-0 z-30">
-      <div className="container max-w-6xl flex items-center justify-between py-4">
+      <div className="container max-w-6xl flex items-center justify-between gap-6 py-4">
         <Brand />
-        <nav className="flex items-center gap-6 text-sm">
+        <nav className="hidden sm:flex items-center gap-6 text-sm">
           <NavLink href="/chat" active={pathname === "/chat"}>
-            Chat
+            {t.nav.chat}
           </NavLink>
           <NavLink href="/eval" active={pathname === "/eval"}>
-            Avaliação
+            {t.nav.eval}
           </NavLink>
         </nav>
-        <VersionToggle value={version} onChange={onVersionChange} />
+        <div className="flex items-center gap-5">
+          <LangSwitcher />
+          <span className="text-ink-dim hidden sm:inline">·</span>
+          <VersionToggle value={version} onChange={onVersionChange} />
+        </div>
       </div>
+      <nav className="sm:hidden border-t border-border bg-bg">
+        <div className="container max-w-6xl flex items-center gap-6 py-2 text-sm">
+          <NavLink href="/chat" active={pathname === "/chat"}>
+            {t.nav.chat}
+          </NavLink>
+          <NavLink href="/eval" active={pathname === "/eval"}>
+            {t.nav.eval}
+          </NavLink>
+        </div>
+      </nav>
     </header>
   );
 }

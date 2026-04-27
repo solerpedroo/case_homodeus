@@ -10,6 +10,7 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
+import { useT } from "@/lib/i18n";
 
 interface Datum {
   metric: string;
@@ -22,11 +23,12 @@ interface Props {
 }
 
 export function ComparisonChart({ data }: Props) {
+  const t = useT();
   return (
     <div className="border-t border-border pt-6">
-      <div className="marker mb-3">/chart · global metrics</div>
+      <div className="marker mb-3">{t.eval.chartsGlobalKicker}</div>
       <h3 className="text-base font-semibold tracking-tight text-ink mb-5">
-        v1 vs v2 — métricas globais
+        {t.eval.chartsGlobal}
       </h3>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">

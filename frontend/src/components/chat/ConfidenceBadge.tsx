@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 interface Props {
   score: number;
@@ -7,6 +10,7 @@ interface Props {
 }
 
 export function ConfidenceBadge({ score, refused, className }: Props) {
+  const t = useT();
   if (refused) {
     return (
       <span
@@ -16,9 +20,9 @@ export function ConfidenceBadge({ score, refused, className }: Props) {
           className
         )}
       >
-        <span className="marker !text-warning">refused</span>
+        <span className="marker !text-warning">{t.confidence.refused}</span>
         <span className="text-ink-dim normal-case tracking-normal">
-          recusa graciosa · low confidence
+          {t.confidence.refusedNote}
         </span>
       </span>
     );
@@ -40,7 +44,7 @@ export function ConfidenceBadge({ score, refused, className }: Props) {
       )}
       title={`Confidence: ${score.toFixed(2)}`}
     >
-      <span className="marker">conf</span>
+      <span className="marker">{t.confidence.label}</span>
       <span className={cn("tabular", tierColor)}>
         {arrow} {(score * 100).toFixed(0)}%
       </span>

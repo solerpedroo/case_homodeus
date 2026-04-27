@@ -33,6 +33,7 @@ class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=4000)
     conversation_id: str | None = None
     agent_version: str | None = None  # "v1" | "v2"
+    locale: str | None = None  # "pt" | "en"
 
 
 class ChatResponse(BaseModel):
@@ -46,8 +47,19 @@ class ChatResponse(BaseModel):
     agent_version: str
 
 
-def _agent_for(request: Request, version: str | None) -> LaborAgent:
-    return LaborAgent(http_client=request.app.state.http_client, version=version)
+def _normalize_locale(value: str | None) -> str:
+    v = (value or "pt").strip().lower()
+    return "en" if v == "en" else "pt"
+
+
+def _agent_for(
+    request: Request, version: str | None, locale: str | None = None
+) -> LaborAgent:
+    return LaborAgent(
+        http_client=request.app.state.http_client,
+        version=version,
+        locale=_normalize_locale(locale),
+    )
 
 
 @router.post("", response_model=ChatResponse)
@@ -64,7 +76,7 @@ async def chat(req: ChatRequest, request: Request) -> ChatResponse:
     conv_id = req.conversation_id or str(uuid.uuid4())
     history = await session_store.get(conv_id)
 
-    agent = _agent_for(request, req.agent_version)
+    agent = _agent_for(request, req.agent_version, req.locale)
     state = await agent.run(req.message, history=history, conversation_id=conv_id)
 
     await session_store.append(conv_id, {"role": "user", "content": req.message})
@@ -99,6 +111,7 @@ async def chat_stream(
     message: str = Query(..., min_length=1, max_length=4000),
     conversation_id: str | None = Query(default=None),
     agent_version: str | None = Query(default=None),
+    locale: str | None = Query(default=None),
 ) -> StreamingResponse:
     if not settings.active_api_key:
         raise HTTPException(
@@ -111,7 +124,7 @@ async def chat_stream(
 
     conv_id = conversation_id or str(uuid.uuid4())
     history = await session_store.get(conv_id)
-    agent = _agent_for(request, agent_version)
+    agent = _agent_for(request, agent_version, locale)
 
     async def generator() -> AsyncIterator[bytes]:
         yield _sse({"type": "start", "conversation_id": conv_id, "agent_version": agent.version})
