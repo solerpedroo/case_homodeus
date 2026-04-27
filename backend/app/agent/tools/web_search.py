@@ -1,9 +1,19 @@
 """Web search tool — scoped to Portuguese official sources.
 
-Uses Tavily for high-quality, low-noise results. We hard-include the official
-domains (ACT, Portal das Finanças, DRE, CITE) so the agent cannot cite blogs
-or unofficial mirrors. If Tavily is unavailable we degrade gracefully to an
-empty result with a clear error message rather than fabricate citations.
+EN:
+    Async Tavily client with `include_domains` filtered by question category
+    (`_DOMAIN_HINTS`). This biases results toward ACT, DRE, Finanças, Segurança
+    Social, etc., reducing blog spam.
+
+    Without `TAVILY_API_KEY`, returns `ok=False` — the agent must not invent
+    URLs. On HTTP errors, logs and returns the exception string in `error`.
+
+PT:
+    Cliente Tavily assíncrono com `include_domains` filtrado pela categoria
+    (`_DOMAIN_HINTS`), enviesando para ACT, DRE, Finanças, Seg. Social, etc.
+
+    Sem `TAVILY_API_KEY`, devolve `ok=False` — o agente não deve inventar URLs.
+    Em erro HTTP, regista e devolve a mensagem em `error`.
 """
 from __future__ import annotations
 

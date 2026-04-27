@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: PT/EN toggle — writes preference to localStorage via `useLocale`.
+ * PT: Alternador PT/EN — grava preferência em localStorage via `useLocale`.
+ */
+
 import { useLocale, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 

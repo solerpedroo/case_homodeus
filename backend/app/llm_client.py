@@ -1,15 +1,30 @@
 """Provider-agnostic LLM client factory.
 
-Both Groq and OpenAI expose the same Chat Completions schema (Groq is
-intentionally OpenAI-API-compatible), so we use the official `openai` Python
-SDK against either endpoint by overriding `base_url`. This keeps the rest of
-the codebase provider-agnostic.
+EN:
+    Groq exposes an OpenAI-compatible Chat Completions API. We use the official
+    `openai` Async SDK for both providers: for Groq, `base_url` points to
+    `https://api.groq.com/openai/v1`; for OpenAI, the default base URL is used.
 
-Two helpers are exported:
-- `get_llm_client()` — main agent client
-- `get_judge_client()` — judge client (may use a different model)
+    Exports:
+    - `get_llm_client()` — model used by the agent (planning, answers).
+    - `get_judge_client()` — model used by the evaluation judge (can differ).
+    - `is_configured()` / `supports_json_mode()` — cheap capability checks.
 
-Both return an `AsyncOpenAI` instance plus the model name to send.
+    Returning a small `LlmClient` dataclass keeps call sites explicit about
+    which model string to pass into `chat.completions.create`.
+
+PT:
+    A Groq expõe uma API compatível com OpenAI. Usamos o SDK `openai` async
+    nos dois fornecedores: na Groq, `base_url` aponta para o endpoint Groq;
+    na OpenAI usa-se o URL por defeito.
+
+    Exporta:
+    - `get_llm_client()` — modelo do agente (planeamento, respostas).
+    - `get_judge_client()` — modelo do juiz de avaliação (pode diferir).
+    - `is_configured()` / `supports_json_mode()` — verificações rápidas.
+
+    O dataclass `LlmClient` deixa explícito qual modelo passar a
+    `chat.completions.create`.
 """
 from __future__ import annotations
 
@@ -28,6 +43,10 @@ class LlmClient:
 
 
 def _build(api_key: str, base_url: str | None, model: str, provider: str) -> LlmClient:
+    # EN: `api_key or "missing"` lets the client construct; actual calls fail
+    #     with a clear auth error if the key is empty (see chat route checks).
+    # PT: `api_key or "missing"` permite construir o cliente; chamadas falham
+    #     com erro de auth claro se a chave estiver vazia (rotas verificam antes).
     kwargs: dict = {"api_key": api_key or "missing"}
     if base_url:
         kwargs["base_url"] = base_url

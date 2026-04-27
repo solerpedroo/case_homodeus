@@ -1,8 +1,22 @@
 """Fetch and parse a URL into clean text.
 
-Used after `web_search` when the agent needs the actual contents of an article
-or table (e.g., the IRS withholding tables, a specific DRE law page). We strip
-boilerplate aggressively so the LLM context is dense.
+EN:
+    `fetch_and_parse` is the second hop after `search_web`: given an official
+    URL, download HTML, whitelist the host against `_ALLOWED`, strip scripts /
+    nav / footer via BeautifulSoup, and return up to `_MAX_CHARS` of main text.
+    A `Source` row is always attached so the answer can cite the exact page.
+
+    Non-HTML content types fail fast — we don't parse PDFs here (CT PDF is
+    indexed offline by `indexer.py`).
+
+PT:
+    `fetch_and_parse` é o segundo salto depois de `search_web`: dado um URL
+    oficial, descarrega HTML, valida o host em `_ALLOWED`, remove ruído com
+    BeautifulSoup e devolve texto até `_MAX_CHARS`. Gera sempre um `Source`
+    para citação.
+
+    Tipos não-HTML falham de propósito — PDFs não são tratados aqui (o CT é
+    indexado offline pelo `indexer.py`).
 """
 from __future__ import annotations
 

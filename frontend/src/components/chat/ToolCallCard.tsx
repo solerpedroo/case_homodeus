@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Expandable row for one tool invocation (name, args, latency, error).
+ * PT: Linha expansível por invocação de ferramenta (nome, args, tempo, erro).
+ */
+
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { useState } from "react";
 import type { ToolCallTrace } from "@/lib/types";

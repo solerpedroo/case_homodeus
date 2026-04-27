@@ -1,3 +1,8 @@
+/**
+ * EN: Tailwind theme — editorial dark palette (bg/ink/accent), custom fonts
+ *     via CSS variables from next/font in layout.tsx.
+ * PT: Tema Tailwind — paleta escura editorial, fontes via variáveis do layout.
+ */
 import type { Config } from "tailwindcss";
 
 const config: Config = {

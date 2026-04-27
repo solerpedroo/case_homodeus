@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Recharts bar chart — side-by-side v1 vs v2 headline metrics.
+ * PT: Gráfico de barras Recharts — métricas v1 vs v2.
+ */
+
 import {
   BarChart,
   Bar,

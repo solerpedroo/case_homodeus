@@ -1,3 +1,5 @@
+# EN: Production-ish image — slim Python, build tools for native wheels, uvicorn multi-worker.
+# PT: Imagem de produção — Python slim, ferramentas de build, uvicorn com workers.
 FROM python:3.11-slim
 
 WORKDIR /app

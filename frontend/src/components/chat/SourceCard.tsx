@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Renders citation list (favicon, domain, title, snippet) from agent sources.
+ * PT: Lista de citações (favicon, domínio, título, snippet) das fontes do agente.
+ */
+
 import type { Source } from "@/lib/types";
 import { domainFromUrl } from "@/lib/utils";
 import { useLocale } from "@/lib/i18n";

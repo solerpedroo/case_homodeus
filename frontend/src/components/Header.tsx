@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * EN: Top bar — nav links (chat/eval), agent version toggle (v1/v2), language
+ *     switcher, highlights active route.
+ * PT: Barra superior — navegação, versão do agente, idioma, rota ativa.
+ */
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brand } from "./Brand";

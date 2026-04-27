@@ -1,8 +1,22 @@
 """Redis-backed conversation store.
 
-The API stays stateless: every request reads/writes the conversation by id from
-Redis. Falls back to an in-memory dict if Redis is unavailable so local dev and
-unit tests don't require the dependency to be running.
+EN:
+    FastAPI handlers do not hold conversation state in memory. Each turn loads
+    history by `conversation_id` from Redis (JSON list of messages), appends the
+    new user/assistant messages, and sets a TTL so old threads expire.
+
+    If `connect()` cannot reach Redis, `_fallback` switches to an in-process
+    dict. That is enough for local dev without Docker, but data is lost on
+    restart and is not shared across workers.
+
+PT:
+    Os handlers FastAPI não guardam estado da conversa em memória. Cada turno
+    carrega o histórico por `conversation_id` a partir do Redis (lista JSON),
+    acrescenta mensagens user/assistant e define TTL para expirar threads antigas.
+
+    Se `connect()` não alcançar o Redis, `_fallback` usa um dicionário em
+    processo. Serve para desenvolvimento local sem Docker, mas os dados
+    perdem-se ao reiniciar e não são partilhados entre workers.
 """
 from __future__ import annotations
 
@@ -14,12 +28,16 @@ import redis.asyncio as redis
 from app.config import settings
 from app.logging_config import logger
 
+# EN: Key namespace avoids collisions with other apps on shared Redis.
+# PT: Espaço de nomes de chaves evita colisões com outras apps no mesmo Redis.
 _KEY_PREFIX = "homodeus:conv:"
 _INDEX_KEY = "homodeus:conv:index"
 
 
 class SessionStore:
     def __init__(self) -> None:
+        # EN: `_memory` + `_memory_index` mirror Redis behaviour when offline.
+        # PT: `_memory` + `_memory_index` espelham o Redis quando está offline.
         self._redis: redis.Redis | None = None
         self._memory: dict[str, list[dict[str, Any]]] = {}
         self._memory_index: list[str] = []
@@ -59,6 +77,8 @@ class SessionStore:
         await self.set(conv_id, history)
 
     async def set(self, conv_id: str, history: list[dict[str, Any]]) -> None:
+        # EN: Redis path also maintains a SET of conversation ids for `/conversations`.
+        # PT: No Redis também mantém um SET de ids para listar conversas.
         if self._fallback or self._redis is None:
             self._memory[conv_id] = history
             if conv_id not in self._memory_index:

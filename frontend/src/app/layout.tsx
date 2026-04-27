@@ -1,3 +1,9 @@
+/**
+ * EN: Root layout — loads Inter + JetBrains Mono, global CSS, and wraps the
+ *     tree with LocaleProvider so PT/EN strings and API locale propagate.
+ * PT: Layout raiz — carrega fontes, CSS global e LocaleProvider para i18n UI
+ *     e locale nas chamadas à API.
+ */
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";

@@ -1,3 +1,5 @@
+# EN: Multi-stage build — deps, Next standalone build, minimal runtime as nextjs user.
+# PT: Build multi-stage — dependências, build standalone Next, runtime mínimo.
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./

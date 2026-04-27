@@ -1,17 +1,28 @@
 """Ingestion script: download the Código do Trabalho PDF and index article chunks.
 
-Run once on first deploy:
+EN:
+    One-off (or CI) job — not executed per chat request. Steps:
+    1. `download_pdf` caches bytes under `data/cache/`.
+    2. `extract_pages` uses pypdf to pull text per page.
+    3. `split_by_article` regex-splits on "Artigo N.º" headers so each vector
+       row maps to a citeable article; long articles are sub-split by length.
+    4. `vector_store.add_chunks` upserts ids + documents + metadata.
+
+    Article-aware chunking beats generic splitters: legal answers need stable
+    "Art. X.º CT" references.
+
+PT:
+    Job pontual (ou CI) — não corre por pedido de chat. Passos:
+    1. `download_pdf` guarda o PDF em `data/cache/`.
+    2. `extract_pages` extrai texto por página com pypdf.
+    3. `split_by_article` divide por marcadores "Artigo N.º" para cada vetor
+       corresponder a um artigo citável; artigos longos são subdivididos.
+    4. `vector_store.add_chunks` faz upsert.
+
+    Chunking por artigo evita cortar cláusulas ao meio e perder o número do artigo.
+
+Run / Executar:
     python -m app.retrieval.indexer
-
-Strategy:
-1. Download the PDF (cached on disk).
-2. Extract text per page with pypdf.
-3. Split by article markers ("Artigo X.º") so each chunk is semantically coherent
-   and references a stable identifier we can cite.
-4. Each chunk is upserted into ChromaDB with metadata (article number, page).
-
-Why article-aware chunking? Generic recursive splitters break legal text mid-clause
-and lose the Art. number — which is exactly what we need to cite.
 """
 from __future__ import annotations
 

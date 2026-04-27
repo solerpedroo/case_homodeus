@@ -1,5 +1,16 @@
 """ChromaDB persistent client wrapper.
 
+EN:
+    One `PersistentClient` per process on `chroma_persist_dir`. Collection
+    `labor_code` stores CT chunks from `indexer.py`. Embeddings: **local**
+    (bundled MiniLM, no key) or **openai** (`text-embedding-3-small`). Query
+    scores use `1 - cosine_distance`.
+
+PT:
+    Um cliente persistente por processo em `chroma_persist_dir`. Coleção
+    `labor_code` com chunks do CT. Embeddings: **local** (MiniLM integrado) ou
+    **openai**. Scores de consulta: `1 - distância coseno`.
+
 A single shared client per process — chroma's PersistentClient is thread-safe
 for typical query patterns and we want to avoid per-request overhead. The
 `labor_code` collection holds chunks of the Portuguese Labor Code; entries can

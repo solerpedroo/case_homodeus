@@ -1,4 +1,10 @@
-/** @type {import('next').NextConfig} */
+/**
+ * EN: Next.js config — standalone output for Docker, strict mode, optional
+ *     rewrite proxy /api/* → FastAPI (when same-origin desired).
+ * PT: Config Next.js — output standalone para Docker, strict mode, proxy
+ *     opcional /api/* → FastAPI.
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   output: "standalone",
   reactStrictMode: true,

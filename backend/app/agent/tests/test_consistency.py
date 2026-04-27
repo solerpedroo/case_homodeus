@@ -1,13 +1,21 @@
 """Regression tests for consistency of the agent's refusal & scoring logic.
 
-These tests guarantee that an answerable question with official sources never
-flips between "answer" and "refusal" across retries — the user-visible
-flakiness this module was created to prevent.
+EN:
+    Ensures an answer backed by official sources is not randomly replaced by a
+    refusal when confidence jitter misbehaves. Uses a fake LLM client that
+    always errors so `_score_confidence` uses heuristics only — deterministic.
 
-The tests are intentionally framework-free: they run with plain
-``python -m app.agent.tests.test_consistency`` from the ``backend`` folder so
-they work without adding a pytest dependency. They are also discoverable by
-pytest if installed.
+    Run: ``python -m app.agent.tests.test_consistency`` from ``backend/``.
+    No pytest required; pytest can still collect these functions.
+
+PT:
+    Garante que uma resposta com fontes oficiais não é substituída ao acaso
+    por uma recusa quando o score de confiança oscila. Usa um cliente LLM
+    falso que falha sempre para forçar só heurísticas — comportamento
+    determinístico.
+
+    Execução: ``python -m app.agent.tests.test_consistency`` a partir de
+    ``backend/``. Não exige pytest.
 """
 from __future__ import annotations
 

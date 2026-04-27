@@ -1,8 +1,14 @@
 """Semantic search over the Código do Trabalho vector index.
 
-Wraps `vector_store.query` and converts hits into citation Source records.
-This is the FIRST stop for `labor_code` questions because it returns the
-exact article number — which we then expose to the user.
+EN:
+    Blocking Chroma query wrapped by `asyncio.to_thread` from the agent. Each
+    hit becomes a `Source` with title "Código do Trabalho — Artigo N.º". Empty
+    index: `ok=True` with message to run `python -m app.retrieval.indexer`.
+
+PT:
+    Consulta Chroma bloqueante, invocada via `asyncio.to_thread`. Cada hit vira
+    `Source` com título "Código do Trabalho — Artigo N.º". Índice vazio: pede
+    para correr o indexer.
 """
 from __future__ import annotations
 

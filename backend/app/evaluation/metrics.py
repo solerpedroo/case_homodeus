@@ -1,4 +1,21 @@
-"""Aggregate metrics from individual case results."""
+"""Aggregate metrics from individual case results.
+
+EN:
+    `aggregate` folds a list of per-case dicts (from the harness) into summary
+    statistics: means of judge scores, latency percentiles (p50/p95), and
+    average correctness bucketed by difficulty.
+
+    `diff_versions` compares v1 vs v2 summary dicts for the dashboard delta
+    table (absolute and percentage change).
+
+PT:
+    `aggregate` reduz uma lista de resultados por caso (do harness) a
+    estatísticas: médias dos scores do juiz, percentis de latência (p50/p95),
+    e média de correctness por nível de dificuldade.
+
+    `diff_versions` compara resumos v1 vs v2 para a tabela de deltas no
+    dashboard (variação absoluta e percentual).
+"""
 from __future__ import annotations
 
 import statistics
@@ -85,6 +102,8 @@ def _quantile(xs: list[float] | list[int], q: float) -> float:
 
 
 def diff_versions(v1: dict[str, Any], v2: dict[str, Any]) -> dict[str, Any]:
+    # EN: Only a fixed set of headline metrics — keep in sync with dashboard UI.
+    # PT: Conjunto fixo de métricas principais — manter alinhado com a UI.
     keys = ["correctness_avg", "coverage_avg", "citation_quality_avg", "refusal_accuracy", "tool_call_accuracy"]
     delta = {}
     for k in keys:

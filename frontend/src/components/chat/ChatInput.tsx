@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Composer — textarea, Shift+Enter newline, Enter sends, disabled while streaming.
+ * PT: Caixa de texto — Shift+Enter nova linha, Enter envia, desativo em stream.
+ */
+
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n";

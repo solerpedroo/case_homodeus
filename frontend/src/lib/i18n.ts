@@ -1,5 +1,15 @@
 "use client";
 
+/**
+ * EN: Client-side internationalization — `Locale` context (`pt` | `en`), copy
+ *     dictionaries (`STRINGS.pt` / `STRINGS.en`), and hooks (`useLocale`,
+ *     `useT`) consumed by layout, chat, and eval components. Keeps API locale
+ *     in sync with UI language.
+ * PT: Internacionalização no cliente — contexto `Locale`, dicionários de texto
+ *     e hooks usados pelo layout, chat e avaliação. Mantém o locale da API
+ *     alinhado com o idioma da interface.
+ */
+
 import {
   createContext,
   useCallback,

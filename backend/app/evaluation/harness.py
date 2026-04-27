@@ -1,11 +1,31 @@
-"""Async evaluation harness.
+"""Async evaluation harness — batch agent runs + scoring + persistence.
 
-For each test case, runs the agent (v1 or v2), grades the answer with the
-LLM judge, and aggregates metrics. Persists results to disk so the frontend
-`/eval` page can render the v1-vs-v2 comparison without re-running.
+EN:
+    For each `TestCase`, `_run_one`:
+    1. Invokes `LaborAgent.run` with empty history (isolated question).
+    2. Extracts answer, sources, tool traces, refusal flag, confidence.
+    3. Calls `judge_answer` which either uses the judge LLM or a heuristic
+       fallback when no API key is configured.
+    4. Returns a dict merged into `results` and then `aggregate`d.
 
-Run via API (POST /eval/run) or as a script:
-    python -m app.evaluation.harness --version v2 --concurrency 4
+    `run_eval` writes `{version}_results.json` under `evaluation_results/`.
+    `run_both` runs v1 and v2 sequentially and writes `v1_vs_v2.json` deltas.
+
+    CLI: `python -m app.evaluation.harness --version v2 --concurrency 4`
+    API: POST `/eval/run`
+
+PT:
+    Para cada `TestCase`, `_run_one`:
+    1. Chama `LaborAgent.run` com histórico vazio (pergunta isolada).
+    2. Extrai resposta, fontes, traces, recusa, confiança.
+    3. Chama `judge_answer` (LLM juiz ou heurística sem chave).
+    4. Devolve dict que entra em `results` e depois em `aggregate`.
+
+    `run_eval` grava `{version}_results.json` em `evaluation_results/`.
+    `run_both` corre v1 e v2 e grava deltas em `v1_vs_v2.json`.
+
+    CLI: `python -m app.evaluation.harness --version v2 --concurrency 4`
+    API: POST `/eval/run`
 """
 from __future__ import annotations
 
@@ -26,6 +46,8 @@ from app.evaluation.test_cases import TEST_CASES, TestCase
 from app.logging_config import logger
 
 
+# EN: `backend/evaluation_results/` — gitignored in real deployments if desired.
+# PT: Pasta `backend/evaluation_results/` — pode ir para .gitignore em produção.
 RESULTS_DIR = Path(__file__).resolve().parent.parent.parent / "evaluation_results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -36,6 +58,8 @@ async def _run_one(
     sem: asyncio.Semaphore,
 ) -> dict[str, Any]:
     async with sem:
+        # EN: Semaphore caps parallel LLM/tool calls to avoid rate limits.
+        # PT: Semáforo limita chamadas paralelas ao LLM/ferramentas (rate limits).
         logger.info("[{}] {} — {}", agent.version, case.id, case.question[:80])
         t0 = time.perf_counter()
         try:
@@ -84,6 +108,8 @@ async def run_eval(
     agent = LaborAgent(http_client=http_client, version=agent_version)
     sem = asyncio.Semaphore(max(1, concurrency))
 
+    # EN: `gather` runs all cases concurrently up to the semaphore limit.
+    # PT: `gather` executa todos os casos em paralelo até ao limite do semáforo.
     tasks = [_run_one(c, agent, sem) for c in cases]
     results = await asyncio.gather(*tasks)
 

@@ -1,15 +1,32 @@
 """LLM-as-judge for the eval harness.
 
-Provider-agnostic: uses Groq (default, free) or OpenAI depending on
-`LLM_PROVIDER`. Judging is a different skill than answering, but with Llama
-3.3 70B on Groq the same model is good enough for both — and it's free.
+EN:
+    `judge_answer` builds a structured prompt with the question, expected facts,
+    expected official domains, the agent answer, cited sources, and refusal
+    flag. The judge model must return **only** JSON (enforced via
+    `response_format` when supported).
 
-The judge returns:
-- correctness: 0.0–1.0
-- coverage: 0.0–1.0   (did it cover the ground_truth_facts?)
-- citation_quality: 0.0–1.0
-- refusal_correct: 0/1 (only when expects_refusal=True or out-of-scope)
-- explanation: short textual reasoning
+    If `is_configured()` is false (no API key), `_fallback` uses cheap
+    heuristics: token overlap with facts + domain presence in sources.
+
+    Scores:
+    - correctness, coverage, citation_quality: floats in [0, 1]
+    - refusal_correct: did refusal behaviour match `expects_refusal`?
+    - explanation: short rationale (for humans reading eval output)
+
+PT:
+    `judge_answer` monta um prompt estruturado com a pergunta, factos
+    esperados, domínios oficiais, resposta do agente, fontes e flag de recusa.
+    O modelo juiz deve devolver **apenas** JSON (`response_format` quando
+    suportado).
+
+    Se não houver chave API, `_fallback` usa heurísticas: sobreposição de
+    tokens com factos + presença de domínios nas fontes.
+
+    Métricas:
+    - correctness, coverage, citation_quality: floats em [0, 1]
+    - refusal_correct: o comportamento de recusa bate com `expects_refusal`?
+    - explanation: justificação curta para revisão humana
 """
 from __future__ import annotations
 
@@ -115,7 +132,8 @@ async def judge_answer(
 
 
 def _parse_json_loose(raw: str) -> dict[str, Any]:
-    """Tolerate models that wrap JSON in ```json fences or add prefix text."""
+    """EN: Strip ```json fences / chatter before json.loads (same idea as graph.py).
+    PT: Remove cercas ```json / texto antes de json.loads (como em graph.py)."""
     raw = raw.strip()
     if raw.startswith("```"):
         raw = raw.strip("`")
@@ -141,7 +159,8 @@ def _fallback(
     sources: list[dict[str, Any]],
     refused: bool,
 ) -> dict[str, Any]:
-    """Heuristic fallback when no judge LLM is available."""
+    """EN: Cheap scoring without LLM — token overlap on facts + domain match.
+    PT: Pontuação sem LLM — sobreposição de tokens nos factos + domínios."""
     a = answer.lower()
     fact_hits = sum(
         1

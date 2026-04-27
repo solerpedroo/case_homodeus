@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Empty-state hero — title, how-it-works steps, example question chips.
+ * PT: Hero sem mensagens — título, passos, exemplos clicáveis.
+ */
+
 import { useT } from "@/lib/i18n";
 
 interface Props {

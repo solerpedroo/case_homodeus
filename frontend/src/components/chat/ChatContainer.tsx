@@ -1,5 +1,14 @@
 "use client";
 
+/**
+ * EN: Main chat shell — owns message list, conversationId, SSE subscription
+ *     via `streamChat`, maps `AgentEvent` stream to UI state (phases, tools,
+ *     tokens, sources, confidence). AbortController cancels in-flight streams.
+ * PT: Invólucro principal do chat — lista de mensagens, conversationId,
+ *     subscrição SSE com `streamChat`, mapeia eventos para a UI; AbortController
+ *     cancela pedidos em curso.
+ */
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 

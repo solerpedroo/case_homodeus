@@ -1,14 +1,32 @@
 """Annotated test cases for the labor-law agent.
 
-Includes the 10 reference questions from the brief plus 5 we authored to test
-edge cases, refusal behavior, and out-of-scope handling.
+EN:
+    This module is the **ground truth specification** for offline evaluation.
+    Each `TestCase` records:
+    - `difficulty`: basic / intermediate / advanced / edge / refusal — used
+      only for reporting buckets in `metrics.aggregate`.
+    - `expected_category`: what the classifier *should* output (sanity check).
+    - `expected_domains`: substrings that should appear in cited URLs or
+      `Source.domain` for citation-quality scoring.
+    - `ground_truth_facts`: short strings the judge checks for coverage.
+    - `expects_refusal`: if True, `refusal_correct` expects the agent to
+      decline rather than hallucinate.
 
-Each case carries:
-- difficulty bucket
-- expected category (for tool-routing accuracy)
-- expected source domain(s) (for citation quality)
-- ground_truth_facts: short bullet list the answer must cover
-- expects_refusal: True when the correct behavior is to refuse
+    The harness iterates `TEST_CASES` in order; use `limit` to shorten runs.
+
+PT:
+    Este módulo é a **especificação de verdade** para avaliação offline.
+    Cada `TestCase` contém:
+    - `difficulty`: basic / intermediate / advanced / edge / refusal — só para
+      agregações no `metrics.aggregate`.
+    - `expected_category`: o que o classificador *deveria* produzir.
+    - `expected_domains`: substrings que devem aparecer em URLs citadas ou em
+      `Source.domain` para pontuar qualidade de citação.
+    - `ground_truth_facts`: frases curtas que o juiz verifica quanto à cobertura.
+    - `expects_refusal`: se True, espera-se que o agente recuse em vez de
+      inventar.
+
+    O harness percorre `TEST_CASES` em ordem; use `limit` para corridas curtas.
 """
 from __future__ import annotations
 

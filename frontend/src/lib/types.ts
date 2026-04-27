@@ -1,3 +1,7 @@
+/**
+ * EN: Shared TypeScript types mirroring backend AgentState / SSE payloads.
+ * PT: Tipos TypeScript alinhados com AgentState e eventos SSE do backend.
+ */
 export type AgentVersion = "v1" | "v2";
 
 export interface Source {

@@ -1,8 +1,20 @@
-"""Evaluation endpoints.
+"""Evaluation endpoints — benchmark harness and persisted metrics.
 
-- GET  /eval/cases       — list test cases
-- POST /eval/run         — run the harness for a given version (v1|v2)
-- GET  /eval/results     — fetch the latest persisted results from disk
+EN:
+    - GET `/eval/cases`: returns the curated `TEST_CASES` list (questions,
+      expected domains, ground-truth bullets) for the dashboard.
+    - POST `/eval/run`: executes `run_eval` — runs the agent against each case,
+      optionally calls the judge LLM, writes JSON under `evaluation_results/`.
+    - GET `/eval/results`: reads back `v1_results.json` / `v2_results.json`
+      so the frontend can chart correctness without re-running.
+
+PT:
+    - GET `/eval/cases`: devolve a lista `TEST_CASES` (perguntas, domínios
+      esperados, factos) para o dashboard.
+    - POST `/eval/run`: executa `run_eval` — corre o agente em cada caso,
+      opcionalmente o juiz LLM, grava JSON em `evaluation_results/`.
+    - GET `/eval/results`: lê `v1_results.json` / `v2_results.json` para
+      gráficos sem voltar a correr o harness.
 """
 from __future__ import annotations
 

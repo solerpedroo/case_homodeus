@@ -1,14 +1,30 @@
 """Centralized configuration via pydantic-settings.
 
-Single source of truth for env-driven knobs. Values are validated at import time
-so we fail fast if the deployment is misconfigured.
+EN:
+    Single source of truth for environment variables. Pydantic validates types
+    at import time so misconfiguration fails fast (wrong port, missing enum).
 
-The agent supports two LLM providers via `LLM_PROVIDER`:
-- `groq` (default, free tier-friendly, fast Llama models)
-- `openai` (premium quality, paid)
+    - LLM_PROVIDER: `groq` (OpenAI-compatible API at Groq) or `openai`.
+    - Keys and model names are separate per provider; `active_*` properties
+      pick the right pair for the running provider.
+    - EMBEDDINGS_PROVIDER: `local` uses Chroma's bundled MiniLM (no API key);
+      `openai` uses paid embeddings if you set OPENAI_API_KEY.
+    - Agent knobs: AGENT_VERSION (v1 baseline vs v2 full pipeline),
+      CONFIDENCE_THRESHOLD (below which v2 may refuse after scoring),
+      MAX_TOOL_ITERATIONS (ReAct loop depth).
 
-Embeddings default to `local` (ChromaDB's bundled ONNX MiniLM) so the system
-works end-to-end without an embeddings provider key.
+PT:
+    Configuração centralizada a partir de variáveis de ambiente. O Pydantic
+    valida tipos à importação para falhar cedo (porta errada, enum inválido).
+
+    - LLM_PROVIDER: `groq` (API compatível com OpenAI na Groq) ou `openai`.
+    - Chaves e nomes de modelo são por fornecedor; as propriedades `active_*`
+      escolhem o par correto em tempo de execução.
+    - EMBEDDINGS_PROVIDER: `local` usa o MiniLM embutido no Chroma (sem chave);
+      `openai` usa embeddings pagos se definir OPENAI_API_KEY.
+    - Parâmetros do agente: AGENT_VERSION (v1 base vs v2 completo),
+      CONFIDENCE_THRESHOLD (abaixo do qual a v2 pode recusar após scoring),
+      MAX_TOOL_ITERATIONS (profundidade do loop ReAct).
 """
 from __future__ import annotations
 
@@ -24,6 +40,10 @@ EmbeddingsProvider = Literal["local", "openai"]
 
 
 class Settings(BaseSettings):
+    # EN: Reads `.env` in the working directory; unknown env vars are ignored
+    #     so Docker/K8s can inject extra keys without crashing imports.
+    # PT: Lê `.env` no diretório de trabalho; variáveis desconhecidas são
+    #     ignoradas para Docker/K8s poderem injetar chaves extra.
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -113,7 +133,13 @@ class Settings(BaseSettings):
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
+    # EN: Singleton pattern — one Settings instance per process; tests can
+    #     clear the cache if they need to reload env.
+    # PT: Padrão singleton — uma instância Settings por processo; testes
+    #     podem limpar a cache para recarregar o ambiente.
     return Settings()
 
 
+# EN: Module-level alias imported across the codebase (`from app.config import settings`).
+# PT: Alias ao nível do módulo usado em todo o código (`from app.config import settings`).
 settings = get_settings()

@@ -1,13 +1,28 @@
-"""Chat HTTP routes.
+"""Chat HTTP routes — non-streaming JSON and SSE streaming.
 
-- POST /chat: full request/response (no streaming) — used by tests and the
-  evaluation harness. Returns the full AgentState as JSON.
-- GET  /chat/stream: SSE stream of agent events. The frontend opens this and
-  renders each event as it arrives (phase markers, tool calls, sources,
-  tokens, confidence, refusal, done).
-- GET  /chat/conversations: list active conversation ids.
-- GET  /chat/conversations/{id}: fetch a conversation's history.
-- DELETE /chat/conversations/{id}: clear a conversation.
+EN:
+    - POST `/chat`: waits for the full agent run, returns one JSON payload
+      (answer, sources, traces, confidence). Used by integration tests and
+      scripts; simpler than parsing SSE.
+    - GET `/chat/stream`: Server-Sent Events. Each line is `data: {json}\\n\\n`.
+      Event types include `phase`, `tool_call`, `sources`, `token`, `confidence`,
+      `refusal`, `done`. The frontend consumes this for live UX.
+    - Conversation CRUD: list ids, fetch history, delete. History is stored
+      via `session_store` (Redis or memory fallback).
+
+    Locale: `locale` query/body selects `pt` vs `en` for the agent's reply
+    language (legal citations stay in Portuguese per prompt rules).
+
+PT:
+    - POST `/chat`: espera o agente terminar e devolve um JSON completo.
+      Usado em testes de integração; mais simples do que parsear SSE.
+    - GET `/chat/stream`: Server-Sent Events. Cada evento é JSON com `type`.
+      Tipos: `phase`, `tool_call`, `sources`, `token`, `confidence`, etc.
+    - CRUD de conversas: listar ids, obter histórico, apagar. O histórico vai
+      para `session_store` (Redis ou memória).
+
+    Locale: parâmetro `locale` escolhe `pt` vs `en` para o idioma da resposta
+    (citações legais mantêm-se em português conforme o prompt).
 """
 from __future__ import annotations
 
@@ -30,6 +45,8 @@ router = APIRouter()
 
 
 class ChatRequest(BaseModel):
+    # EN: `conversation_id` optional — server creates UUID on first message.
+    # PT: `conversation_id` opcional — o servidor cria UUID na primeira mensagem.
     message: str = Field(..., min_length=1, max_length=4000)
     conversation_id: str | None = None
     agent_version: str | None = None  # "v1" | "v2"
@@ -48,6 +65,8 @@ class ChatResponse(BaseModel):
 
 
 def _normalize_locale(value: str | None) -> str:
+    # EN: Only `en` is special-cased; everything else maps to Portuguese.
+    # PT: Só `en` é tratado à parte; todo o resto mapeia para português.
     v = (value or "pt").strip().lower()
     return "en" if v == "en" else "pt"
 
@@ -64,6 +83,8 @@ def _agent_for(
 
 @router.post("", response_model=ChatResponse)
 async def chat(req: ChatRequest, request: Request) -> ChatResponse:
+    # EN: Fail fast if no LLM key — avoids opaque errors deep inside the agent.
+    # PT: Falha cedo sem chave LLM — evita erros opacos dentro do agente.
     if not settings.active_api_key:
         raise HTTPException(
             status_code=500,
@@ -77,8 +98,12 @@ async def chat(req: ChatRequest, request: Request) -> ChatResponse:
     history = await session_store.get(conv_id)
 
     agent = _agent_for(request, req.agent_version, req.locale)
+    # EN: `run()` drains the async generator until `done` — same logic as stream.
+    # PT: `run()` consome o gerador async até `done` — mesma lógica que o stream.
     state = await agent.run(req.message, history=history, conversation_id=conv_id)
 
+    # EN: Persist user + assistant turns; metadata holds structured fields for UI.
+    # PT: Grava turnos user + assistant; metadata com campos estruturados para a UI.
     await session_store.append(conv_id, {"role": "user", "content": req.message})
     await session_store.append(
         conv_id,
@@ -127,6 +152,8 @@ async def chat_stream(
     agent = _agent_for(request, agent_version, locale)
 
     async def generator() -> AsyncIterator[bytes]:
+        # EN: First event tells the client which conversation id to reuse on follow-ups.
+        # PT: Primeiro evento indica ao cliente qual `conversation_id` reutilizar.
         yield _sse({"type": "start", "conversation_id": conv_id, "agent_version": agent.version})
         final_answer = ""
         try:
@@ -161,6 +188,8 @@ async def chat_stream(
 
 
 def _sse(payload: dict[str, Any]) -> bytes:
+    # EN: SSE framing: each event is one line starting with `data: `, blank line ends event.
+    # PT: Formato SSE: cada evento é uma linha `data: `, linha em branco fecha o evento.
     return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8")
 
 

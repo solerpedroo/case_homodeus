@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * EN: User/assistant bubble — markdown answer via react-markdown, tool cards,
+ *     source list, confidence badge.
+ * PT: Bolha user/assistant — markdown, cartões de ferramentas, fontes, confiança.
+ */
+
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

@@ -1,21 +1,21 @@
 """Deterministic Portuguese payroll calculators.
 
-CRITICAL: the LLM never does arithmetic. It calls these functions which return
-exact numbers + the formula used + the official source URL. This eliminates an
-entire class of hallucinations and is what makes the agent production-grade.
+EN:
+    **Design rule:** the LLM must never do payroll arithmetic. It picks an
+    `action` and numeric inputs; this module returns exact values, readable
+    formulas, and `Source` rows (DRE, Portal das Finanças, CT PDF).
 
-Implemented:
-- TSU (Taxa Social Única) — Lei 110/2009: 23.75% empregador / 11% trabalhador
-- IRS withholding (Despacho 236-A/2025) — non-married, no dependents, mainland
-  approximation table for 2025 (continente). The full official tables have
-  many cells; we encode the principal brackets and clearly cite the source so
-  the user can confirm.
-- Holiday subsidy (Art. 264.º CT) — full month's salary, pro-rated for partial year
-- Christmas subsidy (Art. 263.º CT) — full month's salary, pro-rated for partial year
-- Net salary estimate combining the above
+    Actions (see `CALCULATOR_ACTIONS`): **tsu**, **irs**, **holiday_subsidy**,
+    **christmas_subsidy**, **net_salary**. Public entry: `calculate(action, **kwargs)`.
 
-Every function returns:
-    { "value": float, "formula": str, "explanation": str, "sources": [Source] }
+PT:
+    **Regra:** o LLM não faz contas salariais. Escolhe `action` e números;
+    o módulo devolve valores, fórmulas e `Source` oficiais.
+
+    Ações: **tsu**, **irs**, **holiday_subsidy**, **christmas_subsidy**,
+    **net_salary**. Entrada: `calculate(action, **kwargs)`.
+
+CRITICAL / CRÍTICO: the LLM never does arithmetic — eliminates hallucinated numbers.
 """
 from __future__ import annotations
 

@@ -1,3 +1,9 @@
+/*
+ * EN: Global styles — Tailwind layers, dark color scheme, typography tweaks,
+ *     markdown/prose overrides for chat bubbles, subtle noise overlay.
+ * PT: Estilos globais — camadas Tailwind, tema escuro, tipografia, markdown
+ *     no chat, overlay de ruído subtil.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

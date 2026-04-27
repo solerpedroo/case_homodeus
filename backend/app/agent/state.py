@@ -1,7 +1,31 @@
 """Agent state, source records, and tool-call traces.
 
-Pure data classes / TypedDicts. Kept separate so they can be imported by both
-graph nodes and API serializers without pulling in heavy LLM deps.
+EN:
+    Pure Pydantic models and a TypedDict describe everything the agent needs to
+    serialize to JSON for the API and the evaluation harness.
+
+    - `QuestionCategory`: coarse routing label from the classifier (tax, labor
+      code, salary math, etc.). Drives tool hints and web-search domain filters.
+    - `Source`: one citation (URL, title, domain, retrieval score, provenance:
+      web vs vector index vs calculator).
+    - `ToolCallTrace`: audit row for the UI — which tool ran, args, timing,
+      success flag, error string.
+    - `AgentState`: mutable dict shape accumulated during `LaborAgent.stream`;
+      `total=False` means every field is optional until set.
+
+PT:
+    Modelos Pydantic puros e um TypedDict descrevem tudo o que o agente precisa
+    serializar em JSON para a API e o harness de avaliação.
+
+    - `QuestionCategory`: etiqueta de encaminhamento do classificador (IRS,
+      código laboral, cálculos, etc.). Influencia ferramentas e filtros de
+      domínio na pesquisa web.
+    - `Source`: uma citação (URL, título, domínio, score, origem: web vs
+      índice vs calculadora).
+    - `ToolCallTrace`: linha de auditoria para a UI — ferramenta, args,
+      tempo, sucesso, erro.
+    - `AgentState`: dicionário acumulado durante `LaborAgent.stream`;
+      `total=False` significa que cada campo é opcional até ser definido.
 """
 from __future__ import annotations
 
@@ -11,17 +35,18 @@ from pydantic import BaseModel, Field
 
 
 QuestionCategory = Literal[
-    "tax",  # IRS retention
-    "social_security",  # TSU
-    "labor_code",  # Código do Trabalho - vacation, dismissal, lay-off, etc.
-    "salary_calc",  # numerical computation needed
-    "edge_case",  # cross-border, ambiguous, gray area
-    "out_of_scope",  # not Portuguese labor law
+    "tax",  # EN: IRS / withholding — PT: IRS / retenção na fonte
+    "social_security",  # EN: TSU / Social Security — PT: TSU / Segurança Social
+    "labor_code",  # EN: Código do Trabalho topics — PT: temas do CT
+    "salary_calc",  # EN: numeric payroll — PT: cálculos salariais
+    "edge_case",  # EN: ambiguous / cross-border — PT: ambíguo / transfronteiriço
+    "out_of_scope",  # EN: not PT labor law — PT: fora do âmbito
 ]
 
 
 class Source(BaseModel):
-    """A citation tied to an answer."""
+    """EN: One citation backing factual claims in the answer.
+    PT: Uma citação que sustenta afirmações factuais na resposta."""
 
     url: str
     title: str = ""
@@ -32,7 +57,8 @@ class Source(BaseModel):
 
 
 class ToolCallTrace(BaseModel):
-    """Trace of a single tool invocation surfaced to the UI for transparency."""
+    """EN: Serializable record of a tool invocation for the chat UI / eval.
+    PT: Registo serializável de uma invocação de ferramenta para a UI / eval."""
 
     tool_name: str
     args: dict[str, Any] = Field(default_factory=dict)
@@ -43,7 +69,8 @@ class ToolCallTrace(BaseModel):
 
 
 class AgentState(TypedDict, total=False):
-    """Agent turn state (serializable). The orchestrator in graph.py is hand-rolled."""
+    """EN: Full turn state produced by `LaborAgent` (see graph.py).
+    PT: Estado completo de um turno produzido pelo `LaborAgent` (ver graph.py)."""
 
     messages: list[dict[str, Any]]
     user_query: str

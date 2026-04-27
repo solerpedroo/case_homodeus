@@ -1,11 +1,39 @@
 """System prompts for v1 (baseline) and v2 (refined).
 
-Two versions exist deliberately so we can quantify the impact of the prompt +
-architecture upgrade in the evaluation harness (see `evaluation/harness.py`).
+EN:
+    All large string constants below are injected into LLM calls by
+    `LaborAgent` and the evaluation judge. Two agent versions exist so the
+    harness can quantify prompt + architecture impact:
 
-Why this matters:
-- v1 simulates a typical "ReAct + single web search" agent.
-- v2 forces source-grounded answers, deterministic computation, and refusal.
+    - **SYSTEM_V1**: minimal instructions — web search only, no calculator /
+      vector index in the tool schema. Baseline behaviour.
+    - **SYSTEM_V2**: strict grounding rules, tool-routing hints (IRS → Finanças,
+      CT topics → `search_labor_code`, arithmetic → `calculate`), citation
+      format, and graceful refusal. Matches the production agent design.
+
+    Additional prompts:
+    - **REFUSAL_INSTRUCTION**: system message when composing a low-confidence refusal.
+    - **CLASSIFIER_PROMPT**: few-shot-style category picker for routing.
+    - **CONFIDENCE_PROMPT**: asks the model for a 0–1 score (used in v2 scoring).
+    - **LANGUAGE_HINT_EN**: second system message when `locale=en`.
+    - **GROQ_JSON_PLAN_SUFFIX_***: appended on Groq because native tool_calls
+      from Llama are unreliable; we force JSON `{"tool_calls":[...]}` instead.
+
+PT:
+    Todas as strings grandes abaixo são injetadas nas chamadas ao LLM pelo
+    `LaborAgent` e pelo juiz de avaliação. Duas versões permitem medir impacto
+    de prompt + arquitetura:
+
+    - **SYSTEM_V1**: instruções mínimas — só pesquisa web (baseline).
+    - **SYSTEM_V2**: regras estritas de fundamentação, encaminhamento de
+      ferramentas, formato de citações e recusa graciosa (produção).
+
+    Outros prompts:
+    - **REFUSAL_INSTRUCTION**: mensagem de sistema para recusa por baixa confiança.
+    - **CLASSIFIER_PROMPT**: escolha de categoria para encaminhamento.
+    - **CONFIDENCE_PROMPT**: pede score 0–1 (scoring na v2).
+    - **LANGUAGE_HINT_EN**: segundo system message quando `locale=en`.
+    - **GROQ_JSON_PLAN_SUFFIX_***: sufixo no Groq para forçar JSON de plano.
 """
 from __future__ import annotations
 
@@ -100,6 +128,8 @@ Fontes: {sources}
 Confiança:"""
 
 
+# EN: Groq/Llama often emits pseudo-XML tool calls; JSON planning is reliable.
+# PT: Groq/Llama muitas vezes emite pseudo-XML; plano em JSON é fiável.
 # Groq / Llama models sometimes emit invalid native tool XML (<function=...>).
 # We force a JSON plan + response_format=json_object instead (reliable).
 

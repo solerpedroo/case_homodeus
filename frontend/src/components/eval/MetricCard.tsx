@@ -1,3 +1,7 @@
+/**
+ * EN: Single stat tile — compares v1 vs v2 with delta coloring.
+ * PT: Cartão de métrica — compara v1 e v2 com cor na variação.
+ */
 import { cn, fmtPct } from "@/lib/utils";
 
 interface Props {

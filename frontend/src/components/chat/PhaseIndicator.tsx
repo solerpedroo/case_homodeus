@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Shows current pipeline phase label (classify, plan, generate, …).
+ * PT: Mostra a fase atual do pipeline (classificar, planear, gerar, …).
+ */
+
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n";
 

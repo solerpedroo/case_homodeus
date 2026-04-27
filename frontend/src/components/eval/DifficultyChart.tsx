@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Recharts chart — correctness broken down by difficulty bucket.
+ * PT: Gráfico — correctness por nível de dificuldade.
+ */
+
 import {
   BarChart,
   Bar,

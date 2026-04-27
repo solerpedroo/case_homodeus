@@ -1,20 +1,41 @@
-"""Agent orchestrator — LangGraph-style state machine implemented as an
-async pipeline that emits structured events.
+"""Agent orchestrator — hand-rolled async state machine with SSE-friendly events.
 
-Two versions:
-- v1 (baseline): single `web_search` tool, basic ReAct, no calculators, no
-  vector index, no confidence-based refusal.
-- v2 (production): full pipeline below.
+EN:
+    This module implements `LaborAgent`, the brain of the backend. Design goals:
+    1. **Streaming first** — `stream()` yields typed dicts (`phase`, `tool_call`,
+       `token`, `done`, …) so FastAPI can forward them as Server-Sent Events.
+    2. **Two product versions** — `v1` is a deliberately weak baseline (web
+       only, single iteration) for A/B metrics; `v2` is production (classifier,
+       all tools, confidence gating, source recovery).
+    3. **Dual planning paths** — OpenAI-compatible providers that support native
+       `tool_calls` use the SDK path; Groq/Llama uses a JSON plan suffix
+       (`GROQ_JSON_PLAN_SUFFIX_*`) because models hallucinate XML tools.
+    4. **Deterministic tools** — numeric payroll never comes from free-form LLM
+       math; it always goes through `calculate`.
 
-v2 pipeline:
-    classify  →  plan  →  execute_tools  →  (loop ≤ N)  →  generate  →  score → done
+    v2 high-level pipeline:
+        classify → (maybe early out_of_scope) → plan/tool loop → optional
+        `_recover_sources` → final answer stream → `_score_confidence` →
+        maybe `_compose_refusal`.
 
-Why a hand-rolled state machine vs raw LangGraph? Streaming token-level output
-through LangGraph's runtime is awkward; orchestrating a few well-typed async
-steps keeps the code small (~300 LOC) and easy to read in <30 minutes.
+    State is a typed `AgentState` dict; `_serializable` converts Pydantic
+    models to plain dicts for JSON.
 
-All state mutations go through `AgentState` so there's a single source of truth
-for serialization and tracing.
+PT:
+    Este módulo implementa o `LaborAgent`, o cérebro do backend. Objectivos:
+    1. **Streaming primeiro** — `stream()` produz dicts tipados para SSE.
+    2. **Duas versões** — `v1` baseline fraco (só web); `v2` produção completa.
+    3. **Dois caminhos de plano** — `tool_calls` nativos (OpenAI) vs plano JSON
+       (Groq/Llama) por fiabilidade.
+    4. **Ferramentas determinísticas** — números de salário vêm sempre de
+       `calculate`, nunca de aritmética livre do LLM.
+
+    Pipeline v2:
+        classificar → (talvez `out_of_scope`) → loop ferramentas →
+        `_recover_sources` opcional → resposta final em stream → scoring →
+        recusa opcional.
+
+    O estado é um `AgentState`; `_serializable` prepara JSON.
 """
 from __future__ import annotations
 
@@ -44,6 +65,8 @@ from app.llm_client import get_llm_client
 from app.logging_config import logger
 
 
+# EN: Mirrors `QuestionCategory` in state.py — classifier must output one of these.
+# PT: Espelha `QuestionCategory` em state.py — o classificador deve devolver uma.
 _VALID_CATEGORIES: tuple[QuestionCategory, ...] = (
     "tax",
     "social_security",
@@ -54,6 +77,8 @@ _VALID_CATEGORIES: tuple[QuestionCategory, ...] = (
 )
 
 
+# EN: OpenAI function-calling JSON schemas — only used on the native tool path.
+# PT: Esquemas JSON para function-calling OpenAI — só no caminho nativo de tools.
 # ----- Tool schemas exposed to OpenAI for function calling ----- #
 
 V2_TOOLS = [
@@ -142,13 +167,15 @@ V2_TOOLS = [
     },
 ]
 
-V1_TOOLS = [V2_TOOLS[0]]  # only basic web search
+V1_TOOLS = [V2_TOOLS[0]]  # EN: v1 exposes search_web only — PT: v1 só search_web
 
 V1_TOOL_NAMES = frozenset({"search_web"})
 V2_TOOL_NAMES = frozenset({"search_web", "fetch_url", "search_labor_code", "calculate"})
 
 
 class LaborAgent:
+    # EN: Orchestrator class — one instance per HTTP request in chat routes.
+    # PT: Classe orquestradora — uma instância por pedido HTTP nas rotas de chat.
     def __init__(
         self,
         http_client: httpx.AsyncClient,
@@ -228,6 +255,8 @@ class LaborAgent:
             "agent_version": "v1" if self.version == "v1" else "v2",
         }
 
+        # EN: v2 runs a tiny LLM classifier before spending tokens on tools.
+        # PT: v2 corre um classificador LLM pequeno antes de gastar tokens em tools.
         # ----- Phase: classify (v2 only) ----- #
         if self.version == "v2":
             yield {"type": "phase", "phase": "classify", "message": "A classificar a pergunta…"}
@@ -253,6 +282,8 @@ class LaborAgent:
                 yield {"type": "done", "state": _serializable(state)}
                 return
 
+        # EN: Build chat messages: system + optional history + current user turn.
+        # PT: Monta mensagens: system + histórico opcional + pergunta atual.
         # ----- Phase: plan + tool loop ----- #
         messages: list[dict[str, Any]] = self._build_system_messages()
         for m in (history or []):
@@ -276,6 +307,8 @@ class LaborAgent:
                     getattr(self.client, "base_url", "?"),
                 )
 
+            # EN: Groq path: model returns JSON with `tool_calls` array, not SDK tool_calls.
+            # PT: Caminho Groq: modelo devolve JSON com array `tool_calls`, não tool_calls SDK.
             if self._must_use_json_tool_plan():
                 plan_messages = self._groq_plan_messages(messages)
                 try:
@@ -373,6 +406,8 @@ class LaborAgent:
                 )
                 continue
 
+            # EN: Branch: Chat Completions with `tools=` — works on OpenAI & compatible.
+            # PT: Ramo: Chat Completions com `tools=` — funciona na OpenAI e compatíveis.
             # ---- OpenAI (native tool calling) ---- #
             try:
                 completion = await self.client.chat.completions.create(
@@ -446,6 +481,10 @@ class LaborAgent:
 
             yield {"type": "sources", "sources": [s.model_dump() for s in state["sources"]]}
 
+        # EN: Second-chance retrieval when the first loop returned zero sources
+        #     (e.g. Tavily hiccup, empty Chroma). Skips `out_of_scope`.
+        # PT: Segunda tentativa de recuperação quando o primeiro loop não trouxe
+        #     fontes (ex.: falha Tavily, Chroma vazio). Ignora `out_of_scope`.
         # ----- Phase: source recovery (v2 only) ----- #
         # If the tool loop ended without any sources for a respondable
         # question, try one extra deterministic recovery before we generate
@@ -506,6 +545,9 @@ class LaborAgent:
             for chunk in _chunkize(state["final_answer"]):
                 yield {"type": "token", "delta": chunk}
 
+        # EN: Heuristic + optional LLM score; may replace answer with refusal only
+        #     if `_should_refuse` agrees (no evidence).
+        # PT: Heurística + LLM opcional; substitui por recusa só se `_should_refuse`.
         # ----- Phase: score confidence (v2 only) ----- #
         if self.version == "v2":
             yield {"type": "phase", "phase": "score", "message": "A avaliar confiança…"}
@@ -883,11 +925,14 @@ class LaborAgent:
             )
 
 
+# EN: Pure functions for JSON repair and SSE chunking — no I/O.
+# PT: Funções puras para reparar JSON e fatiar texto para SSE — sem I/O.
 # ----- Helpers ----- #
 
 
 def _parse_json_loose(raw: str) -> dict[str, Any]:
-    """Strip markdown fences / prefix text so Groq JSON plans still parse."""
+    """EN: Strip fences / chatter so Groq JSON tool plans still parse.
+    PT: Remove cercas ``` e texto extra para o JSON do Groq ser parseável."""
     raw = raw.strip()
     if raw.startswith("```"):
         raw = raw.strip("`")
@@ -901,10 +946,14 @@ def _parse_json_loose(raw: str) -> dict[str, Any]:
 
 
 def _chunkize(text: str, size: int = 32) -> list[str]:
+    # EN: Fake streaming for answers already fully known (early-exit path).
+    # PT: Simula stream para respostas já completas (caminho de saída antecipada).
     return [text[i : i + size] for i in range(0, len(text), size)]
 
 
 def _serializable(state: AgentState) -> dict[str, Any]:
+    # EN: Pydantic models → dict for JSON serialization in SSE `done` event.
+    # PT: Modelos Pydantic → dict para serializar JSON no evento SSE `done`.
     return {
         "user_query": state.get("user_query", ""),
         "conversation_id": state.get("conversation_id", ""),

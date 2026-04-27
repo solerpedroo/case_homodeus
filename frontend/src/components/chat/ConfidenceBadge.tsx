@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * EN: Numeric confidence + refused state styling from agent v2 scoring.
+ * PT: Confiança numérica + estado de recusa após scoring v2.
+ */
+
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n";
 

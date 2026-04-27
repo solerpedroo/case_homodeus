@@ -1,3 +1,7 @@
+/**
+ * EN: Logo + title link to /chat (editorial mark “HD”).
+ * PT: Logótipo + título com link para /chat (marca “HD”).
+ */
 import Link from "next/link";
 
 export function Brand() {

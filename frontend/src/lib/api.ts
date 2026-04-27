@@ -1,3 +1,9 @@
+/**
+ * EN: Browser-side API helpers — SSE parser for /chat/stream and JSON helpers
+ *     for /eval/*. Uses NEXT_PUBLIC_API_URL (fallback localhost:8000).
+ * PT: Funções de API no browser — parser SSE para /chat/stream e JSON para
+ *     /eval/*. Usa NEXT_PUBLIC_API_URL (fallback localhost:8000).
+ */
 import type { AgentEvent, AgentVersion } from "./types";
 import type { Locale } from "./i18n";
 
@@ -35,6 +41,8 @@ export async function* streamChat(
     if (done) break;
     buffer += decoder.decode(value, { stream: true });
 
+    // EN: SSE events are separated by blank lines; keep incomplete tail in buffer.
+    // PT: Eventos SSE separados por linha em branco; cauda incompleta fica no buffer.
     const blocks = buffer.split("\n\n");
     buffer = blocks.pop() || "";
     for (const block of blocks) {

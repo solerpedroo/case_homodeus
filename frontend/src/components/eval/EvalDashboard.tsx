@@ -1,5 +1,13 @@
 "use client";
 
+/**
+ * EN: Evaluation page body — loads persisted JSON results, shows MetricCards
+ *     and charts, triggers `runEval` POST for v1/v2. FALLBACK supplies demo data
+ *     when API returns empty (offline UX).
+ * PT: Corpo da página /eval — carrega resultados JSON, cartões e gráficos,
+ *     dispara `runEval`. FALLBACK dá dados de demonstração se a API falhar.
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { Header } from "@/components/Header";
 import { MetricCard } from "./MetricCard";
