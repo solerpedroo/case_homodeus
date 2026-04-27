@@ -4,7 +4,7 @@
  * PT: Layout raiz — carrega fontes, CSS global e LocaleProvider para i18n UI
  *     e locale nas chamadas à API.
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LocaleProvider } from "@/components/LocaleProvider";
@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   title: "HomoDeus Challenge - Pedro Soler",
   description:
     "HomoDeus Challenge submission by Pedro Soler: labor law & payroll Q&A with citations and deterministic calculators.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#070709",
 };
 
 export default function RootLayout({

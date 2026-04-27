@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="HomoDeus">
+  <!-- Design system: bg, border-strong, accent hairline, ink (JetBrains-style mono) -->
+  <rect width="32" height="32" rx="6" fill="#070709"/>
+  <rect
+    x="0.5"
+    y="0.5"
+    width="31"
+    height="31"
+    rx="5.5"
+    fill="none"
+    stroke="rgba(77,127,255,0.14)"
+  />
+  <rect
+    x="0.5"
+    y="0.5"
+    width="31"
+    height="31"
+    rx="5.5"
+    fill="none"
+    stroke="rgba(255,255,255,0.13)"
+  />
+  <text
+    x="16"
+    y="20.5"
+    text-anchor="middle"
+    font-family="ui-monospace, 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace"
+    font-size="10.5"
+    font-weight="600"
+    fill="#f0f0f3"
+    letter-spacing="0.05em"
+  >HD</text>
+</svg>
