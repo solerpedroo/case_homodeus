@@ -101,6 +101,11 @@ class Settings(BaseSettings):
     max_tool_iterations: int = Field(default=4)
 
     # ---- Vector store ---- #
+    # EN: Set false on Windows if local ONNX embeddings crash the process
+    #     (access violation); use Docker/WSL or OpenAI embeddings instead.
+    # PT: Defina false no Windows se o ONNX local der crash; use Docker/WSL
+    #     ou embeddings OpenAI.
+    chromadb_enabled: bool = Field(default=True)
     chroma_persist_dir: str = Field(default="./data/chroma")
     labor_code_pdf_url: str = Field(
         default="https://www.act.gov.pt/(pt-PT)/Legislacao/Legislacao_n/Documents/C%C3%B3digo%20do%20Trabalho.pdf"

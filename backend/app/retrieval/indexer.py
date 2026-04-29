@@ -133,6 +133,11 @@ def split_by_article(pages: list[tuple[int, str]]) -> list[dict]:
 
 async def index_labor_code(force: bool = False) -> int:
     """Returns number of chunks indexed."""
+    if not settings.chromadb_enabled:
+        logger.error(
+            "CHROMADB_ENABLED=false — vector store is off; cannot index the Labor Code."
+        )
+        return 0
     vector_store.ensure_initialized()
     if not force and not vector_store.is_empty():
         existing = vector_store.collection.count()

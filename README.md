@@ -176,6 +176,7 @@ Também podes disparar avaliação via API: `POST /eval/run` (ver tabela abaixo 
 | `LLM provider ... is not configured` | Define `GROQ_API_KEY` (ou `OPENAI_API_KEY` com `LLM_PROVIDER=openai`). |
 | `TAVILY_API_KEY is not configured` | Preenche `TAVILY_API_KEY` no `.env`; sem isso a pesquisa web falha (ferramenta `search_web`). |
 | Respostas sem artigos do CT / índice vazio | Corre `python -m app.retrieval.indexer` (local) ou `docker compose exec backend python -m app.retrieval.indexer` (Docker). |
+| Harness / Python termina com exit code negativo no Windows ao usar Chroma (crash nativo ONNX) | Define `CHROMADB_ENABLED=false` no `.env` para correr o harness sem `search_labor_code`, ou usa Docker/WSL, ou `EMBEDDINGS_PROVIDER=openai` com chave. |
 | Frontend não fala com o API | Confirma `NEXT_PUBLIC_API_URL=http://localhost:8000` e que o backend está na porta 8000. |
 | Erro ao instalar pacotes Node | Executa `npm install` dentro de **`frontend/`**. |
 

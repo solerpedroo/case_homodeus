@@ -44,6 +44,12 @@ class VectorStore:
     def __init__(self) -> None:
         self._client: chromadb.api.ClientAPI | None = None
         self._collection: Any = None
+        self._disabled: bool = not settings.chromadb_enabled
+        if self._disabled:
+            logger.warning(
+                "ChromaDB disabled (CHROMADB_ENABLED=false); "
+                "search_labor_code returns no hits."
+            )
 
     def _embedding_function(self):
         if settings.embeddings_provider == "openai" and settings.openai_api_key:
@@ -56,6 +62,8 @@ class VectorStore:
         return embedding_functions.DefaultEmbeddingFunction()
 
     def ensure_initialized(self) -> None:
+        if self._disabled:
+            return
         if self._client is not None:
             return
         os.makedirs(settings.chroma_persist_dir, exist_ok=True)
@@ -77,10 +85,16 @@ class VectorStore:
 
     @property
     def collection(self) -> Any:
+        if self._disabled:
+            raise RuntimeError(
+                "ChromaDB is disabled (CHROMADB_ENABLED=false); indexing is unavailable."
+            )
         self.ensure_initialized()
         return self._collection
 
     def is_empty(self) -> bool:
+        if self._disabled:
+            return True
         try:
             return self.collection.count() == 0
         except Exception:
@@ -92,6 +106,8 @@ class VectorStore:
         k: int = 5,
         where: dict[str, Any] | None = None,
     ) -> list[dict[str, Any]]:
+        if self._disabled:
+            return []
         try:
             self.ensure_initialized()
         except Exception as exc:
@@ -121,7 +137,7 @@ class VectorStore:
         return out
 
     def add_chunks(self, chunks: list[dict[str, Any]]) -> int:
-        if not chunks:
+        if self._disabled or not chunks:
             return 0
         self.ensure_initialized()
         ids = [c["id"] for c in chunks]

@@ -6,19 +6,19 @@
   "n_cases": 15,
   "summary": {
     "n": 15,
-    "correctness_avg": 0.433,
-    "coverage_avg": 0.373,
-    "citation_quality_avg": 0.813,
-    "refusal_accuracy": 0.6,
-    "tool_call_accuracy": 0.6,
-    "latency_p50_ms": 8387,
-    "latency_p95_ms": 9634,
+    "correctness_avg": 0.04,
+    "coverage_avg": 0.067,
+    "citation_quality_avg": 0.0,
+    "refusal_accuracy": 0.133,
+    "tool_call_accuracy": 0.133,
+    "latency_p50_ms": 60,
+    "latency_p95_ms": 81,
     "by_difficulty": {
-      "basic": 0.4,
-      "intermediate": 0.3,
-      "advanced": 0.467,
-      "edge": 0.467,
-      "refusal": 0.65
+      "basic": 0.0,
+      "intermediate": 0.0,
+      "advanced": 0.0,
+      "edge": 0.0,
+      "refusal": 0.3
     }
   },
   "cases": [
@@ -34,71 +34,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "De acordo com as informações disponíveis, o salário mínimo nacional em Portugal para 2024 é de 820,00 €, como mencionado na Portaria n.º 128/2024/1, de 2 de abril, publicada no Diário da República (diariodarepublica.pt). No entanto, é importante notar que o Decreto-Lei n.º 112/2024, de 19 de dezembro, determina o aumento do valor da RMMG (Retribuição Mínima Mensal Garantida) para 870,00 €, com efeitos a partir de 1 de janeiro de 2025 (diariodarepublica.pt).\n\nAlém disso, o Decreto-Lei n.º 139/2025, de 29 de dezembro, atualiza o valor da retribuição mínima mensal garantida para 2026 (diariodarepublica.pt).\n\nFontes:\n- Portaria n.º 128/2024/1, de 2 de abril - Diário da República (diariodarepublica.pt)\n- Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República (diariodarepublica.pt)\n- Decreto-Lei n.º 139/2025, de 29 de dezembro | DR (diariodarepublica.pt)\n\n{\"tool_calls\":[]}",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/01/29/839320245.pdf",
-          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 4/2024",
-          "snippet": "vendas Recepcionista 871,23 € XXII Cobrador 847,45 € XXIII Pré-oficial electricista de sistemas de alarme do 2.º ano 834,87 € BTE 4 | 244 Boletim do Trabalho e Emprego 4 29 janeiro 2024 XXIV Estagiário de 1.ª classe Empacotador Servente ou auxiliar de armazém (a) XXV Pré-oficial eletricista de sistemas de alarme do 1.º ano Trabalhador de limpeza Ajudante de eletricista de sistemas de alarme do 2.º ano Estagiário de 2.ª classe Ajudante de eletricista de sistemas de alarme do 1.º ano Paquete Aprendiz de eletricista de sistemas de alarme do 2.º período Aprendiz de eletricista de sistemas de alarm",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.86303437,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/07/29/873755626.pdf",
-          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 28/2024",
-          "snippet": "5-\tNo caso do Salário Mínimo Nacional determinado anualmente pelo Governo contemplar um aumento superior a 4 % (quatro por cento), a revisão anual da tabela para as categorias será feita com base no valor bruto do diferencial do aumento do Salário Mínimo Nacional e o valor mais baixo da tabela salarial, e não em percentagem. 6-\tNos casos em que não se verifique, num determinado ano (s), um aumento do Salário Mínimo Nacional pelo Governo superior a 4 % (quatro por cento), e a atualização anual seja feita conforme acima referido com base na taxa de inflação indexada ao IPC entre o mínimo e o máx",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.77446437,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/portaria/128-2024-858576212",
-          "title": "Portaria n.º 128/2024/1, de 2 de abril - Diário da República",
-          "snippet": "A atualização das retribuições mínimas previstas ocorre na sequência da atualização da RMMG, no valor de 820,00 €, aprovada pelo Decreto-Lei n.º",
-          "domain": "diariodarepublica.pt",
-          "score": 0.72489023,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/112-2024-900706889",
-          "title": "Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República",
-          "snippet": "Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a partir de 1 de janeiro de 2025. Foram",
-          "domain": "diariodarepublica.pt",
-          "score": 0.5849357,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/139-2025-992879809",
-          "title": "Decreto-Lei n.º 139/2025, de 29 de dezembro | DR",
-          "snippet": "Atualiza o valor da retribuição mínima mensal garantida para 2026.",
-          "domain": "diariodarepublica.pt",
-          "score": 0.12280721,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "salário mínimo nacional em Portugal 2024",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] BOLETIM DO TRABALHO E EMPREGO 4/2024 (files.diariodarepublica.pt)\n  vendas Recepcionista 871,23 € XXII Cobrador 847,45 € XXIII Pré-oficial electricista de sistemas de alarme do 2.º ano 834,87 € BTE 4 | 244 Boletim do Trabalho e Emprego 4 29 janeiro 2024 XXIV Estagiári\n- [PDF] BOLETIM DO TRABALHO E EMPREGO 28/2024 (files.diariodarepublica.pt)\n  5-\tNo caso do Salário Mínimo Nacional determinado anualmente pelo Governo contemplar um aumento superior a 4 % (quatro por cento), a revisão anual da tabela para as categorias será feita com base no v\n- Portaria n.º 128/2024/1, de 2 de abril - Di",
-          "duration_ms": 1364,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 3348,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 91,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.8,
-        "citation_quality": 1.0,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta fornece informações sobre o salário mínimo nacional em Portugal, mas não está atualizada para o ano de 2026. Ela menciona o valor de 820,00 € para 2024 e o aumento para 870,00 € em 2025, mas não fornece o valor atual de 920 EUR/mês para 2026. As fontes citadas são oficiais e válidas."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -112,71 +59,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Infelizmente, não consegui encontrar a informação exata sobre o número de dias de férias a que um trabalhador a tempo inteiro tem direito em Portugal. No entanto, posso sugerir que consulte o Código do Trabalho, disponível no portal da Autoridade para as Condições do Trabalho (ACT) [1] ou no site da Comissão para a Igualdade no Trabalho e no Emprego (CITE) [2], que podem fornecer informações mais detalhadas sobre os direitos dos trabalhadores em Portugal.\n\nAlém disso, é importante notar que o número de dias de férias pode variar dependendo do contrato de trabalho e da empresa. Se você tiver mais informações sobre o seu contrato de trabalho ou a sua empresa, posso tentar ajudar a encontrar a resposta certa.\n\nReferências:\n[1] Portal da Autoridade para as Condições do Trabalho (ACT). (2021). Código do Trabalho. Disponível em: https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf\n[2] Comissão para a Igualdade no Trabalho e no Emprego (CITE). (2024). Parecer n.º 885/CITE/2024. Disponível em: https://cite.gov.pt/documents/14333/476674/PP885_2024.pdf/76a70ca2-1be0-45ab-9601-138e15e63bfc\n\nLamento não ter podido fornecer uma resposta mais precisa. Se tiver mais informações ou precisar de ajuda adicional, por favor, não hesite em perguntar.\n\nFontes\n- [[PDF] Parecer n.º 885/CITE/2024](https://cite.gov.pt/documents/14333/476674/PP885_2024.pdf/76a70ca2-1be0-45ab-9601-138e15e63bfc) — que me seja concedido o horário flexível. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: g…\n- [[PDF] 1 PARECER N.º 191/CITE/2019](https://cite.gov.pt/documents/14333/17953/P191_2019.pdf/2a26f47f-6a81-4cde-a991-42dace08523e) — dos dias de descanso semanal e o gozo de ferias podem influir e limitar a sua disponibilidade. 18. Ou seja, se a loja não puder contar com V…\n- [[PDF] PARECER N.º 2/CITE/2026 Assunto](https://cite.gov.pt/documents/14333/541333/PP0002_2026.pdf/3fbcdfff-714d-4d92-b188-77edf3b0e2ce) — - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt Uma dessas exigências imperiosas, prende-se com o facto de a empresa…\n- [[PDF] CÓDIGO DO TRABALHO - Portal ACT](https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf) — 3 – O regime de destacamento em território português não é aplicável ao pessoal navegante da marinha \n\nmercante. \n\n_______________ \n\nNotas: …\n- [C%C3%B3digo%20do%20trabalho.pdf](https://portal.act.gov.pt/AnexosPDF/Legisla%C3%A7%C3%A3o%20nacional/C%C3%B3digo%20do%20trabalho.pdf) — feriados; \n\nd) As faltas dadas ao abrigo das alíneas anteriores não podem exceder quatro dias por disciplina em cada \n\nano letivo. \n\n2 – O d…\n",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://cite.gov.pt/documents/14333/476674/PP885_2024.pdf/76a70ca2-1be0-45ab-9601-138e15e63bfc",
-          "title": "[PDF] Parecer n.º 885/CITE/2024",
-          "snippet": "que me seja concedido o horário flexível. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt Para o efeito pretendo trabalhar de segunda a sexta-feira, com exceção de feriados e demais dias em que a creche esteia encerrada, com um horário de trabalho que pode variar entre as 08h:30 e as 19h:00 de forma a permitir que possa ir buscar o meu filho à creche. Uma vez que o pai do meu filho está efetivo na empresa e no vislumbra a possibilidade de regressar, definitivamente, a Portugal, em breve, solicito que o horário flexível me seja conc",
-          "domain": "cite.gov.pt",
-          "score": 0.97462875,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/17953/P191_2019.pdf/2a26f47f-6a81-4cde-a991-42dace08523e",
-          "title": "[PDF] 1 PARECER N.º 191/CITE/2019",
-          "snippet": "dos dias de descanso semanal e o gozo de ferias podem influir e limitar a sua disponibilidade. 18. Ou seja, se a loja não puder contar com V. Exa. poderão não existir trabalhadores necessários para assegurar o atendimento dos clientes ao fim de semana, algo que teria um impacto direto nos resultados da loja. 19. Ademais, o Contrato Coletivo aplicável, já mencionado, determina que «nos horários que sejam organizados por forma a preverem prestação de trabalho em todos os sete dias da semana, o descanso semanal será organizado para que coincida pelo menos com quinze domingos por ano, incluindo, p",
-          "domain": "cite.gov.pt",
-          "score": 0.9005298,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/541333/PP0002_2026.pdf/3fbcdfff-714d-4d92-b188-77edf3b0e2ce",
-          "title": "[PDF] PARECER N.º 2/CITE/2026 Assunto",
-          "snippet": "- OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt Uma dessas exigências imperiosas, prende-se com o facto de a empresa necessitar de um determinado número de trabalhadores para realizar os horários rotativos, que incluem o sábado e domingo. A aplicação de folgas fixas impedirá a garantia do gozo dos dias de descanso semanal aos restantes colaboradores durante o período do fim de semana, sabendo-se que cada trabalhador deverá folgar ao sábado e domingo, pelo menos uma vez por mês, de acordo com o CCT aplicável e conforme a cláusula já transcrita. A organização da loja onde",
-          "domain": "cite.gov.pt",
-          "score": 0.87147486,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf",
-          "title": "[PDF] CÓDIGO DO TRABALHO - Portal ACT",
-          "snippet": "3 – O regime de destacamento em território português não é aplicável ao pessoal navegante da marinha \n\nmercante. \n\n_______________ \n\nNotas: \n\n1 - Sobre destacamento de trabalhadores no âmbito de uma prestação de serviços ver  Lei n.º 29/ 2017 , de \n\n30 de m aio. \n\nArtigo 7.º \n\nCondições de trabalho de trabalhador destacado \n\n1 – Sem prejuízo de regime mais favorável constante de lei ou contrato de trabalho, o trabalhador \n\ndestacado tem direito às condições de trabalho previstas na lei e em regulamentação coletiva de trabalho \n\nde eficácia geral aplicável que respeitem a: \n\na) Segurança no emp",
-          "domain": "portal.act.gov.pt",
-          "score": 0.64957863,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/AnexosPDF/Legisla%C3%A7%C3%A3o%20nacional/C%C3%B3digo%20do%20trabalho.pdf",
-          "title": "C%C3%B3digo%20do%20trabalho.pdf",
-          "snippet": "feriados; \n\nd) As faltas dadas ao abrigo das alíneas anteriores não podem exceder quatro dias por disciplina em cada \n\nano letivo. \n\n2 – O direito previsto no número anterior só pode ser exercido em dois anos letivos relativamente a cada \n\ndisciplina. \n\n3 - Nos casos em que o curso esteja organizado no regime de sistema europeu de transferência e \n\nacumulação de créditos (ECTS), o trabalhador -estudante pode, em alternativa ao disposto no n.º 1, optar \n\npor cumular os dias anteriores ao da prestação das provas de avaliação, num máximo de três dias, seguidos \n\nou interpolados ou do corresponden",
-          "domain": "portal.act.gov.pt",
-          "score": 0.44360042,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "dias de férias trabalhador a tempo inteiro em Portugal",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] Parecer n.º 885/CITE/2024 (cite.gov.pt)\n  que me seja concedido o horário flexível. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt Para o efeito pretendo trabalhar de segunda a s\n- [PDF] 1 PARECER N.º 191/CITE/2019 (cite.gov.pt)\n  dos dias de descanso semanal e o gozo de ferias podem influir e limitar a sua disponibilidade. 18. Ou seja, se a loja não puder contar com V. Exa. poderão não existir trabalhadores necessários para as\n- [PDF] PARECER N.º 2/CITE/2026 Assunto (cite.gov.pt)\n  - OLAIAS 1900-064 LISBOA • TELEFONE: 215",
-          "duration_ms": 4693,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 6529,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 67,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
-        "citation_quality": 0.8,
+        "citation_quality": 0.0,
         "refusal_correct": 0.0,
-        "explanation": "A resposta não fornece a informação solicitada sobre o número de dias de férias a que um trabalhador a tempo inteiro tem direito em Portugal, apesar de citar fontes oficiais relevantes."
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -189,71 +83,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Sim, existe um período experimental num contrato sem termo em Portugal. De acordo com o Código do Trabalho, o período experimental pode ter uma duração entre 15 a 240 dias, dependendo do tipo de vínculo e da carreira em causa. Este regime consta dos artigos 45.º e 72.º do Código do Trabalho, que podem ser consultados no Diário da República (diariodarepublica.pt) [1] [2].\n\nÉ importante notar que o período experimental é um período de prova durante o qual o empregador pode avaliar a capacidade e o desempenho do trabalhador, e o trabalhador pode avaliar as condições de trabalho e a empresa. Se o trabalhador for considerado apto, o contrato pode ser convertido em contrato sem termo.\n\nFontes:\n[1] Diário da República. (s.d.). Período experimental (função pública). Diário da República. https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental-funcao-publica\n[2] Diário da República. (s.d.). Código do Trabalho - CT. Diário da República. https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475\n\nLembre-se de que as leis e regulamentos podem mudar, por isso é sempre recomendável consultar as fontes oficiais e atualizadas para obter informações precisas e atualizadas.",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental-funcao-publica",
-          "title": "Período experimental (função pública) - Diário da República",
-          "snippet": "O período experimental pode ter uma duração entre 15 a 240 dias, dependendo do tipo de vínculo e da carreira em causa. Este regime consta dos artigos 45.º e",
-          "domain": "diariodarepublica.pt",
-          "score": 0.56517935,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental",
-          "title": "Lexionário - Período experimental | DR",
-          "snippet": "# Lexionário - Período experimental | DR\n\nIr para o conteúdo principal\n\nImage 1: Diário da República\n\nJornal Oficial da República Portuguesa\n\nInício\n\nLegislação\n\nPor códigoPor dataPor tema\n\nLexionário\n\nLia\n\nSobre o DR\n\nImage 2: AjudaAjuda\n\nImage 3: O meu DiárioO meu Diário\n\nInício\n\nLexionário\n\nPeríodo experimental\n\n# Período experimental\n\nEnviar por emailCopiar ligaçãoFacebookLinkedInPinterestRedditTelegramXWhatsapp\n\n\n\nA A\n\nPode sugerir melhorias ou atualizações aqui\n\nServiços e Recursos\n\nSubmissão de Atos\n\nSugestões\n\nReportar Erro\n\nAtributos Profissionais\n\nAjuda\n\nContactos\n\nMapa do Sítio\n\nSub",
-          "domain": "diariodarepublica.pt",
-          "score": 0.304859,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475",
-          "title": "Código do Trabalho - CT - Diário da República",
-          "snippet": "... contrato de trabalho a termo depois de o empregador lhe haver proposto por escrito a conversão do mesmo em contrato sem termo. Artigo 72.º. Protecção da",
-          "domain": "diariodarepublica.pt",
-          "score": 0.20721509,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/93-2019-124417106",
-          "title": "Lei n.º 93/2019, de 4 de setembro - Diário da República",
-          "snippet": "2 - O contrato de trabalho temporário a termo certo não está sujeito ao limite de duração do n.º 2 do artigo 148.º e, enquanto se mantiver o motivo",
-          "domain": "diariodarepublica.pt",
-          "score": 0.14303228,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/12-300392",
-          "title": "Lei n.º 12/92, de 16 de julho - Diário da República",
-          "snippet": "Lei n.º 12/92. de 16 de Julho. Autoriza o Governo a rever o regime legal do contrato de serviço doméstico. A Assembleia da República decreta, nos termos dos",
-          "domain": "diariodarepublica.pt",
-          "score": 0.06386092,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "período experimental contrato sem termo Portugal",
-            "category": "labor_code"
-          },
-          "output_summary": "- Período experimental (função pública) - Diário da República (diariodarepublica.pt)\n  O período experimental pode ter uma duração entre 15 a 240 dias, dependendo do tipo de vínculo e da carreira em causa. Este regime consta dos artigos 45.º e\n- Lexionário - Período experimental | DR (diariodarepublica.pt)\n  # Lexionário - Período experimental | DR\n\nIr para o conteúdo principal\n\nImage 1: Diário da República\n\nJornal Oficial da República Portuguesa\n\nInício\n\nLegislação\n\nPor códigoPor dataPor tema\n\nLexionário\n- Código do Trabalho - CT - Diário da República (diariodarepublica.pt)\n  ... contrato de ",
-          "duration_ms": 872,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 2525,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 62,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.4,
-        "citation_quality": 0.8,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta contém informações gerais corretas sobre o período experimental, mas não especifica corretamente as durações para contratos sem termo (90, 180 e 240 dias) e cita artigos do Código do Trabalho diferentes dos esperados (112.º). As fontes citadas são oficiais, mas não são as mais relevantes para o tema."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -266,71 +107,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Para calcular o subsídio de férias para um trabalhador que ganha 1.500 EUR/mês, é necessário considerar as regras estabelecidas na lei laboral portuguesa. De acordo com o Diário da República, o subsídio de férias deve ser pago antes do início do período de férias e de forma proporcional, em situações em que as partes não estipulem de modo diverso (Diário da República, 2022).\n\nO valor do subsídio de férias é calculado com base no salário do trabalhador e no número de dias de férias a que tem direito. No entanto, não encontrei informações específicas sobre o cálculo do subsídio de férias para um trabalhador que ganha 1.500 EUR/mês.\n\nNo entanto, posso sugerir que o trabalhador utilize o Simulador de Férias disponível no Portal ACT (Portal ACT, 2022) para calcular os valores previstos na lei para as suas férias. Além disso, o Portal ACT também oferece outros simuladores, como o Simulador de Compensação por Cessação de Contrato de Trabalho, que pode ser útil em outras situações (Portal ACT, 2022).\n\nEm resumo, o cálculo do subsídio de férias depende de vários fatores, incluindo o salário do trabalhador e o número de dias de férias a que tem direito. É recomendável que o trabalhador consulte as fontes oficiais, como o Diário da República e o Portal ACT, para obter informações mais detalhadas e atualizadas sobre o cálculo do subsídio de férias.\n\nFontes:\n\n* Diário da República. (2022). Subsídio de férias. Recuperado de <https://diariodarepublica.pt/dr/lexionario/termo/subsidio-ferias>\n* Portal ACT. (2022). Simulador de Férias. Recuperado de <https://portal.act.gov.pt/Pages/SimuladorFerias.aspx>\n* Portal ACT. (2022). Simuladores. Recuperado de <https://portal.act.gov.pt/Pages/simuladores-todos.aspx>",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/subsidio-ferias",
-          "title": "Subsídio de férias - Diário da República",
-          "snippet": "A menos que as partes estipulem de modo diverso, o subsídio de férias deve ser pago antes do início do período de férias e de forma proporcional, em situações",
-          "domain": "diariodarepublica.pt",
-          "score": 0.9851576,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/Pages/SimuladorFerias.aspx",
-          "title": "Simulador de férias - Portal ACT",
-          "snippet": "Este simulador ajuda-o a saber quantos dias de férias tem direito no ano de admissão, e no ano seguinte. Informação sobre o contrato de trabalho",
-          "domain": "portal.act.gov.pt",
-          "score": 0.0059340666,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/",
-          "title": "Portal ACT",
-          "snippet": "Cookies essenciais\n\n Sempre Ativado \n\nOs cookies essenciais permitem o acesso a áreas específicas dos websites, para a navegação e utilização das suas aplicações, incluindo o acesso a áreas seguras, através de login. Estes cookies são fundamentais para a prestação do serviço, sem os quais não é possível executar tal serviço.\n\nCookies de funcionalidade\n\nEstes cookies permitem relembrar as preferências do utilizador, relativamente à navegação no website, para que este não tenha de os reconfigurar e personalizar de cada vez que visita o website.\n\n SALVAR E ACEITAR \n\nSaltar para o conteúdo princip",
-          "domain": "portal.act.gov.pt",
-          "score": 0.00462753,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/Pages/simuladores-todos.aspx",
-          "title": "Simuladores - Portal ACT",
-          "snippet": "Este simulador ajuda-o a calcular os valores previstos na lei para as situações de cessação de contrato de trabalho, incluindo a compensação (quando haja lugar)",
-          "domain": "portal.act.gov.pt",
-          "score": 0.0019267347,
-          "source_type": "web"
-        },
-        {
-          "url": "https://portal.act.gov.pt/Pages/SimuladorCompensacaoCessacaoContratoTrabalho.aspx",
-          "title": "Simulador de compensação por cessação de contrato de trabalho",
-          "snippet": "Vai cessar o seu contrato de trabalho e não sabe aquilo a que tem direito? Este simulador ajuda-o, pois calcula os valores previstos na lei",
-          "domain": "portal.act.gov.pt",
-          "score": 0.0017274586,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "cálculo subsídio de férias portugal",
-            "category": "labor_code"
-          },
-          "output_summary": "- Subsídio de férias - Diário da República (diariodarepublica.pt)\n  A menos que as partes estipulem de modo diverso, o subsídio de férias deve ser pago antes do início do período de férias e de forma proporcional, em situações\n- Simulador de férias - Portal ACT (portal.act.gov.pt)\n  Este simulador ajuda-o a saber quantos dias de férias tem direito no ano de admissão, e no ano seguinte. Informação sobre o contrato de trabalho\n- Portal ACT (portal.act.gov.pt)\n  Cookies essenciais\n\n Sempre Ativado \n\nOs cookies essenciais permitem o acesso a áreas específicas dos websites, para a navegação e utili",
-          "duration_ms": 866,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 2814,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 57,
       "judge": {
-        "correctness": 0.2,
-        "coverage": 0.4,
-        "citation_quality": 0.8,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta não fornece o cálculo correto do subsídio de férias, mas cita fontes oficiais e não recusou explicitamente a resposta quando deveria ter fornecido uma explicação mais direta sobre o cálculo do subsídio de férias."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -344,71 +132,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "De acordo com a Portaria n.º 97/2013, de 4 de março, publicada no Diário da República, as taxas de contribuição TSU (Taxa Social Única) para contratos sem termo são de 100% do valor da TSU para o empregador (Diário da República, 2013). Já para os trabalhadores, não foi encontrada uma taxa específica de contribuição TSU para contratos sem termo nos resultados das ferramentas.\n\nNo entanto, é importante notar que as taxas de contribuição TSU podem variar dependendo do tipo de contrato e da situação específica do trabalhador e do empregador. Além disso, é fundamental consultar as fontes oficiais e atualizadas para obter informações precisas e atualizadas sobre as taxas de contribuição TSU.\n\nFontes:\n- Diário da República, Portaria n.º 97/2013, de 4 de março (diariodarepublica.pt)\n- Diário da República, 1.ª série — N.º 3 — 4 de janeiro de 2013 (files.diariodarepublica.pt)\n- Decreto-Lei n.º 72/2017, de 21 de junho - Diário da República (diariodarepublica.pt)\n- BOLETIM DO TRABALHO E EMPREGO 29/2023 (files.diariodarepublica.pt)\n- Acordão de 2025-02-07 (Processo nº 01443/24.0BEPRT) (diariodarepublica.pt)\n\n{\"tool_calls\":[]}",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/portaria/97-2013-259265",
-          "title": "Portaria n.º 97/2013, de 4 de março | DR - Diário da República",
-          "snippet": "a) 100% do valor da TSU, no caso de contrato sem termo;. b) 75% do valor da TSU, no caso de contrato a termo resolutivo certo. 2 - O reembolso referido no",
-          "domain": "diariodarepublica.pt",
-          "score": 0.99988496,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/1s/2013/01/00301/0000200005.pdf",
-          "title": "[PDF] Diário da República, 1.ª série — N.º 3 — 4 de janeiro de 2013",
-          "snippet": "Artigo 5.º Apoio financeiro 1 - O empregador que celebre contrato de trabalho ao abrigo da Medida tem direito, durante o período máximo de 18 meses, ao reembolso, total ou parcial, do valor da TSU paga mensalmente pelo mesmo relativamente a cada trabalhador, nos seguintes termos: a) 100% do valor da TSU, no caso de contrato sem termo; b) 75% do valor da TSU, no caso de contrato a termo resolutivo certo 2 - O reembolso referido no número anterior não pode ser superior a €200 por mês.\nArtigo 6.º Procedimento 1 - Para efeitos de obtenção do apoio, o empregador apresenta a candidatura à Medida no ",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.99980134,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/72-2017-107541408",
-          "title": "Decreto-Lei n.º 72/2017, de 21 de junho - Diário da República",
-          "snippet": "a) Redução temporária de 50 % da taxa contributiva da responsabilidade da entidade empregadora relativamente à contratação de jovens à procura do primeiro",
-          "domain": "diariodarepublica.pt",
-          "score": 0.9257686,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2023/08/08/220186744.pdf",
-          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 29/2023",
-          "snippet": "Cláusula 4.ª Contratos de trabalho Os contratos de trabalho dos pilotos são celebrados por tempo indeterminado, podendo, no entanto, ser celebrados a termo nos seguintes casos: a)\tSubstituição temporária de trabalhador que, por qualquer razão, se encontre impedido de prestar serviço, em relação ao qual esteja pendente em juízo ação de apreciação de licitude do despedimento, em situação de licença sem retribuição ou passe a prestar trabalho a tempo parcial por período determinado; b) Atividades sazonais; c) Acréscimo temporário ou excecional da atividade da empresa; d) Execução de uma tarefa oc",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.6584175,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/acordao/01443-2025-930561175",
-          "title": "Acordão de 2025-02-07 (Processo nº 01443/24.0BEPRT)",
-          "snippet": "Além disso, as horas obrigatória de formação - 40 por ano ou as proporcionais ao tempo do contrato, no caso do contrato a termo – podem ser utilizadas pelo",
-          "domain": "diariodarepublica.pt",
-          "score": 0.1732882,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "taxas de contribuição TSU empregador e trabalhador contrato sem termo",
-            "category": "labor_code"
-          },
-          "output_summary": "- Portaria n.º 97/2013, de 4 de março | DR - Diário da República (diariodarepublica.pt)\n  a) 100% do valor da TSU, no caso de contrato sem termo;. b) 75% do valor da TSU, no caso de contrato a termo resolutivo certo. 2 - O reembolso referido no\n- [PDF] Diário da República, 1.ª série — N.º 3 — 4 de janeiro de 2013 (files.diariodarepublica.pt)\n  Artigo 5.º Apoio financeiro 1 - O empregador que celebre contrato de trabalho ao abrigo da Medida tem direito, durante o período máximo de 18 meses, ao reembolso, total ou parcial, do valor da TSU pag\n- Decreto-Lei n.º 72/2017, de 21 de junho - Diário da",
-          "duration_ms": 865,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8656,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 57,
       "judge": {
-        "correctness": 0.2,
-        "coverage": 0.4,
-        "citation_quality": 0.8,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta não fornece as taxas de contribuição TSU corretas para o empregador e o trabalhador, mas cita fontes oficiais portuguesas válidas."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -421,71 +156,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "De acordo com o Código do Trabalho português, o prazo de aviso prévio para despedir um trabalhador com 3 anos de antiguidade é de 60 dias, conforme estabelecido no artigo 361.º do mesmo diploma legal [1]. No entanto, é importante notar que o prazo de aviso prévio pode variar em função de factores imprevisíveis que determinem um adiantamento ou atraso no procedimento de despedimento [2].\n\nAlém disso, é fundamental considerar que o procedimento de despedimento coletivo envolve uma série de etapas e prazos, incluindo a marcação de férias, créditos laborais decorrentes da cessação do vínculo e antiguidade, e valor da compensação [3].\n\nEm resumo, o prazo de aviso prévio para despedir um trabalhador com 3 anos de antiguidade é de 60 dias, mas é importante considerar as especificidades do caso e as disposições legais aplicáveis.\n\nFontes:\n\n[1] Parecer n.º 331/CITE/2013, disponível em [https://cite.gov.pt/documents/14333/17935/P331_13.pdf/1d4ae399-3156-4279-8ef0-dc845b3e8b49](https://cite.gov.pt/documents/14333/17935/P331_13.pdf/1d4ae399-3156-4279-8ef0-dc845b3e8b49)\n\n[2] Parecer n.º 585/CITE/2025, disponível em [https://cite.gov.pt/documents/14333/514232/PP0585_2025.pdf/b465dcfd-8749-4fef-ad03-a94a428e9493](https://cite.gov.pt/documents/14333/514232/PP0585_2025.pdf/b465dcfd-8749-4fef-ad03-a94a428e9493)\n\n[3] Parecer n.º 309/CITE/2020, disponível em [https://cite.gov.pt/documents/14333/275838/PP309_2020.pdf/4a9123db-0460-4427-9f54-c34f327d922b](https://cite.gov.pt/documents/14333/275838/PP309_2020.pdf/4a9123db-0460-4427-9f54-c34f327d922b)",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://cite.gov.pt/documents/14333/17935/P331_13.pdf/1d4ae399-3156-4279-8ef0-dc845b3e8b49",
-          "title": "[PDF] 1 PARECER N.º 331/CITE/2013 Assunto",
-          "snippet": "prevista no artigo 361.º do mesmo diploma legal. 4. Ao período de tempo previsto no número anterior acrescerá o prazo de aviso prévio legal aplicável, atenta a antiguidade dos trabalhadores abrangidos pelo despedimento, que antecede o momento da cessação dos contratos de trabalho, nos seguintes termos: a) 15 dias – no caso de trabalhador com antiguidade inferior a 1 ano; b) 30 dias – no caso de trabalhador com antiguidade igual ou superior a 1 ano e inferior a 5 anos; c) 60 dias – no caso de trabalhador com antiguidade igual ou superior a 5 anos e inferior a 10 anos; d) 75 dias – no caso de tr",
-          "domain": "cite.gov.pt",
-          "score": 0.9996594,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/514232/PP0585_2025.pdf/b465dcfd-8749-4fef-ad03-a94a428e9493",
-          "title": "[PDF] Parecer n.º 585/CITE/2025",
-          "snippet": "expectável para a cessação dos contratos de trabalho, - As aludidas datas são naturalmente meramente indicativas, pois poderão variar em função de factores imprevisíveis que determinem um adiantamento ou atraso de alguns dias. - Os prazos de pré-aviso variam em função da duração do contrato, sendo, no caso concreto de 30 (trinta) dias para todos os trabalhadores abrangidos pelo despedimento, uma vez que todos têm mais de um ano de antiguidade e menos de cinco, Durante o prazo de aviso prévio, os trabalhadores terão direito a um crédito de horas correspondente a dois dias de trabalho por semana",
-          "domain": "cite.gov.pt",
-          "score": 0.99949265,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/275838/PP309_2020.pdf/4a9123db-0460-4427-9f54-c34f327d922b",
-          "title": "[PDF] Parecer n.º 309/CITE/2020",
-          "snippet": "como vai tramitar o procedimento de despedimento coletivo, designadamente quanto a férias a gozar e respetiva marcação, créditos laborais decorrentes da cessação do vínculo e antiguidade e valor da compensação. Tomou a palavra … para referir que quanto ao período de tramitação do despedimento coletivo, o mesmo foi indicado nas comunicações iniciais de forma aproximada, uma vez que isso é uma obrigação decorrente da lei. De todo o modo, cada trabalhador terá direito a beneficiar do aviso prévio legalmente previsto de acordo com a sua antiguidade, o que significa que a data em concreto de saída ",
-          "domain": "cite.gov.pt",
-          "score": 0.99690056,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/497809/PP1335_2024.pdf/18fb6716-c9a3-4f7b-8f89-03ab49ab16b5",
-          "title": "[PDF] Parecer n.º 1335/CITE/2024",
-          "snippet": "compreender as dúvidas que são levantadas por um lado dos trabalhadores, porque efetivamente a questão do crédito de horas está prevista e tipificada e é um direito. Não obstante, apesar de ser um direito, a verdade é que não é obrigatório de ser usado e há trabalhadores que cumprem o seu aviso prévio sem o gozar. Mais disse conseguir compreender também a posição de empresa, porque haverá com certeza responsabilidades que devem ser cumpridas, o período aviso prévio será extenso para alguns trabalhadores, porque há antiguidades relativamente grandes. No fundo o que empresa pretende evitar é que",
-          "domain": "cite.gov.pt",
-          "score": 0.97112906,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/17953/P105_19.pdf/6072ae5c-e764-474e-9588-686066424b94",
-          "title": "[PDF] parecer n.º 105/cite/2019",
-          "snippet": "que a subsistência da relação de trabalho é praticamente impossível quando o empregador não disponha de outro compatível com a categoria profissional do trabalhador. 5 – O despedimento por extinção do posto de trabalho só pode ter lugar desde que, até ao termo do prazo de aviso prévio, seja posta à disposição do trabalhador a compensação devida, bem como os créditos vencidos e os exigíveis por efeito da cessação do contrato de trabalho. 6 – Constitui contraordenação grave o despedimento com violação do disposto nas alíneas c) e d) do n.º 1 e nos n.ºs 2 ou 3”. 2.10. E, nos termos do disposto no",
-          "domain": "cite.gov.pt",
-          "score": 0.9700135,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "prazo de aviso prévio despedimento 3 anos antiguidade",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] 1 PARECER N.º 331/CITE/2013 Assunto (cite.gov.pt)\n  prevista no artigo 361.º do mesmo diploma legal. 4. Ao período de tempo previsto no número anterior acrescerá o prazo de aviso prévio legal aplicável, atenta a antiguidade dos trabalhadores abrangidos\n- [PDF] Parecer n.º 585/CITE/2025 (cite.gov.pt)\n  expectável para a cessação dos contratos de trabalho, - As aludidas datas são naturalmente meramente indicativas, pois poderão variar em função de factores imprevisíveis que determinem um adiantamento\n- [PDF] Parecer n.º 309/CITE/2020 (cite.gov.pt)\n  como vai tramitar o procedimento de de",
-          "duration_ms": 4746,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 9413,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 60,
       "judge": {
-        "correctness": 0.8,
-        "coverage": 0.7,
-        "citation_quality": 0.9,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta apresenta uma boa compreensão do tema, mas com alguns erros factuais, como a referência ao artigo 361.º do Código do Trabalho, que não é o correto para o prazo de aviso prévio. Além disso, a resposta poderia ser mais direta e concisa, cobrindo melhor os factos esperados. As fontes citadas são oficiais e válidas, o que é um ponto positivo."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -499,47 +181,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Infelizmente, não consegui encontrar a informação exata sobre a retenção na fonte de IRS para um trabalhador solteiro sem dependentes que ganha 2.000 EUR brutos/mês em 2025. No entanto, posso sugerir que consulte as Tabelas de Retenção do IRS disponíveis no site da Autoridade Tributária e Aduaneira (info.portaldasfinancas.gov.pt) para obter a informação mais atualizada.\n\nDe acordo com o site da Autoridade Tributária e Aduaneira, as Tabelas de Retenção do IRS estão disponíveis para consulta (info.portaldasfinancas.gov.pt). Além disso, o site também fornece informações sobre a Declaração Automática do IRS, que pode ser útil para entender como a retenção na fonte é calculada (info.portaldasfinancas.gov.pt).\n\nFontes:\n- info.portaldasfinancas.gov.pt: Tabelas de Retenção do IRS\n- info.portaldasfinancas.gov.pt: IRS > IRS Automático > Declaração Automática\n\nLamento não poder fornecer uma resposta mais precisa. Se tiver mais alguma dúvida, por favor, não hesite em perguntar.",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-00620.aspx",
-          "title": "IRS > IRS Automático > Declaração Automática",
-          "snippet": "Não. A declaração automática do IRS apenas se aplica a contribuintes que apenas tenham obtido rendimentos do trabalho dependente (com exceção das gratificações não atribuídas pela entidade patronal) ou de pensões (com exceção das pensões de alimentos), ou rendimentos tributados por retenção na fonte a taxas liberatórias e não pretendam optar pelo respetivo englobamento, quando legalmente permitido, ou ainda rendimentos da categoria B enquadrados no regime simplificado, desde que exerçam apenas atividades constantes da tabela do artigo 151.º do CIRS (exceto o código 1519) e emitam, exclusivamen",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.2683463,
-          "source_type": "web"
-        },
-        {
-          "url": "http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx",
-          "title": "Tabelas de Retenção do IRS",
-          "snippet": "Help\nFollow\nFocus on Content\nFocus on Content\nAutoridade Tributária e Aduaneira\n\n# Tabelas de Retenção do IRS\n\n​​​​​​​​​\n\n|  |  | Título | Tamanho do ficheiro |\n ---  --- |\n|  |  | Título | Tamanho do ficheiro |\n ---  --- |\n\n##### Links Úteis\n\nPágina de contactos\nFacebook\nInstagram\nYouTube\n\nLinkedin\nAplicações móveis di​sponibilizadas pela Autoridade Tributária e Aduaneira​​\nDireitos do Contribuinte\nAcessibilidade (W3C)",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.14850381,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "tabela de retenção na fonte de IRS para trabalhador solteiro sem dependentes em 2025",
-            "category": "tax"
-          },
-          "output_summary": "- IRS > IRS Automático > Declaração Automática (info.portaldasfinancas.gov.pt)\n  Não. A declaração automática do IRS apenas se aplica a contribuintes que apenas tenham obtido rendimentos do trabalho dependente (com exceção das gratificações não atribuídas pela entidade patronal) o\n- Tabelas de Retenção do IRS (info.portaldasfinancas.gov.pt)\n  Help\nFollow\nFocus on Content\nFocus on Content\nAutoridade Tributária e Aduaneira\n\n# Tabelas de Retenção do IRS\n\n​​​​​​​​​\n\n|  |  | Título | Tamanho do ficheiro |\n ---  --- |\n|  |  | Título | Tamanho do",
-          "duration_ms": 4068,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8387,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 57,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
-        "citation_quality": 1.0,
+        "citation_quality": 0.0,
         "refusal_correct": 0.0,
-        "explanation": "A resposta não fornece a informação solicitada sobre a retenção na fonte de IRS para um trabalhador solteiro sem dependentes que ganha 2.000 EUR brutos/mês em 2025, apesar de citar fontes oficiais."
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -552,71 +205,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "O cálculo do subsídio de Natal para um trabalhador contratado a meio do ano é proporcional ao tempo de serviço prestado durante o ano. De acordo com o Código do Trabalho, o subsídio de Natal é igual à remuneração mensal, sem prejuízo da retribuição normal (BOLETIM DO TRABALHO E EMPREGO 29/2023, [PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025).\n\nNo caso de um trabalhador contratado a meio do ano, o subsídio de Natal é calculado proporcionalmente ao tempo de serviço prestado durante o ano. Isso significa que o trabalhador terá direito a receber um subsídio de Natal proporcional ao número de meses que trabalhou durante o ano (Subsídio de Natal - Diário da República).\n\nPor exemplo, se um trabalhador foi contratado em junho e trabalhou até dezembro, terá direito a receber um subsídio de Natal proporcional a 6 meses de trabalho (de junho a dezembro). O valor do subsídio de Natal será calculado com base na remuneração mensal do trabalhador e será pago até 15 de dezembro de cada ano (BOLETIM DO TRABALHO E EMPREGO 5/2025).\n\nEm resumo, o cálculo do subsídio de Natal para um trabalhador contratado a meio do ano é proporcional ao tempo de serviço prestado durante o ano e é calculado com base na remuneração mensal do trabalhador.\n\nFontes:\n- [PDF] BOLETIM DO TRABALHO E EMPREGO 29/2023 (files.diariodarepublica.pt)\n- [PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025 (files.diariodarepublica.pt)\n- Subsídio de Natal - Diário da República (diariodarepublica.pt)",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2023/08/08/220186746.pdf",
-          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 29/2023",
-          "snippet": "Cláusula 30.ª Subsídio de Natal 1- Todos os trabalhadores têm direito a receber pelo Natal um subsídio igual à remuneração mensal, sem prejuízo da retribuição normal. BTE 29 | 346 Boletim do Trabalho e Emprego 29 8 agosto 2023 2-\tOs trabalhadores que no ano da admissão não tenham concluído um ano de serviço terão direito a tantos duodécimos daquele subsídio quantos os meses de serviço que completem até 31 de dezembro desse ano.\n3-\tNo ano da cessação do contrato de trabalho, qualquer que seja a causa, os trabalhadores terão direito a tantos duodécimos daquele subsídio quanto os meses completos ",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.70799106,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2025/02/10/906173762.pdf",
-          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025",
-          "snippet": "Cláusula 66.ª Subsídio de Natal 1-\tTodos os trabalhadores têm direito a subsídio de Natal de valor igual a um mês de retribuição, que deve ser pago até 15 de dezembro de cada ano.\n2-\tEm caso de suspensão da prestação de trabalho por impedimento prolongado, o trabalhador terá direito, no ano em que a suspensão tiver início, a um subsídio de Natal proporcional ao tempo de trabalho prestado nesse ano.\n3-\tNo ano de admissão, o trabalhador terá direito a um subsídio de Natal proporcional ao tempo de trabalho prestado nesse ano.\n4-\tCessando por qualquer forma o contrato de trabalho, nomeadamente por",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.70726365,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1980-893692923",
-          "title": "Regulação da atribuição dos subsídios de férias e de Natal ao ...",
-          "snippet": "3 - O montante do subsídio de Natal do pessoal em tempo parcial ao abrigo do Decreto-Lei n.º 167/80, de 29 de Maio, será igual à remuneração auferida pelo",
-          "domain": "diariodarepublica.pt",
-          "score": 0.39592856,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/subsidio-natal",
-          "title": "Subsídio de Natal - Diário da República",
-          "snippet": "O valor do subsídio de Natal poderá ser proporcional nas situações descritas no artigo 263.º, n.º 2 do Código do Trabalho (e no artigo 151.º, n.º 2 da LGTFP,",
-          "domain": "diariodarepublica.pt",
-          "score": 0.37421933,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/49408-1969-176289",
-          "title": "Decreto-Lei n.º 49408, de 24 de novembro | DR - Diário da República",
-          "snippet": "a) Meio mês ou um mês por cada ano completo de antiguidade do trabalhador, conforme tenha menos ou mais de quinze anos de serviço, se a iniciativa da",
-          "domain": "diariodarepublica.pt",
-          "score": 0.13745166,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "cálculo subsídio de Natal trabalhador contratado a meio do ano",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] BOLETIM DO TRABALHO E EMPREGO 29/2023 (files.diariodarepublica.pt)\n  Cláusula 30.ª Subsídio de Natal 1- Todos os trabalhadores têm direito a receber pelo Natal um subsídio igual à remuneração mensal, sem prejuízo da retribuição normal. BTE 29 | 346 Boletim do Trabalho \n- [PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025 (files.diariodarepublica.pt)\n  Cláusula 66.ª Subsídio de Natal 1-\tTodos os trabalhadores têm direito a subsídio de Natal de valor igual a um mês de retribuição, que deve ser pago até 15 de dezembro de cada ano.\n2-\tEm caso de suspen\n- Regulação da atribuição dos subsídios de fé",
-          "duration_ms": 857,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8602,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 77,
       "judge": {
-        "correctness": 0.8,
-        "coverage": 0.8,
-        "citation_quality": 0.9,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta é geralmente correta, mas falta a fórmula exata para o cálculo do subsídio de Natal. A cobertura dos factos é boa, mas não completa. As fontes citadas são oficiais e válidas, mas poderiam ser mais diretas."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -630,71 +230,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Infelizmente, não consegui encontrar as taxas de retenção na fonte de IRS para um contribuinte solteiro com 2.200 EUR brutos/mês em 2024 nas fontes disponíveis. No entanto, posso sugerir que consulte o Portal das Finanças, que fornece informações sobre as tabelas de retenção na fonte de IRS, incluindo as atualizações mais recentes [1]. Além disso, o Despacho SEAF de 22/07/2025 também pode ser útil para entender as novas tabelas de retenção na fonte para 2025 [2].\n\nÉ importante notar que as taxas de retenção na fonte de IRS podem variar dependendo da situação individual do contribuinte, por isso é recomendável consultar as fontes oficiais ou um profissional de contabilidade para obter informações mais precisas.\n\nReferências:\n[1] Portal das Finanças. (2024). Artigo 99.º-F Tabelas de retenção na fonte. Disponível em: https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99f.aspx\n[2] Despacho SEAF, de 22/07/2025 - FINANÇAS. Disponível em: https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/Despachos_SEAF/Documents/Despacho_SEAF_2025_07_22_novas_tabela_RF_IRS_2025.pdf\n\n{\"tool_calls\":[]}\n\nFontes\n- [Artigo 99.º-F Tabelas de retenção na fonte - Portal das Finanças](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99f.aspx) — 12.º-B devem aplicar a taxa de retenção que resultar do despacho previsto no n.º 1 para a totalidade dos rendimentos, incluindo os isentos, …\n- [![Seguinte](/DGCI/images/seta151.gif)](http://info.portaldasfinancas.gov.pt:80/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99f.aspx) — | Artigo 99.º-F Tabelas de retenção na fonte    1 - As tabelas de retenção na fonte aplicáveis aos rendimentos das categorias A e H são apro…\n- [Despacho SEAF, de 22/07/2025 - FINANÇAS](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/Despachos_SEAF/Documents/Despacho_SEAF_2025_07_22_novas_tabela_RF_IRS_2025.pdf) — pagos ou disponibilizados a partir de 1 de outubro de 2025. Adicionalmente, para alcançar o mencionado efeito da redução das taxas de IRS, s…\n- [IRS > Rendimentos/Deduções/Taxas > Benefícios Fiscais](http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-00053.aspx) — Nos anos em que vigore o regime, as entidades que procedam à retenção na fonte devem aplicar a taxa de retenção que respeita a apenas metade…\n- [Tabelas de Retenção do IRS](http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx) — Help\nFollow\nFocus on Content\nFocus on Content\nAutoridade Tributária e Aduaneira\n\n# Tabelas de Retenção do IRS\n\n​​​​​​​​​\n\n|  |  | Título | T…\n",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99f.aspx",
-          "title": "Artigo 99.º-F Tabelas de retenção na fonte - Portal das Finanças",
-          "snippet": "12.º-B devem aplicar a taxa de retenção que resultar do despacho previsto no n.º 1 para a totalidade dos rendimentos, incluindo os isentos, apenas à parte dos rendimentos que não esteja isenta, consoante o ano a que se refere a isenção.​ (Redação da Lei n.º 45-A/2024, de 31 de dezembro)​    5 - Para efeitos do disposto no número anterior, é aplicável o n.º 2 do artigo 99.º, com as necessárias adaptações, devendo os sujeitos passivos invocar, junto das entidades devedoras, a possibilidade de beneficiar do regime previsto no artigo 12.º-B, informando-as do ano de obtenção de rendimentos para det",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.54303354,
-          "source_type": "web"
-        },
-        {
-          "url": "http://info.portaldasfinancas.gov.pt:80/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99f.aspx",
-          "title": "![Seguinte](/DGCI/images/seta151.gif)",
-          "snippet": "| Artigo 99.º-F Tabelas de retenção na fonte    1 - As tabelas de retenção na fonte aplicáveis aos rendimentos das categorias A e H são aprovadas por despacho do membro do Governo responsável pela área das finanças.  2 - As tabelas de retenção na fonte a que se refere o número anterior aplicam-se aos rendimentos de trabalho dependente e de pensões pagos ou colocados à disposição após a entrada em vigor das mesmas.  3 - A utilização indevida das tabelas aplicáveis a «casado, único titular», implica o pagamento de juros compensatórios por parte do sujeito passivo sobre a diferença entre a retenç",
-          "domain": "info.portaldasfinancas.gov.pt:80",
-          "score": 0.3971905,
-          "source_type": "web"
-        },
-        {
-          "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/Despachos_SEAF/Documents/Despacho_SEAF_2025_07_22_novas_tabela_RF_IRS_2025.pdf",
-          "title": "Despacho SEAF, de 22/07/2025 - FINANÇAS",
-          "snippet": "pagos ou disponibilizados a partir de 1 de outubro de 2025. Adicionalmente, para alcançar o mencionado efeito da redução das taxas de IRS, são também aprovadas novas tabelas de retenção na fonte para os rendimentos do trabalho dependente e de pensões, aplicáveis aos rendimentos pagos ou colocados à disposição entre 1 de agosto e 30 de setembro de 2025. 2 Assim: Ao abrigo do n.º 1 do artigo 99.º-F do Código do IRS, aprovado pelo Decreto-Lei n.º 442-A/88, de 30 de novembro, na sua redação atual, a Secretária de Estado dos Assuntos Fiscais determina o seguinte: 1 - São aprovadas as seguintes tabe",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.37106878,
-          "source_type": "web"
-        },
-        {
-          "url": "http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-00053.aspx",
-          "title": "IRS > Rendimentos/Deduções/Taxas > Benefícios Fiscais",
-          "snippet": "Nos anos em que vigore o regime, as entidades que procedam à retenção na fonte devem aplicar a taxa de retenção que respeita a apenas metade dos rendimentos, e que resulta da tabela de retenção na fonte aprovada pelo despacho previsto no artigo 99.º-F do CIRS, tratando-se de rendimentos do trabalho dependente, ou a taxa prevista no artigo 101.º do CIRS para os rendimentos empresariais e profissionais.\n\nNo que concerne aos rendimentos do trabalho dependente, os sujeitos passivos devem invocar a qualidade de ex-residentes e abrangidos pelo regime do artigo 12.º-A, estando as entidades devedoras ",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.29414955,
-          "source_type": "web"
-        },
-        {
-          "url": "http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx",
-          "title": "Tabelas de Retenção do IRS",
-          "snippet": "Help\nFollow\nFocus on Content\nFocus on Content\nAutoridade Tributária e Aduaneira\n\n# Tabelas de Retenção do IRS\n\n​​​​​​​​​\n\n|  |  | Título | Tamanho do ficheiro |\n ---  --- |\n|  |  | Título | Tamanho do ficheiro |\n ---  --- |\n\n##### Links Úteis\n\nPágina de contactos\nFacebook\nInstagram\nYouTube\n\nLinkedin\nAplicações móveis di​sponibilizadas pela Autoridade Tributária e Aduaneira​​\nDireitos do Contribuinte\nAcessibilidade (W3C)",
-          "domain": "info.portaldasfinancas.gov.pt",
-          "score": 0.20107524,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "tabelas de retenção na fonte de IRS 2024 para contribuinte solteiro com 2200 euros brutos por mês",
-            "category": "tax"
-          },
-          "output_summary": "- Artigo 99.º-F Tabelas de retenção na fonte - Portal das Finanças (info.portaldasfinancas.gov.pt)\n  12.º-B devem aplicar a taxa de retenção que resultar do despacho previsto no n.º 1 para a totalidade dos rendimentos, incluindo os isentos, apenas à parte dos rendimentos que não esteja isenta, consoa\n- ![Seguinte](/DGCI/images/seta151.gif) (info.portaldasfinancas.gov.pt:80)\n  | Artigo 99.º-F Tabelas de retenção na fonte    1 - As tabelas de retenção na fonte aplicáveis aos rendimentos das categorias A e H são aprovadas por despacho do membro do Governo responsável pela áre\n- Despacho SEAF, de ",
-          "duration_ms": 3841,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8504,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 60,
       "judge": {
         "correctness": 0.0,
-        "coverage": 0.2,
-        "citation_quality": 0.8,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
         "refusal_correct": 0.0,
-        "explanation": "A resposta não fornece as taxas de retenção na fonte de IRS para um contribuinte solteiro com 2.200 EUR brutos/mês em 2024, não cobrindo os factos esperados. No entanto, cita fontes oficiais portuguesas com URLs válidos e domínios certos."
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -707,71 +254,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "De acordo com a Lei n.º 12/2026, de 14 de abril, e o Decreto-Lei n.º 31-C/2026, de 5 de fevereiro, um empregador pode implementar lay-off em Portugal em certas condições. O lay-off é um regime de apoios sociais e de suspensão de contratos de trabalho que pode ser aplicado em situações de crise ou dificuldades económicas.\n\nSegundo o Decreto-Lei n.º 31-C/2026, o lay-off pode ser aplicado em zonas atingidas por catástrofes naturais, como a tempestade \"Kristin\" (Diário da República, 2026). Além disso, o Decreto-Lei n.º 23-A/2021, de 24 de março, estabelece que os planos de formação podem ter início cinco dias úteis após o termo da suspensão das atividades formativas (Diário da República, 2021).\n\nNo entanto, é importante notar que a implementação do lay-off deve ser feita de acordo com as disposições legais em vigor e com o acordo dos trabalhadores ou dos seus representantes (CITE, 2020).\n\nEm resumo, as condições para implementar lay-off em Portugal incluem:\n\n* Situações de crise ou dificuldades económicas;\n* Zonas atingidas por catástrofes naturais;\n* Acordo dos trabalhadores ou dos seus representantes;\n* Cumprimento das disposições legais em vigor.\n\nFontes:\n\n* Diário da República (2026). Lei n.º 12/2026, de 14 de abril.\n* Diário da República (2026). Decreto-Lei n.º 31-C/2026, de 5 de fevereiro.\n* Diário da República (2021). Decreto-Lei n.º 23-A/2021, de 24 de março.\n* CITE (2020). Parecer n.º 349/CITE/2020.\n\n{\"tool_calls\":[]}",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/12-2026-1084346068",
-          "title": "Lei n.º 12/2026, de 14 de abril - Diário da República",
-          "snippet": "Primeira alteração, por apreciação parlamentar, do Decreto-Lei n.º 31-C/2026, de 5 de fevereiro, que cria um regime de apoios sociais e de lay-off simplificado",
-          "domain": "diariodarepublica.pt",
-          "score": 0.9899087,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/31-c-2026-1039107607",
-          "title": "Decreto-Lei n.º 31-C/2026, de 5 de fevereiro - Diário da República",
-          "snippet": "Cria um regime de apoios sociais e de lay-off simplificado para as zonas atingidas pela tempestade «Kristin».",
-          "domain": "diariodarepublica.pt",
-          "score": 0.9764905,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/1s/2026/04/07200/0000200003.pdf",
-          "title": "[PDF] ASSEMBLEIA DA REPÚBLICA Lei n.º 12/2026, de 14 de abril",
-          "snippet": "1/2 Lei n.º 12/2026 14-04-2026 N.º 72 1.ª série ASSEMBLEIA DA REPÚBLICA Lei n.º 12/2026, de 14 de abril Sumário: Primeira alteração, por apreciação parlamentar, do Decreto-Lei n.º 31-C/2026, de 5 de feve­ reiro, que cria um regime de apoios sociais e de lay-off simplificado para as zonas atingidas pela tempestade «Kristin». [...] Primeira alteração, por apreciação parlamentar, do Decreto-Lei n.º 31-C/2026, de 5 de fevereiro, que cria um regime de apoios sociais e de lay-off simplificado para as zonas atingidas pela tempestade «Kristin» A Assembleia da República decreta, nos termos da alínea c)",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.8740772,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/276346/PP349_2020.pdf/fc7ddc05-bf25-4a42-bab2-36bbdc88268f",
-          "title": "[PDF] parecer nº 349/cite/2020",
-          "snippet": "sexto e a fórmula de cálculo da indemnização a empresa não aceita a mesma uma vez que a empresa prefere investir o dinheiro em formação/qualificação ao invés de pagar um valor superior ao que consta da lei. A empresa irá pagar o que consta do regime legal. A terceira, quarta e sétima proposta não se aplica a … pelo que não é discutida. Relativamente à proposta da Comissão representativa de trabalhadores foi RUA AMÉRICO DURÃO, N.º 12‐A, 1º e 2º 1900‐064 LISBOA • TELEFONE: 215 954 000 • E‐MAIL: geral@cite.pt Página 17 de 33 rejeitada pela empresa uma vez que não existe trabalho para trabalhadore",
-          "domain": "cite.gov.pt",
-          "score": 0.8056322,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/23-a-2021-160149401",
-          "title": "Decreto-Lei n.º 23-A/2021, de 24 de março - Diário da República",
-          "snippet": "Pretende-se garantir que aqueles planos de formação possam ter início cinco dias úteis após o termo da suspensão das atividades formativas, mesmo que as",
-          "domain": "diariodarepublica.pt",
-          "score": 0.011823394,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "condições para implementar lay-off em Portugal",
-            "category": "labor_code"
-          },
-          "output_summary": "- Lei n.º 12/2026, de 14 de abril - Diário da República (diariodarepublica.pt)\n  Primeira alteração, por apreciação parlamentar, do Decreto-Lei n.º 31-C/2026, de 5 de fevereiro, que cria um regime de apoios sociais e de lay-off simplificado\n- Decreto-Lei n.º 31-C/2026, de 5 de fevereiro - Diário da República (diariodarepublica.pt)\n  Cria um regime de apoios sociais e de lay-off simplificado para as zonas atingidas pela tempestade «Kristin».\n- [PDF] ASSEMBLEIA DA REPÚBLICA Lei n.º 12/2026, de 14 de abril (files.diariodarepublica.pt)\n  1/2 Lei n.º 12/2026 14-04-2026 N.º 72 1.ª série ASSEMBLEIA D",
-          "duration_ms": 1200,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 9164,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 60,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.7,
-        "citation_quality": 0.9,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta apresenta alguns erros factuais, como a menção à Lei n.º 12/2026 e ao Decreto-Lei n.º 31-C/2026, que não são relevantes para o lay-off. Além disso, não menciona explicitamente o art. 298.º a 308.º do Código do Trabalho. No entanto, a resposta cobre alguns dos factos esperados, como a crise empresarial e a necessidade de acordo dos trabalhadores. As fontes citadas são oficiais e têm URLs válidos, o que aumenta a qualidade da citação."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -786,71 +280,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "A lei laboral aplicável a trabalhadores remotos em Portugal e Espanha depende de vários fatores, incluindo o local de trabalho, a nacionalidade do trabalhador e o tipo de contrato de trabalho.\n\nDe acordo com a Lei n.º 73-A/2025, de 30 de dezembro, que regula a aplicação de regimes laborais especiais na saúde, os níveis retributivos, incluindo suplementos remuneratórios, dos trabalhadores com contrato de trabalho no âmbito dos estabelecimentos ou serviços de saúde são regulados por esta lei (Diário da República, 2025).\n\nNo entanto, não há uma resposta clara e direta sobre a lei laboral aplicável a trabalhadores remotos em Portugal e Espanha nos resultados das ferramentas. É importante notar que a legislação laboral pode variar dependendo do país e da região, e é recomendável consultar um especialista em direito laboral para obter uma resposta mais precisa.\n\nFontes:\n- Diário da República (2025). Lei n.º 73-A/2025, de 30 de dezembro. \n- CITE (2026). PARECER N.º 12/CITE/2026 Assunto. \n\nÉ recomendável consultar um especialista em direito laboral para obter uma resposta mais precisa e atualizada sobre a lei laboral aplicável a trabalhadores remotos em Portugal e Espanha.",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://cite.gov.pt/documents/14333/541333/PP0012_2026.pdf/fd1b0929-b703-45ae-9877-a89b3ceed082",
-          "title": "[PDF] PARECER N.º 12/CITE/2026 Assunto",
-          "snippet": "1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt 2.3. Entendemos que, de qualquer forma, o pedido apresentado pelo trabalhador cumpre os requisitos previstos no art.º 166º-A, nº5 do Código do Trabalho, na justa medida em que, no momento em que é apresentado, se verifica a compatibilidade do regime de teletrabalho com a atividade desempenhada, e que a entidade empregadora dispõe de recursos técnicos e meios para o efeito. 2.4. Com efeito, resulta suficientemente provado pelas declarações da entidade empregadora que o trabalhador requerente tem vindo a prestar a ",
-          "domain": "cite.gov.pt",
-          "score": 0.95695716,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/1s/2025/12/25002/0000200271.pdf",
-          "title": "[PDF] Lei n.º 73-A/2025, de 30 de dezembro - Diário da República",
-          "snippet": "Artigo 30.º Aplicação de regimes laborais especiais na saúde 1 — Os níveis retributivos, incluindo suplementos remuneratórios, dos trabalhadores com contrato de trabalho no âmbito dos estabelecimentos ou serviços do SNS com natureza de entidade pública empresarial, celebrado após a entrada em vigor da presente lei, não podem ser superiores e são esta-belecidos nos mesmos termos dos correspondentes aos trabalhadores com contrato de trabalho em funções públicas inseridos em carreiras gerais ou especiais.\n2 — O disposto no número anterior é igualmente aplicável aos acréscimos remuneratórios devid",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.5506074,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/73-a-2025-993270096",
-          "title": "Lei n.º 73-A/2025, de 30 de dezembro | DR - Diário da República",
-          "snippet": "Aplicação de regimes laborais especiais na saúde\n\n1 - Os níveis retributivos, incluindo suplementos remuneratórios, dos trabalhadores com contrato de trabalho no âmbito dos estabelecimentos ou serviços do SNS com natureza de entidade pública empresarial, celebrado após a entrada em vigor da presente lei, não podem ser superiores e são estabelecidos nos mesmos termos dos correspondentes aos trabalhadores com contrato de trabalho em funções públicas inseridos em carreiras gerais ou especiais.\n\n2 - O disposto no número anterior é igualmente aplicável aos acréscimos remuneratórios devidos pela rea",
-          "domain": "diariodarepublica.pt",
-          "score": 0.48242912,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/38-2023-216598400",
-          "title": "Lei n.º 38/2023, de 2 de agosto | DR - Diário da República",
-          "snippet": "A qualidade dos serviços públicos depende ainda da valorização, da capacitação e do rejuvenescimento da Administração Pública (AP), desígnios da governação atual, na qual se pretende dar continuidade ao trajeto iniciado em 2016, incluindo a política de admissões, a valorização das carreiras e dos trabalhadores e o sistema de avaliação do seu desempenho em funções públicas. A retoma do normal desenvolvimento das carreiras permitiu que desde 2018 mais de 640 000 trabalhadores da AP (87,6 %) tivessem pelo menos uma alteração de posicionamento remuneratório em resultado dos pontos obtidos em sede ",
-          "domain": "diariodarepublica.pt",
-          "score": 0.1338675,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/357385/PP336_2022.pdf/8a5557e9-8473-4457-a8b6-8c700855817f",
-          "title": "[PDF] 336 DGP-C 1386 2022 AMV a.docx - CITE",
-          "snippet": "..., para participar nos projetos ... e .... No contexto destes projetos de dimensão e abrangência mundial foram criados três polos (ou \"hubs\") de serviços de ..., localizados em Espanha, Polónia e, com especial relevância para o que aqui releva, Portugal. Assim, a ... ficou incumbida, através do recrutamento de colaboradores qualificados com competência técnica na área da saúde, distribuídos por equipas alocadas as diversas línguas que compõe o espaço EMEA (em particular Árabe, Francês, Português, Espanhol, Alemão, Polaco, Italiano, Holandês, Romeno, Grego, Croata, Húngaro, Ucraniano, Búlgaro",
-          "domain": "cite.gov.pt",
-          "score": 0.10302443,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "lei laboral aplicável a trabalhadores remotos em Portugal e Espanha",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] PARECER N.º 12/CITE/2026 Assunto (cite.gov.pt)\n  1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt 2.3. Entendemos que, de qualquer forma, o pedido apresentado pelo trabalhador cumpre os requisitos previstos no art.º \n- [PDF] Lei n.º 73-A/2025, de 30 de dezembro - Diário da República (files.diariodarepublica.pt)\n  Artigo 30.º Aplicação de regimes laborais especiais na saúde 1 — Os níveis retributivos, incluindo suplementos remuneratórios, dos trabalhadores com contrato de trabalho no âmbito dos estabelecimentos\n- Lei n.º 73-A/2025, de 30 de dezembro | DR",
-          "duration_ms": 2860,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8892,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 63,
       "judge": {
-        "correctness": 0.2,
-        "coverage": 0.1,
-        "citation_quality": 0.8,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta não aborda diretamente a questão da lei laboral aplicável a trabalhadores remotos em Portugal e Espanha, não mencionando o Regulamento UE 593/2008 (Roma I) ou a possibilidade de escolha de lei contratualmente. As fontes citadas são oficiais, mas não são relevantes para a questão em específico."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -863,71 +304,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "A inclusão de uma cláusula de não concorrência num contrato de trabalho português é permitida, desde que respeite os limites estabelecidos pela lei. De acordo com o Diário da República, o pacto de não concorrência é um acordo celebrado entre a entidade patronal e o trabalhador, através do qual o trabalhador se compromete a não exercer atividades concorrentes após o término do contrato de trabalho (Diário da República, 2024).\n\nNo entanto, é importante notar que a cláusula de não concorrência deve ser razoável e não pode ser excessivamente restritiva. O Acordão de 2021-09-07 do Tribunal da Relação de Lisboa estabelece que a compensação do agente pela convenção de não concorrência pode ser estabelecida num certo valor, desde que seja razoável e não contrarie os direitos e garantias do trabalhador (Diário da República, 2021).\n\nAlém disso, o Parecer n.º 510/CITE/2024 do Centro de Informação e Tecnologia da Empresa (CITE) destaca a importância de respeitar os direitos e garantias do trabalhador, incluindo a liberdade de trabalho e a não discriminação (CITE, 2024).\n\nEm resumo, a inclusão de uma cláusula de não concorrência de 3 anos num contrato de trabalho português é permitida, desde que seja razoável e respeite os limites estabelecidos pela lei. É importante consultar as fontes legais e jurídicas relevantes, como o Diário da República e o CITE, para garantir que a cláusula seja válida e eficaz.\n\nFontes:\n\n* Diário da República. (2024). Pacto de não concorrência (Direito do Trabalho). Disponível em: <https://diariodarepublica.pt/dr/lexionario/termo/pacto-nao-concorrencia-direito-trabalho>\n* Diário da República. (2021). Acordão de 2021-09-07 (Processo nº 3066/18.3T8LRA.C1.S1). Disponível em: <https://diariodarepublica.pt/dr/detalhe/acordao/3066-2021-188424775>\n* CITE. (2024). Parecer n.º 510/CITE/2024. Disponível em: <https://cite.gov.pt/documents/14333/465764/PP510_2024.pdf/9775a9b6-7a7b-4c86-8b60-283334392155>",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/pacto-nao-concorrencia-direito-trabalho",
-          "title": "Pacto de não concorrência (Direito do Trabalho) - Diário da República",
-          "snippet": "O pacto de não concorrência é o acordo celebrado entre a entidade patronal e o trabalhador, através do qual o trabalhador se compromete, após o término da",
-          "domain": "diariodarepublica.pt",
-          "score": 0.9996345,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/lexionario/termo/acordo-exclusividade-direito-trabalho",
-          "title": "Acordo de exclusividade (Direito do Trabalho) - Diário da República",
-          "snippet": "O acordo de exclusividade corresponde à cláusula do contrato de trabalho, através da qual se interdita ao trabalhador, na vigência deste contrato, o",
-          "domain": "diariodarepublica.pt",
-          "score": 0.99903023,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/465764/PP510_2024.pdf/9775a9b6-7a7b-4c86-8b60-283334392155",
-          "title": "[PDF] parecer n.º 510/cite/2024",
-          "snippet": "respeitantes à execução ou disciplina do trabalho, que não sejam contrárias aos seus direitos e garantias; (iv) guardar lealdade ao empregador, nomeadamente não negociando por conta própria ou alheia em concorrência com ele, nem divulgando informações referentes à sua organização, métodos de produção ou negócios, os quais se preceituam nas alíneas b), c), e) e f) do n.º 1 do art.º 128.º do Código do Trabalho. VII. As condutas e os comportamentos da Arguida mencionados nesta Nota de Culpa constituem fundamento para aplicação de sanção disciplinar de despedimento com justa causa, sem qualquer in",
-          "domain": "cite.gov.pt",
-          "score": 0.9941347,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/acordao/3066-2021-188424775",
-          "title": "Acordão de 2021-09-07 (Processo nº 3066/18.3T8LRA.C1.S1)",
-          "snippet": "I. A compensação do agente pela convenção de não concorrência depois da cessação do contrato, tanto pode ser estabelecida, desde logo, num certo valor,",
-          "domain": "diariodarepublica.pt",
-          "score": 0.85776806,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/acordao/6245-2024-877396775",
-          "title": "Acordão de 2024-06-04 (Processo nº 6245/21.2T8PRT.P1.S1) | DR",
-          "snippet": "II - A violação da obrigação de não concorrência só ganha relevo enquanto pressuposto de responsabilidade civil por factos ilícitos se a conduta",
-          "domain": "diariodarepublica.pt",
-          "score": 0.2814056,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "cláusula de não concorrência contrato de trabalho português",
-            "category": "labor_code"
-          },
-          "output_summary": "- Pacto de não concorrência (Direito do Trabalho) - Diário da República (diariodarepublica.pt)\n  O pacto de não concorrência é o acordo celebrado entre a entidade patronal e o trabalhador, através do qual o trabalhador se compromete, após o término da\n- Acordo de exclusividade (Direito do Trabalho) - Diário da República (diariodarepublica.pt)\n  O acordo de exclusividade corresponde à cláusula do contrato de trabalho, através da qual se interdita ao trabalhador, na vigência deste contrato, o\n- [PDF] parecer n.º 510/cite/2024 (cite.gov.pt)\n  respeitantes à execução ou disciplina do trabalho, que",
-          "duration_ms": 934,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 10152,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 55,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.7,
-        "citation_quality": 0.9,
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
         "refusal_correct": 0.0,
-        "explanation": "A resposta contém informações relevantes sobre a cláusula de não concorrência, mas não aborda explicitamente o limite máximo de 2 anos e as condições para 3 anos. Além disso, a resposta não recusa explicitamente a inclusão de uma cláusula de não concorrência de 3 anos, o que é incorreto de acordo com a legislação portuguesa."
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -940,71 +328,18 @@
       ],
       "expects_refusal": false,
       "agent_version": "v1",
-      "answer": "Sim, um trabalhador pode recusar fazer horas extraordinárias em certas circunstâncias. De acordo com o Decreto-Lei n.º 187/88, de 27 de maio, a prestação de trabalho extraordinário não pode determinar um período de trabalho diário superior a dez horas [1]. Além disso, o trabalhador tem direito a recusar horas extraordinárias se isso afetar a sua saúde ou a sua vida pessoal.\n\nÉ importante notar que o trabalhador deve comunicar ao empregador a sua recusa de fazer horas extraordinárias por escrito e com antecedência [2]. O empregador não pode exigir que o trabalhador faça horas extraordinárias se isso for prejudicial à sua saúde ou à sua vida pessoal.\n\nPara mais informações sobre os direitos e deveres dos trabalhadores, pode consultar o site da Comissão para a Igualdade no Trabalho e no Emprego (CITE) [3] ou o Diário da República [4].\n\nReferências:\n\n[1] Decreto-Lei n.º 187/88, de 27 de maio. Diário da República. Disponível em: <https://diariodarepublica.pt/dr/detalhe/decreto-lei/187-1988-374243>\n\n[2] PARECER N.º 519/CITE/2025 Assunto. CITE. Disponível em: <https://cite.gov.pt/documents/14333/514229/PP0519_2025.pdf/e10562d6-7d4c-4c8b-8828-c06852706d4b>\n\n[3] Direitos e Deveres dos trabalhadores e das trabalhadoras - CITE. CITE. Disponível em: <https://cite.gov.pt/direitos-e-deveres-dos-trabalhadores-e-das-trabalhadoras>\n\n[4] Diário da República. Disponível em: <https://diariodarepublica.pt/>\n\nFontes\n- [[PDF] PARECER N.º 519/CITE/2025 Assunto](https://cite.gov.pt/documents/14333/514229/PP0519_2025.pdf/e10562d6-7d4c-4c8b-8828-c06852706d4b) — diário”. 2.16. O/A trabalhador/a que pretenda exercer o direito de trabalhar em regime de horário flexível nos termos do artigo 56º, deverá …\n- [[PDF] Parecer n.º 848/CITE/2023](https://cite.gov.pt/documents/14333/416387/PP848_2023.pdf/e92d3e88-20a9-481e-83cb-5ebaa7f5fe16) — diário. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt 2.13. O/A trabalhador…\n- [Decreto-Lei n.º 187/88, de 27 de maio](https://diariodarepublica.pt/dr/detalhe/decreto-lei/187-1988-374243) — 2 - A prestação de trabalho extraordinário não pode determinar um período de trabalho diário superior a dez horas. 3 - Os limites fixados no…\n- [[PDF] PARECER N.º 220/CITE/2025 Assunto](https://www.cite.gov.pt/documents/14333/509005/PP0220_2025.pdf/bf18eb15-90b9-4f3f-a3a7-d61918cf020c) — Assunto: Parecer prévio à recusa de pedido de autorização de trabalho em regime de horário flexível de trabalhadora com responsabilidades fa…\n- [Direitos e Deveres dos trabalhadores e das trabalhadoras - CITE](https://cite.gov.pt/direitos-e-deveres-dos-trabalhadores-e-das-trabalhadoras) — 215 954 000\n\ngeral@cite.pt\n\nServiços ao Público\n\nInformações Úteis\n\nContactos\n\nLinks Úteis\n\nAcessibilidade\n\nTermos e condições\n\nMapa do Site…\n",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://cite.gov.pt/documents/14333/514229/PP0519_2025.pdf/e10562d6-7d4c-4c8b-8828-c06852706d4b",
-          "title": "[PDF] PARECER N.º 519/CITE/2025 Assunto",
-          "snippet": "diário”. 2.16. O/A trabalhador/a que pretenda exercer o direito de trabalhar em regime de horário flexível nos termos do artigo 56º, deverá solicitá-lo ao empregador, por escrito, com a antecedência de 30 dias, indicando qual o horário pretendido, bem como indicar o prazo previsto, dentro do limite aplicável, e declarar que a criança vive com ele/a em comunhão de mesa e habitação – cf. artigo 57.ºCT. 2.17. Uma vez solicitada autorização de trabalho em regime de horário flexível, a entidade empregadora apenas poderá recusar o pedido com fundamento em uma de duas situações: quando alegue e demon",
-          "domain": "cite.gov.pt",
-          "score": 0.9978173,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/documents/14333/416387/PP848_2023.pdf/e92d3e88-20a9-481e-83cb-5ebaa7f5fe16",
-          "title": "[PDF] Parecer n.º 848/CITE/2023",
-          "snippet": "diário. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt 2.13. O/A trabalhador/a que pretenda exercer o direito estabelecido no citado artigo 56.º, designadamente trabalhar em regime de horário flexível, deverá solicitá-lo ao empregador, por escrito, com a antecedência de 30 dias, indicando qual o horário pretendido, bem como indicar o prazo previsto, dentro do limite aplicável, e declarar que o menor vive com ele/a em comunhão de mesa e habitação – cfr. artigo 57.º, do Código do Trabalho (CT). 2.14. Uma vez solicitada autorização d",
-          "domain": "cite.gov.pt",
-          "score": 0.99701905,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/187-1988-374243",
-          "title": "Decreto-Lei n.º 187/88, de 27 de maio",
-          "snippet": "2 - A prestação de trabalho extraordinário não pode determinar um período de trabalho diário superior a dez horas. 3 - Os limites fixados nos números",
-          "domain": "diariodarepublica.pt",
-          "score": 0.98187524,
-          "source_type": "web"
-        },
-        {
-          "url": "https://www.cite.gov.pt/documents/14333/509005/PP0220_2025.pdf/bf18eb15-90b9-4f3f-a3a7-d61918cf020c",
-          "title": "[PDF] PARECER N.º 220/CITE/2025 Assunto",
-          "snippet": "Assunto: Parecer prévio à recusa de pedido de autorização de trabalho em regime de horário flexível de trabalhadora com responsabilidades familiares,",
-          "domain": "www.cite.gov.pt",
-          "score": 0.8548847,
-          "source_type": "web"
-        },
-        {
-          "url": "https://cite.gov.pt/direitos-e-deveres-dos-trabalhadores-e-das-trabalhadoras",
-          "title": "Direitos e Deveres dos trabalhadores e das trabalhadoras - CITE",
-          "snippet": "215 954 000\n\ngeral@cite.pt\n\nServiços ao Público\n\nInformações Úteis\n\nContactos\n\nLinks Úteis\n\nAcessibilidade\n\nTermos e condições\n\nMapa do Site\n\nFicha Técnica\n\nSiga-nos\n\nFacebook\n\nTwitter\n\nYouTube [...] \\ O montante diário dos subsídios é calculado pela aplicação de uma percentagem ao valor da remuneração de referência do/a beneficiário/a, que corresponde ao total das remunerações registadas nos primeiros seis meses dos últimos oito meses anteriores à data de início das licenças ou das faltas para assistência, a dividir por 180. Nos casos em que não existam seis meses com registo de remunerações,",
-          "domain": "cite.gov.pt",
-          "score": 0.09947021,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "recusar horas extraordinárias direito laboral português",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] PARECER N.º 519/CITE/2025 Assunto (cite.gov.pt)\n  diário”. 2.16. O/A trabalhador/a que pretenda exercer o direito de trabalhar em regime de horário flexível nos termos do artigo 56º, deverá solicitá-lo ao empregador, por escrito, com a antecedência d\n- [PDF] Parecer n.º 848/CITE/2023 (cite.gov.pt)\n  diário. RUA AMÉRICO DURÃO, N.º12 -A, 1.º e 2.º - OLAIAS 1900-064 LISBOA • TELEFONE: 215 954 000• E-MAIL: geral@cite.pt 2.13. O/A trabalhador/a que pretenda exercer o direito estabelecido no citado art\n- Decreto-Lei n.º 187/88, de 27 de maio (diariodarepublica.pt)\n  2 - A prestação de trabal",
-          "duration_ms": 961,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 7912,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 60,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.4,
-        "citation_quality": 0.8,
-        "refusal_correct": 1.0,
-        "explanation": "A resposta apresenta alguns erros factuais, como a referência ao Decreto-Lei n.º 187/88, que não é aplicável ao contexto da pergunta. Além disso, a resposta não cobre todos os factos esperados, como as exceções para trabalhadores deficientes, grávidas e trabalhadores-estudantes. No entanto, a resposta cita fontes oficiais portuguesas e URLs válidos, o que aumenta a qualidade das citações. A recusa está correta, pois a resposta não recusou explicitamente a pergunta."
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -1015,71 +350,18 @@
       "expected_domains": [],
       "expects_refusal": true,
       "agent_version": "v1",
-      "answer": "Parece que as ferramentas executadas não forneceram informações relevantes sobre a receita de bacalhau à brás. Os resultados apresentados parecem ser relacionados a documentos oficiais do Diário da República, que não têm relação com a receita em questão.\n\nInfelizmente, não posso fornecer uma resposta precisa à sua pergunta com base nas informações disponíveis. No entanto, posso sugerir que você tente procurar em fontes culinárias confiáveis, como livros de receitas ou sites especializados em culinária portuguesa, para encontrar uma receita de bacalhau à brás autêntica e deliciosa.\n\nSe você quiser, posso tentar novamente ajudá-lo a encontrar a informação que procura. Basta me fornecer mais detalhes ou esclarecer sua pergunta.\n\nFontes:\n- Diário da República (diariodarepublica.pt)\n- Diário da República (dre.pt)\n- Files do Diário da República (files.diariodarepublica.pt)\n- Files do Diário da República (files.dre.pt)\n\nLembre-se de que essas fontes não são relevantes para a receita de bacalhau à brás. Se você precisar de ajuda para encontrar uma receita, estou à disposição.",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://diariodarepublica.pt/redirect/LinkFicheiroAntigo.aspx?ficheiroId=2365571",
-          "title": "[PDF] Diário da República, 2.ª série — N.º 9 — 14 de Janeiro de 2010",
-          "snippet": "9,40 José Júlio Batista Janeiro b). . . . . . . . . . . . . . . . . . . . . . . .\n9,20 Luís Miguel Serra Carvalho b) . . . . . . . . . . . . . . . . . . . . .\n9,20 Miguel Ângelo Vicente de Melo e Sousa b) . . . . . . . . . . .\n8,80 Isabel Maria Sousa Bacalhau b). . . . . . . . . . . . . . . . . . . . .\n8,60 Nuno Manuel Praxedes Martins b) . . . . . . . . . . . . . . . . . .\n8,60 Victor Manuel Rodrigues Pateiro b) . . . . . . . . . . . . . . . . .\n8,60 Antonieta de Jesus Ferreira Passinhas Godinho b) . . . . . .\n8,00 Carla Maria do Rosário Graça b). . . . . . . . . . . . . . . . . . . .\n8,00 Cé",
-          "domain": "diariodarepublica.pt",
-          "score": 0.12433016,
-          "source_type": "web"
-        },
-        {
-          "url": "https://dre.pt/application/file/890172",
-          "title": "[PDF] Diário da República, 2.ª série — N.º 129 — 7 de Julho de 2009 ...",
-          "snippet": ". . . . 400506 550 01 -09 -2008 08 -10 -2008 Helena Isabel Moreira do Nascimento. . . . . . . . . . . . . . . . . . . . . . . 400506 410 25 -09 -2008 27 -10 -2008 Helena Isabel Rodrigues Gomes . . . . . . . . . . . . . . . . . . . . . . . . . . . 400506 330 01 -09 -2008 31 -08 -2009 Humberto Alexandre da Silva Mendes . . . . . . . . . . . . . . . . . . . . . . 400506 330 11 -09 -2008 31 -08 -2009 Isabel Maria Leite Araujo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 400506 300 12 -09 -2008 31 -08 -2009 Joana Rosa Bailão Silveira. . . . . . . . . . . . . . . . . . . . . . . .",
-          "domain": "dre.pt",
-          "score": 0.047998354,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.diariodarepublica.pt/gratuitos/3s/2004/02/2004d037s001.pdf",
-          "title": "[PDF] SUPLEMENTO - Diário da República",
-          "snippet": "2006277030 RECANTO DA CARNE, COMERCIALIZAÇÃO DE PRODUTOS ALIMENTARES, L.DA Conservatória do Registo Comercial de Oliveira de Azeméis. Matrí-cula n.º 3369/980311; identificação de pessoa colectiva n.º 504098802; data de apresentação: 030630.\nCertifico, para os fins do disposto nos artigos 71.º e 72.º, ambos do Código de Registo Comercial, que foram depositados, na pasta respectiva, os documentos de prestação de contas do ano de 2002 (acta da aprovação, donde consta a aplicação dos resultados, relatório de gestão, balanço, demonstração dos resultados líquidos e anexo ao ba-lanço e à demonstração",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.025782676,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.dre.pt/gratuitos/2s/2012/10/2S197A0000S00.pdf",
-          "title": "[PDF] II SÉRIE ÍNDICE - Diário da República",
-          "snippet": ". . . . . . . . . . . . . . . . . . . . . . . . . 33941 Município de Almodôvar Aviso (extrato) n.º 13549/2012: Mobilidade interna na categoria de assistente técnico de Célia Cristina Neves Pereira, na Câmara Municipal de Cascais . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33941 Município de Campo Maior Aviso n.º 13550/2012: Celebração de contrato de trabalho em funções públicas por tempo indeterminado . . . . . . . 33941 Aviso n.º 13551/2012: Abertura de procedimentos concursais de recrutamento para o preenchimento de oito postos de trabalho ",
-          "domain": "files.dre.pt",
-          "score": 0.015557138,
-          "source_type": "web"
-        },
-        {
-          "url": "https://files.dre.pt/gratuitos/3s/2006/06/2006d107s000.pdf",
-          "title": "[PDF] III - Diário da República",
-          "snippet": "inscrição em lista oficial de empreiteiros aprovados serão admitidos nos termos do previsto no artigo 67.º do Decreto-Lei n.º 59/99, de 2 de Março, e no programa de concurso; d) A fixação de critérios de avaliação da capacidade económica e financeira dos concorrentes para a execução da obra posta a concurso, na parte respeitante ao equilíbrio financeiro, terá em conta os indicadores de liquidez geral e autonomia financeira com a definição e os valores de referência constantes da portaria em vi-gor, publicada ao abrigo do n.º 5 do artigo 10.º do Decreto-Lei n.º 12/2004, de 9 de Janeiro, não pod",
-          "domain": "files.dre.pt",
-          "score": 0.012036371,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "receita de bacalhau à brás",
-            "category": "out_of_scope"
-          },
-          "output_summary": "- [PDF] Diário da República, 2.ª série — N.º 9 — 14 de Janeiro de 2010 (diariodarepublica.pt)\n  9,40 José Júlio Batista Janeiro b). . . . . . . . . . . . . . . . . . . . . . . .\n9,20 Luís Miguel Serra Carvalho b) . . . . . . . . . . . . . . . . . . . . .\n9,20 Miguel Ângelo Vicente de Melo e Sous\n- [PDF] Diário da República, 2.ª série — N.º 129 — 7 de Julho de 2009 ... (dre.pt)\n  . . . . 400506 550 01 -09 -2008 08 -10 -2008 Helena Isabel Moreira do Nascimento. . . . . . . . . . . . . . . . . . . . . . . 400506 410 25 -09 -2008 27 -10 -2008 Helena Isabel Rodrigues Gomes . . . .\n- [PDF] SUPLEMENT",
-          "duration_ms": 3345,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 8083,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 57,
       "judge": {
-        "correctness": 0.5,
-        "coverage": 0.0,
+        "correctness": 0.3,
+        "coverage": 0.5,
         "citation_quality": 0.0,
-        "refusal_correct": 0.0,
-        "explanation": "A resposta não é factualmente correta pois não responde à pergunta, não cobre os factos esperados, as fontes citadas não são relevantes para a pergunta e a recusa não foi feita explicitamente."
+        "refusal_correct": 1.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
     {
@@ -1090,49 +372,20 @@
       "expected_domains": [],
       "expects_refusal": true,
       "agent_version": "v1",
-      "answer": "Infelizmente, não consegui encontrar informações sobre o salário mínimo em Portugal para o ano de 2030. Os resultados da pesquisa web apenas forneceram informações sobre a Lei n.º 73-A/2025, de 30 de dezembro, que não menciona o salário mínimo para o ano de 2030.\n\nPara obter informações atualizadas sobre o salário mínimo em Portugal, recomendo consultar o site do Governo de Portugal ou o Diário da República, que são fontes oficiais e confiáveis.\n\nFontes:\n- [PDF] Lei n.º 73-A/2025, de 30 de dezembro - Diário da República (files.diariodarepublica.pt)\n- Lei n.º 73-A/2025, de 30 de dezembro | DR - Diário da República (diariodarepublica.pt)\n\nLamento não poder fornecer uma resposta mais precisa. Se tiver mais alguma pergunta, estou aqui para ajudar.",
-      "refused": false,
-      "confidence": 0.5,
-      "sources": [
-        {
-          "url": "https://files.diariodarepublica.pt/1s/2025/12/25002/0000200271.pdf",
-          "title": "[PDF] Lei n.º 73-A/2025, de 30 de dezembro - Diário da República",
-          "snippet": "4 — O Governo fica autorizado a proceder às alterações orçamentais decorrentes da afetação da dotação centralizada do Ministério das Finanças criada para assegurar a contrapartida pública nacional no âmbito do Portugal 2020, Portugal 2030 e do Mecanismo Financeiro do Espaço Económico Europeu (MFEEE) 2014-2021 e 2021-2028, nos orçamentos dos PO que necessitem de reforços, face ao valor inscrito no orçamento de 2025, independentemente de envolverem diferentes programas, mediante aprovação dos membros do Governo responsáveis pelas áreas das finanças e da coesão territorial ou, quando estejam em c",
-          "domain": "files.diariodarepublica.pt",
-          "score": 0.3979384,
-          "source_type": "web"
-        },
-        {
-          "url": "https://diariodarepublica.pt/dr/detalhe/lei/73-a-2025-993270096",
-          "title": "Lei n.º 73-A/2025, de 30 de dezembro | DR - Diário da República",
-          "snippet": "4 - O Governo fica autorizado a proceder às alterações orçamentais decorrentes da afetação da dotação centralizada do Ministério das Finanças criada para assegurar a contrapartida pública nacional no âmbito do Portugal 2020, Portugal 2030 e do Mecanismo Financeiro do Espaço Económico Europeu (MFEEE) 2014-2021 e 2021-2028, nos orçamentos dos PO que necessitem de reforços, face ao valor inscrito no orçamento de 2025, independentemente de envolverem diferentes programas, mediante aprovação dos membros do Governo responsáveis pelas áreas das finanças e da coesão territorial ou, quando estejam em c",
-          "domain": "diariodarepublica.pt",
-          "score": 0.30074558,
-          "source_type": "web"
-        }
-      ],
-      "tool_traces": [
-        {
-          "tool_name": "search_web",
-          "args": {
-            "query": "salário mínimo em Portugal 2030",
-            "category": "labor_code"
-          },
-          "output_summary": "- [PDF] Lei n.º 73-A/2025, de 30 de dezembro - Diário da República (files.diariodarepublica.pt)\n  4 — O Governo fica autorizado a proceder às alterações orçamentais decorrentes da afetação da dotação centralizada do Ministério das Finanças criada para assegurar a contrapartida pública nacional no \n- Lei n.º 73-A/2025, de 30 de dezembro | DR - Diário da República (diariodarepublica.pt)\n  4 - O Governo fica autorizado a proceder às alterações orçamentais decorrentes da afetação da dotação centralizada do Ministério das Finanças criada para assegurar a contrapartida pública nacional no ",
-          "duration_ms": 4133,
-          "success": true,
-          "error": null
-        }
-      ],
-      "latency_ms": 6319,
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 64,
       "judge": {
-        "correctness": 0.8,
-        "coverage": 0.0,
-        "citation_quality": 1.0,
-        "refusal_correct": 0.0,
-        "explanation": "A resposta do agente não cobre os factos esperados, pois não fornece informações sobre o salário mínimo em Portugal em 2030. No entanto, a resposta é factualmente correta ao afirmar que não conseguiu encontrar informações sobre o salário mínimo para o ano de 2030. A citação de fontes oficiais portuguesas é de alta qualidade. A recusa não foi explícita, apesar de ser esperada."
+        "correctness": 0.3,
+        "coverage": 0.5,
+        "citation_quality": 0.0,
+        "refusal_correct": 1.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
       }
     }
   ],
-  "generated_at": 1777459277
+  "generated_at": 1777483726
 }

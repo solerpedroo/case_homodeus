@@ -6,16 +6,16 @@
   "n_cases": 15,
   "summary": {
     "n": 15,
-    "correctness_avg": 0.08,
-    "coverage_avg": 0.12,
-    "citation_quality_avg": 0.06,
-    "refusal_accuracy": 0.2,
-    "tool_call_accuracy": 0.2,
-    "latency_p50_ms": 116,
-    "latency_p95_ms": 27559,
+    "correctness_avg": 0.16,
+    "coverage_avg": 0.173,
+    "citation_quality_avg": 0.347,
+    "refusal_accuracy": 0.333,
+    "tool_call_accuracy": 0.467,
+    "latency_p50_ms": 273,
+    "latency_p95_ms": 51488,
     "by_difficulty": {
       "basic": 0.2,
-      "intermediate": 0.0,
+      "intermediate": 0.3,
       "advanced": 0.0,
       "edge": 0.0,
       "refusal": 0.3
@@ -34,7 +34,7 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "O salário mínimo nacional atual em Portugal é de € 870,00, com efeitos a partir de 1 de janeiro de 2025, de acordo com o Decreto-Lei n.º 112/2024, de 19 de dezembro, publicado no Diário da República.\n\nNo entanto, é importante notar que o valor da retribuição mínima mensal garantida pode ser atualizado anualmente. De acordo com o Decreto-Lei n.º 139/2025, de 29 de dezembro, o valor da retribuição mínima mensal garantida foi atualizado para 2026.\n\nPara obter informações atualizadas e precisas, recomendo consultar o Diário da República ou outras fontes oficiais.\n\nFontes:\n- [Decreto-Lei n.º 112/2024, de 19 de dezembro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/112-2024-900706889) — Diário da República\n- [Decreto-Lei n.º 139/2025, de 29 de dezembro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/139-2025-992879809) — Diário da República\n- [Decreto-Lei n.º 29-A/2026, de 30 de janeiro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272) — Diário da República\n- [Decreto Legislativo Regional n.º 1/2026/M, de 3 de fevereiro](https://diariodarepublica.pt/dr/detalhe/decreto-legislativo-regional/1-2026-1033291312) — Diário da República",
+      "answer": "O salário mínimo nacional em Portugal é de 1.499,15 € para os trabalhadores com 16 anos ou mais, de acordo com o Decreto-Lei n.º 29-A/2026, de 30 de janeiro, publicado no Diário da República [1].\n\nÉ importante notar que este valor pode ser atualizado anualmente, por isso é sempre recomendável verificar as fontes oficiais para obter a informação mais atualizada.\n\nFontes:\n[1] Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República (https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272)",
       "refused": false,
       "confidence": 0.95,
       "sources": [
@@ -47,11 +47,27 @@
           "source_type": "web"
         },
         {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272",
+          "title": "Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República",
+          "snippet": "Decreto-Lei n.º 29-A/2026, de 30 de janeiro ; 16. 1 499,15 € ; 17. 1 551,78 € ; 18. 1 604,41 € ; 19. 1 657,04 €.",
+          "domain": "diariodarepublica.pt",
+          "score": 0.026759284,
+          "source_type": "web"
+        },
+        {
           "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/112-2024-900706889",
           "title": "Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República",
           "snippet": "Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a partir de 1 de janeiro de 2025. Foram",
           "domain": "diariodarepublica.pt",
           "score": 0.02350945,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-legislativo-regional/1-2026-1033291312",
+          "title": "Decreto Legislativo Regional n.º 1/2026/M, de 3 de fevereiro | DR",
+          "snippet": "O valor da retribuição mínima mensal garantida para vigorar na Região Autónoma da Madeira é de € 980,00, nos termos do artigo 6.º do Decreto",
+          "domain": "diariodarepublica.pt",
+          "score": 0.017045317,
           "source_type": "web"
         },
         {
@@ -65,9 +81,25 @@
         {
           "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272",
           "title": "Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República",
-          "snippet": "Altera o valor da base remuneratória e atualiza os valores das remunerações da Administração Pública.",
+          "snippet": "Decreto-Lei n.º 29-A/2026, de 30 de janeiro ; 16. 1 499,15 € ; 17. 1 551,78 € ; 18. 1 604,41 € ; 19. 1 657,04 €.",
           "domain": "diariodarepublica.pt",
-          "score": 0.00048595612,
+          "score": 0.46490157,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/despacho/233-a-2026-998488151",
+          "title": "Despacho n.º 233-A/2026, de 6 de janeiro - Diário da República",
+          "snippet": "Estas incluem a atualização dos escalões do IRS, a atualização do Mínimo de Existência para 12 880 €, e a proteção do aumento da remuneração mínima mensal",
+          "domain": "diariodarepublica.pt",
+          "score": 0.40356684,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/1s/2026/04/06600/0003200045.pdf",
+          "title": "[PDF] Acórdão do Tribunal Constitucional n.º 275/2026 - Diário da República",
+          "snippet": "2.2 — Regressando à hipótese dos autos, verificamos que, como se reconhece na decisão recorrida, o recorrente tem um rendimento líquido disponível mensal de €669,00 e a taxa de justiça a suportar na ação judicial para a qual pediu o benefício do apoio judiciário é de €612,00. O valor de cada presta­ ção mensal a suportar na modalidade de pagamento faseado seria, no caso do recorrente, de €60,00 (artigos 11.º, n.º 2, e 12.º, conjugados com o Anexo IV, da Portaria n.º 1085-A/2004, de 31 de agosto), o que reduziria aquele rendimento mensal a €609,00 [ou seja, inferior ao salário mínimo nacional (",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.2798285,
           "source_type": "web"
         },
         {
@@ -75,7 +107,15 @@
           "title": "Decreto Legislativo Regional n.º 1/2026/M, de 3 de fevereiro | DR",
           "snippet": "Decreto Legislativo Regional n.º 1/2026/M. Aprova o valor da retribuição mínima mensal garantida para vigorar na Região Autónoma da Madeira.",
           "domain": "diariodarepublica.pt",
-          "score": 0.00034062934,
+          "score": 0.0076956474,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/portaria/64-2026-1043405190",
+          "title": "Portaria n.º 64/2026/1, de 10 de fevereiro | DR - Diário da República",
+          "snippet": "Atualiza os valores devidos pela prestação de serviços remunerados pelos militares da GNR e pelo pessoal policial da PSP e reforça a eficiência",
+          "domain": "diariodarepublica.pt",
+          "score": 0.0022343625,
           "source_type": "web"
         }
       ],
@@ -86,19 +126,51 @@
             "query": "salário mínimo nacional em Portugal",
             "category": "labor_code"
           },
-          "output_summary": "- Decreto-Lei n.º 573/99, de 30 de dezembro - Diário da República (diariodarepublica.pt)\n  Aprova os novos valores do salário mínimo nacional para vigorarem a partir de 1 de Janeiro de 2000.\n- Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República (diariodarepublica.pt)\n  Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a partir de 1 de janeiro de 2025. Foram\n- Decreto-Lei n.º 139/2025, de 29 de dezembro | DR (diariodarepublica.pt)\n  Atualiza o valor da retribuição mínima mensal garantida para 2026.\n- Decreto-Lei n.º 29-A/2026, de",
-          "duration_ms": 4426,
+          "output_summary": "- Decreto-Lei n.º 573/99, de 30 de dezembro - Diário da República (diariodarepublica.pt)\n  Aprova os novos valores do salário mínimo nacional para vigorarem a partir de 1 de Janeiro de 2000.\n- Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República (diariodarepublica.pt)\n  Decreto-Lei n.º 29-A/2026, de 30 de janeiro ; 16. 1 499,15 € ; 17. 1 551,78 € ; 18. 1 604,41 € ; 19. 1 657,04 €.\n- Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República (diariodarepublica.pt)\n  Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a p",
+          "duration_ms": 963,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "fetch_url",
+          "args": {
+            "url": "https://www.portugal.gov.pt/pt/gc22/area-de-governo/trabalho-e-da-formacao-profissional/salario-minimo-nacional"
+          },
+          "output_summary": "URL not in allowed official domains: https://www.portugal.gov.pt/pt/gc22/area-de-governo/trabalho-e-da-formacao-profissional/salario-minimo-nacional",
+          "duration_ms": 0,
+          "success": false,
+          "error": "URL not in allowed official domains: https://www.portugal.gov.pt/pt/gc22/area-de-governo/trabalho-e-da-formacao-profissional/salario-minimo-nacional"
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "salário mínimo nacional em Portugal 2026",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "salário mínimo nacional em Portugal 2026",
+            "category": "labor_code"
+          },
+          "output_summary": "- Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República (diariodarepublica.pt)\n  Decreto-Lei n.º 29-A/2026, de 30 de janeiro ; 16. 1 499,15 € ; 17. 1 551,78 € ; 18. 1 604,41 € ; 19. 1 657,04 €.\n- Despacho n.º 233-A/2026, de 6 de janeiro - Diário da República (diariodarepublica.pt)\n  Estas incluem a atualização dos escalões do IRS, a atualização do Mínimo de Existência para 12 880 €, e a proteção do aumento da remuneração mínima mensal\n- [PDF] Acórdão do Tribunal Constitucional n.º 275/2026 - Diário da República (files.diariodarepublica.pt)\n  2.2 — Regressando à hipótese dos au",
+          "duration_ms": 4167,
           "success": true,
           "error": null
         }
       ],
-      "latency_ms": 26771,
+      "latency_ms": 9094,
       "judge": {
-        "correctness": 0.6,
-        "coverage": 0.8,
-        "citation_quality": 0.9,
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 1.0,
         "refusal_correct": 1.0,
-        "explanation": "A resposta fornece informações sobre o salário mínimo nacional, mas não está atualizada para o valor vigente em 2026. No entanto, o agente fornece fontes oficiais e menciona a possibilidade de atualização anual, o que demonstra uma boa compreensão do tema. A recusa não foi necessária, pois o agente tentou fornecer uma resposta, mesmo que não seja totalmente precisa."
+        "explanation": "A resposta do agente não está de acordo com os factos esperados, pois o salário mínimo nacional em vigor é de 920 EUR/mês, de acordo com o Decreto-Lei n.º 139/2025, e não 1.499,15 € como mencionado. No entanto, o agente cita fontes oficiais portuguesas válidas e não recusou explicitamente a resposta, o que está de acordo com as expectativas."
       }
     },
     {
@@ -112,18 +184,114 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "Ocorreu um erro ao contactar o modelo.",
-      "refused": true,
-      "confidence": 0.0,
-      "sources": [],
-      "tool_traces": [],
-      "latency_ms": 347,
+      "answer": "Infelizmente, não consegui encontrar uma resposta clara e direta às suas perguntas com base nas ferramentas executadas. No entanto, posso dizer que o Código do Trabalho português estabelece regras gerais sobre férias e descanso compensatório para trabalhadores.\n\nDe acordo com o Código do Trabalho, os trabalhadores têm direito a um período de férias anuais remuneradas. No entanto, não consegui encontrar uma menção específica ao número de dias de férias a que um trabalhador a tempo inteiro tem direito.\n\nPosso sugerir que consulte o Código do Trabalho ou outras fontes oficiais, como o Diário da República ou o portal da Autoridade para as Condições do Trabalho (ACT), para obter informações mais precisas e atualizadas sobre o tema.\n\nFontes:\n- [Código do Trabalho - CT](https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475) \n- [Decreto-Lei n.º 397/91, de 16 de outubro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/397-1991-289059) \n- [CodigoTrabalho_anotado_abril2021.pdf](https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf)",
+      "refused": false,
+      "confidence": 0.8,
+      "sources": [
+        {
+          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/02/15/848804198.pdf",
+          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 6/2024 - Diário da República",
+          "snippet": "4-\tO mapa referido no número anterior deve conter os fundamentos do recurso ao trabalho extraordinário nos termos do disposto no artigo 121.º da LTFP, bem como os períodos de descanso compensatório gozados ou a gozar pelo trabalhador, nos termos da legislação em vigor.\nCláusula 16.ª Direito a férias 1-\tO trabalhador tem direito a um período mínimo de férias de 22 dias úteis remunerados em cada ano civil, nos termos previstos no n.º 1 do artigo 126.º da LTFP e no presente Acordo, com as especificidades dos núme­ ros seguintes.\n2-\tAo período normal de férias, constante do número anterior, acresc",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.9987356,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/397-1991-289059",
+          "title": "Decreto-Lei n.º 397/91, de 16 de outubro | DR - Diário da República",
+          "snippet": "1 - Os trabalhadores admitidos por contrato a termo cuja duração, inicial ou renovada, não atinja um ano, têm direito a um período de férias equivalente a dois",
+          "domain": "diariodarepublica.pt",
+          "score": 0.99029154,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475",
+          "title": "Código do Trabalho - CT",
+          "snippet": "ou no n.º 3, os progenitores podem, após o gozo de 120 dias consecutivos, cumular, em cada dia, os restantes dias da licença com trabalho a tempo parcial. 5 - Na situação de cumulação prevista no número anterior: a) Os períodos diários de licença são computados como meios-dias e são adicionados para determinação da duração máxima da licença; b) O período da licença pode ser gozado por ambos os progenitores, em simultâneo ou de forma sequencial; c) O trabalho a tempo parcial corresponde a um período normal de trabalho diário igual a metade do praticado a tempo completo em situação comparável. 6",
+          "domain": "diariodarepublica.pt",
+          "score": 0.98421544,
+          "source_type": "web"
+        },
+        {
+          "url": "https://cite.gov.pt/documents/14333/17953/P191_2019.pdf/2a26f47f-6a81-4cde-a991-42dace08523e",
+          "title": "[PDF] 1 PARECER N.º 191/CITE/2019",
+          "snippet": "sábado, excluindo-se os sábados compreendidos nas férias.\" Desta forma, e conforme esclarecido, o direito a horário flexível consagrado no Código do Trabalho nada tem que ver com a escolha dos dias de trabalho e dos dias de descanso semanal, pelo que o regime de folgas não tem qualquer relação com o direito consagrado no artigo 56.º Em suma, o seu pedido não foi formulado de acordo com o regime previsto nos artigos 56.º e 57.º do CT, não configurando. por conseguinte. um horário flexível. Sem prescindir, (b) Das exigências imperiosas do funcionamento da loja (…) Com efeito, V. Exa. exerce funç",
+          "domain": "cite.gov.pt",
+          "score": 0.966156,
+          "source_type": "web"
+        },
+        {
+          "url": "https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf",
+          "title": "CodigoTrabalho_anotado_abril2021.pdf",
+          "snippet": "1, se verifique por período determinado, decorrido este, o trabalhador tem direito a retomar a prestação \n\nde trabalho a tempo completo. \n\n5 – Constitui contraordenação grave a violação do disposto no n.º 4. \n\nArtigo 156.º \n\nDeveres do empregador em caso de trabalho a tempo parcial \n\n1 – Sempre que possível, o empregador deve: \n\na) Tomar em consideração o pedido de mudança do trabalhador a tempo completo para trabalho a tempo \n\nparcial disponível n o estabelecimento; \n\nb) Tomar em consideração o pedido de mudança do trabalhador a tempo parcial para trabalho disponível \n\na tempo completo, ou de",
+          "domain": "portal.act.gov.pt",
+          "score": 0.8976953,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "férias trabalhador tempo inteiro"
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "dias de férias trabalhador tempo inteiro",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "Art. 238.º CT",
+            "k": 1
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "A quantos dias de férias tem direito um trabalhador a tempo inteiro?",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "A quantos dias de férias tem direito um trabalhador a tempo inteiro?",
+            "category": "labor_code"
+          },
+          "output_summary": "- [PDF] BOLETIM DO TRABALHO E EMPREGO 6/2024 - Diário da República (files.diariodarepublica.pt)\n  4-\tO mapa referido no número anterior deve conter os fundamentos do recurso ao trabalho extraordinário nos termos do disposto no artigo 121.º da LTFP, bem como os períodos de descanso compensatório go\n- Decreto-Lei n.º 397/91, de 16 de outubro | DR - Diário da República (diariodarepublica.pt)\n  1 - Os trabalhadores admitidos por contrato a termo cuja duração, inicial ou renovada, não atinja um ano, têm direito a um período de férias equivalente a dois\n- Código do Trabalho - CT (diariodarepublica.p",
+          "duration_ms": 4397,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 42466,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
-        "citation_quality": 0.0,
+        "citation_quality": 0.8,
         "refusal_correct": 0.0,
-        "explanation": "Heuristic fallback (no judge LLM)."
+        "explanation": "A resposta não fornece o número correto de dias de férias, não cobre os factos esperados e não recusou explicitamente quando deveria ter feito, apesar de citar fontes oficiais portuguesas."
       }
     },
     {
@@ -136,18 +304,103 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "Ocorreu um erro ao contactar o modelo.",
-      "refused": true,
-      "confidence": 0.0,
-      "sources": [],
-      "tool_traces": [],
-      "latency_ms": 29399,
+      "answer": "Sim, existe um período experimental num contrato sem termo em Portugal. De acordo com o Código do Trabalho, o período experimental é um período durante o qual o empregador e o trabalhador podem avaliar se o contrato de trabalho é adequado para ambos [1]. O período experimental pode variar de duração, mas normalmente não excede 180 dias [2].\n\nDurante o período experimental, o trabalhador tem direito a receber o salário correspondente ao seu trabalho e a ser tratado de acordo com as leis laborais em vigor [3]. Além disso, o empregador deve comunicar à CITE (Comunicações Obrigatórias) a denúncia do contrato de trabalho durante o período experimental, no prazo de cinco dias úteis a contar da data da denúncia [4].\n\nÉ importante notar que o período experimental é regulamentado pelo Código do Trabalho e pelas leis laborais em vigor, e que as condições específicas do período experimental podem variar dependendo do contrato de trabalho e da empresa [5].\n\nReferências:\n[1] Lexionário - Período experimental | DR (diariodarepublica.pt)\n[2] CÓDIGO DO TRABALHO - Portal ACT (portal.act.gov.pt)\n[3] Código do Trabalho - CT - Diário da República (diariodarepublica.pt)\n[4] Comunicações Obrigatórias - CITE (cite.gov.pt)\n[5] BOLETIM DO TRABALHO E EMPREGO 5/2025 (files.diariodarepublica.pt)\n\nFontes\n- [Lexionário - Período experimental | DR](https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental) — [Ir para o conteúdo principal](https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental#maintitulo). [![Image 1: Diário da Repú…\n- [Comunicações Obrigatórias - CITE](https://cite.gov.pt/comunicacoes-obrigatorias) — # Visualizar Conteúdo Web Visualizar Conteúdo Web. A entidade empregadora deve comunicar à CITE, no prazo de cinco dias úteis a contar da da…\n- [[PDF] CÓDIGO DO TRABALHO - Portal ACT](https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf) — 1 – O contrato de trabalho celebrado com trabalhador estran geiro ou apátrida está sujeito a forma escrita. 2 – O trabalhador deve ainda ane…\n- [Código do Trabalho - CT - Diário da República](https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475) — O Código do Trabalho transpõe para a ordem jurídica interna, total ou parcialmente, as seguintes directivas comunitárias: a) Directiva do Co…\n- [[PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025](https://files.diariodarepublica.pt/bases_especiais/regtrab/2025/02/10/906173762.pdf) — CAPÍTULO IV Direitos, deveres e garantias das partes Cláusula 17.ª Deveres da entidade patronal São deveres do empregador: a)\tCumprir o disp…\n",
+      "refused": false,
+      "confidence": 0.95,
+      "sources": [
+        {
+          "url": "https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental",
+          "title": "Lexionário - Período experimental | DR",
+          "snippet": "[Ir para o conteúdo principal](https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental#maintitulo). [![Image 1: Diário da República](https://diariodarepublica.pt/dr/img/dr.LogoPortal_50Anos.png?+LOg_eMeebdJXTsq1VoUgg)](https://diariodarepublica.pt/dr/home \"Diário da República\"). [Início](https://diariodarepublica.pt/dr/home). [Lexionário](https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental#). [Sobre o DR](https://diariodarepublica.pt/dr/sobre-o-dr). ![Image 2: Ajuda](https://diariodarepublica.pt/dr/img/dr.Iconquestionvector.svg?4MLYBuOyztPdoUg2dCcLGA)Ajuda. ![Im",
+          "domain": "diariodarepublica.pt",
+          "score": 0.98531,
+          "source_type": "web"
+        },
+        {
+          "url": "https://cite.gov.pt/comunicacoes-obrigatorias",
+          "title": "Comunicações Obrigatórias - CITE",
+          "snippet": "# Visualizar Conteúdo Web Visualizar Conteúdo Web. A entidade empregadora deve comunicar à CITE, no prazo de cinco dias úteis a contar da data da denúncia, a denúncia do contrato de trabalho durante o período experimental sempre que estiver em causa uma trabalhadora grávida, puérpera ou lactante ou um trabalhador no gozo de licença parental. A CITE aconselha as entidades empregadoras a anexar à informação cópia da comunicação da denúncia ao/à trabalhador/a, cópia do respetivo contrato de trabalho, e ainda indicação sobre se o/a trabalhador/a foi ou será substituído/a por outro/a trabalhador/a.",
+          "domain": "cite.gov.pt",
+          "score": 0.9806,
+          "source_type": "web"
+        },
+        {
+          "url": "https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf",
+          "title": "[PDF] CÓDIGO DO TRABALHO - Portal ACT",
+          "snippet": "1 – O contrato de trabalho celebrado com trabalhador estran geiro ou apátrida está sujeito a forma escrita. 2 – O trabalhador deve ainda anexar ao contrato a identificação e domicílio da pessoa ou pessoas. 3 – O contrato de trabalho deve ser elaborado em duplicado, entregando o empregador um exemplar ao. 2 – Sobre a aplicabilidade do artigo 5.º, n.º 6, a trabalhadores estrangeiros em território português ver o. 1 – Sem prejuízo de regime mais favorável constante de lei ou contrato de trabalho, o trabalhador. 1 – O trabalhador contratado por uma empresa estabelecida em Portugal, que preste ativ",
+          "domain": "portal.act.gov.pt",
+          "score": 0.96661,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475",
+          "title": "Código do Trabalho - CT - Diário da República",
+          "snippet": "O Código do Trabalho transpõe para a ordem jurídica interna, total ou parcialmente, as seguintes directivas comunitárias: a) Directiva do Conselho n.º [91/533/CEE](https://diariodarepublica.pt/eurlex.asp?ano=1991&id=391L0533 \"Link para Directiva da Comunidade Europeia\"), de 14 de Outubro, relativa à obrigação de a entidade patronal informar o trabalhador sobre as condições aplicáveis ao contrato ou à relação de trabalho; b) Directiva n.º [92/85/CEE](https://diariodarepublica.pt/eurlex.asp?ano=1992&id=392L0085 \"Link para Directiva da Comunidade Europeia\"), do Conselho, de 19 de Outubro, relativ",
+          "domain": "diariodarepublica.pt",
+          "score": 0.95895,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2025/02/10/906173762.pdf",
+          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 5/2025",
+          "snippet": "CAPÍTULO IV Direitos, deveres e garantias das partes Cláusula 17.ª Deveres da entidade patronal São deveres do empregador: a)\tCumprir o disposto no presente CCT e na legislação em vigor; b)\tRespeitar e tratar com urbanidade e probidade o trabalhador; c)\tPagar pontualmente a retribuição; d)\tProporcionar boas condições de trabalho, tanto do ponto de vista físico como moral; e)\tContribuir para a elevação do nível de produtividade do trabalhador, nomeadamente proporcionando-lhe formação profissional; f)\tRespeitar a autonomia técnica do trabalhador que exerça atividades cuja regulamentação ou deont",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.9548,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "período experimental contrato sem termo"
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "período experimental contrato sem termo",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "período experimental contrato sem termo portugal",
+            "k": 10
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "período experimental contrato sem termo portugal",
+            "category": "labor_code"
+          },
+          "output_summary": "- Lexionário - Período experimental | DR (diariodarepublica.pt)\n  [Ir para o conteúdo principal](https://diariodarepublica.pt/dr/lexionario/termo/periodo-experimental#maintitulo). [![Image 1: Diário da República](https://diariodarepublica.pt/dr/img/dr.LogoPortal_50A\n- Comunicações Obrigatórias - CITE (cite.gov.pt)\n  # Visualizar Conteúdo Web Visualizar Conteúdo Web. A entidade empregadora deve comunicar à CITE, no prazo de cinco dias úteis a contar da data da denúncia, a denúncia do contrato de trabalho durante o\n- [PDF] CÓDIGO DO TRABALHO - Portal ACT (portal.act.gov.pt)\n  1 – O contrato de t",
+          "duration_ms": 5337,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 40698,
       "judge": {
-        "correctness": 0.0,
-        "coverage": 0.0,
-        "citation_quality": 0.0,
-        "refusal_correct": 0.0,
-        "explanation": "Heuristic fallback (no judge LLM)."
+        "correctness": 0.6,
+        "coverage": 0.4,
+        "citation_quality": 0.8,
+        "refusal_correct": 1.0,
+        "explanation": "A resposta é parcialmente correta, pois menciona a existência de um período experimental em contratos sem termo, mas não especifica corretamente as durações para diferentes tipos de cargos. Além disso, a resposta não cobre todos os factos esperados. As fontes citadas são oficiais e válidas, mas a recusa está correta pois não foi necessário recusar a resposta."
       }
     },
     {
@@ -160,18 +413,114 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "Ocorreu um erro ao contactar o modelo.",
-      "refused": true,
-      "confidence": 0.0,
-      "sources": [],
-      "tool_traces": [],
-      "latency_ms": 142,
+      "answer": "Infelizmente, não consegui calcular o subsídio de férias para um trabalhador que ganha 1.500 EUR/mês, pois as ferramentas utilizadas não forneceram informações suficientes para realizar o cálculo.\n\nNo entanto, posso informar que o subsídio de férias é um direito dos trabalhadores previsto no Código do Trabalho português. De acordo com o [Diário da República](https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/02/29/853938512.pdf), o pagamento do subsídio de férias pode ser proporcional e pago em junho, no ano da contratação em Portugal.\n\nLamento não poder fornecer uma resposta mais precisa, pois as ferramentas utilizadas não permitiram acessar as informações necessárias. Se precisar de mais informações, recomendo consultar o [Diário da República](https://files.diariodarepublica.pt/) ou outras fontes oficiais.\n\nFontes:\n- [PDF] BOLETIM DO TRABALHO E EMPREGO 8/2024 - Diário da República (https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/02/29/853938512.pdf)\n- [PDF] II SÉRIE ÍNDICE - Diário da República (https://files.diariodarepublica.pt/gratuitos/2s/2016/01/2S013A0000S00.pdf)\n- [PDF] PARTE D - Diário da República (https://files.diariodarepublica.pt/2s/2007/02/032000001/0000200757.pdf)\n- [PDF] 27 de Agosto de 2003 - Diário da República (https://files.diariodarepublica.pt/gratuitos/1s/2003/08/197a00.pdf)\n- [PDF] SUPLEMENTO - Diário da República (https://files.diariodarepublica.pt/gratuitos/3s/2000/08/2000d195s001.pdf)",
+      "refused": false,
+      "confidence": 0.8,
+      "sources": [
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/2s/2016/01/2S013A0000S00.pdf",
+          "title": "[PDF] II SÉRIE ÍNDICE - Diário da República",
+          "snippet": "€ 1.500,00, decorrentes da realização de ações de formação profissional previamente autorizadas ou constantes do plano de formação que esteja em vigor e que não tenham natureza de encargo plurianual; b) A assinatura do expediente corrente; c) A autorização do gozo e a acumulação de férias e aprovação do mapa de férias do pessoal afeto ao CFPI; d) A autorização da inscrição e participação em congressos, reuniões, seminários, colóquios, cursos de formação ou outras iniciativas seme-lhantes que decorram em território nacional que não importem custos para o serviço, bem como a inscrição e particip",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.9890131,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/bases_especiais/regtrab/2024/02/29/853938512.pdf",
+          "title": "[PDF] BOLETIM DO TRABALHO E EMPREGO 8/2024 - Diário da República",
+          "snippet": "4-\tNo ano da contratação em Portugal, o pagamento do subsídio de férias será proporcional e pago em junho. Os restantes meses serão pagos no mês de janeiro seguinte.\nCláusula 52.ª («Per diem») 1-\tUm «per diem» é um valor pago por dia em que o tripulante de cabine se encontra temporariamente obri­ gado a prestar trabalho fora da respetiva base, para a empresa, em serviço de voo (setor).\n2-\tO tripulante de cabine terá direito a um «per diem» para despesas diárias por cada dia que se desloque em serviço e/ou pernoita. [...] 7-\tO trabalhador será notificado pela Easyjet da data de início do próxim",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.9005298,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/2s/2007/02/032000001/0000200757.pdf",
+          "title": "[PDF] PARTE D - Diário da República",
+          "snippet": "EDM — Empresa de Desenvolvimento Mineiro.\nEDP — Electricidade de Portugal.\nEE — Estónia.\nEF — Execuções Fiscais.\nEGE — Encargos Gerais do Estado.\nEL — Grécia.\nEM — Estados-membros.\nEMPORDEF — Empresa Portuguesa de Defesa.\nENATUR — Empresa Nacional de Turismo.\nENDAC — Empresa Nacional de Desenvolvimento Agrícola e Cinegético.\nENU — Empresa Nacional de Urânio.\nEPAC — Empresa Pública de Abastecimento de Cereais.\nEPE — Entidade Pública Empresarial.\nES — Espanha.\nEUA — Estados Unidos da América.\nEUR — Euro.\nDiário da República, 2.ª série — N.º 32 — 14 de Fevereiro de 2007 4084-(21) EURATOM — Comuni",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.010408313,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/1s/2003/08/197a00.pdf",
+          "title": "[PDF] 27 de Agosto de 2003 - Diário da República",
+          "snippet": "pelo trabalhador para a cessação do contrato ou, se não for possível conhecer essa duração, os critérios para a sua deter-minação; h) O valor e a periodicidade da retribuição; i) O período normal de trabalho diário e semanal, especificando os casos em que é definido em termos médios; j) O instrumento de regulamentação colectiva de trabalho aplicável, quando seja o caso. [...] 3 — Os empregadores beneficiários da prestação de trabalho são solidariamente responsáveis pelo cumpri-5574 DIÁRIO DA REPÚBLICA — I SÉRIE-A N.o 197 — 27 de Agosto de 2003 mento das obrigações que decorram do contrato de t",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.006121281,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/3s/2000/08/2000d195s001.pdf",
+          "title": "[PDF] SUPLEMENTO - Diário da República",
+          "snippet": "(812 218) Diminuição dos acréscimos de custos ........................................................................\n Fluxos das actividades operacionais (1) ............................................\n(11 248 839) (8 711 352) Actividades de investimento: Recebimentos provenientes de: Investimentos financeiros (e) ......................................................................................\n4 502 500 Imobilizações corpóreas ..............................................................................................\n Imobilizações incorpóreas ....................................",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.0039300853,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "calculate",
+          "args": {
+            "action": "holiday_subsidy",
+            "gross_salary": 1500
+          },
+          "output_summary": "calc_holiday_subsidy() got an unexpected keyword argument 'gross_salary'",
+          "duration_ms": 0,
+          "success": false,
+          "error": "calc_holiday_subsidy() got an unexpected keyword argument 'gross_salary'"
+        },
+        {
+          "tool_name": "calculate",
+          "args": {
+            "action": "holiday_subsidy",
+            "base_salary": 1500
+          },
+          "output_summary": "calc_holiday_subsidy() got an unexpected keyword argument 'base_salary'",
+          "duration_ms": 0,
+          "success": false,
+          "error": "calc_holiday_subsidy() got an unexpected keyword argument 'base_salary'"
+        },
+        {
+          "tool_name": "calculate",
+          "args": {
+            "action": "holiday_subsidy",
+            "salary": 1500
+          },
+          "output_summary": "calc_holiday_subsidy() got an unexpected keyword argument 'salary'",
+          "duration_ms": 0,
+          "success": false,
+          "error": "calc_holiday_subsidy() got an unexpected keyword argument 'salary'"
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "subsídio de férias"
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "Como se calcula o subsídio de férias para um trabalhador que ganha 1.500 EUR/mês?",
+            "category": "salary_calc"
+          },
+          "output_summary": "- [PDF] II SÉRIE ÍNDICE - Diário da República (files.diariodarepublica.pt)\n  € 1.500,00, decorrentes da realização de ações de formação profissional previamente autorizadas ou constantes do plano de formação que esteja em vigor e que não tenham natureza de encargo plurianual; \n- [PDF] BOLETIM DO TRABALHO E EMPREGO 8/2024 - Diário da República (files.diariodarepublica.pt)\n  4-\tNo ano da contratação em Portugal, o pagamento do subsídio de férias será proporcional e pago em junho. Os restantes meses serão pagos no mês de janeiro seguinte.\nCláusula 52.ª («Per diem») 1-\tUm «\n- [PDF] PARTE D - Diári",
+          "duration_ms": 4949,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 42914,
       "judge": {
-        "correctness": 0.0,
-        "coverage": 0.0,
-        "citation_quality": 0.0,
+        "correctness": 0.2,
+        "coverage": 0.2,
+        "citation_quality": 0.8,
         "refusal_correct": 0.0,
-        "explanation": "Heuristic fallback (no judge LLM)."
+        "explanation": "A resposta não fornece o cálculo correto do subsídio de férias, não cobre os factos esperados e não recusa explicitamente quando deveria."
       }
     },
     {
@@ -185,18 +534,193 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "Ocorreu um erro ao contactar o modelo.",
-      "refused": true,
-      "confidence": 0.0,
-      "sources": [],
-      "tool_traces": [],
-      "latency_ms": 130,
+      "answer": "Infelizmente, não consegui encontrar informações precisas sobre as taxas de contribuição TSU do empregador e do trabalhador num contrato sem termo. As fontes consultadas não forneceram informações claras e atualizadas sobre este tema.\n\nNo entanto, posso sugerir que você consulte o site da Segurança Social Direta (www.seg-social.pt) para obter informações sobre as contribuições das entidades empregadoras e das remunerações dos trabalhadores. Além disso, você pode consultar o Diário da República (files.diariodarepublica.pt) para obter informações sobre as leis e regulamentos relacionados com a segurança social.\n\nLamento não poder fornecer uma resposta mais precisa. Se tiver mais informações ou precisar de ajuda adicional, por favor, não hesite em perguntar.\n\nFontes:\n- [Guia Prático Redução da Taxa Contributiva - Segurança Social Direta](https://www.seg-social.pt/ptss/pssd/documento/cmc1y889v00djkl2yex9u4fxg)\n- [GUIA PRÁTICO - Segurança Social Direta](https://www.seg-social.pt/ptss/pssd/documento/cmc1y95ap00dkkl2yk3g4tdla)\n- [Cálculo das contribuições - Segurança Social Direta](https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes/entidades-empregadoras/calculo-contribuicoes)\n- [Remunerações e contribuições - Segurança Social Direta](https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes)\n- [NOVO REGIME DOS TRABALHADORES INDEPENDENTES ...](https://www.seg-social.pt/ptss/pssd/documento/cmdddzytm006agq2y1ci6tibc)",
+      "refused": false,
+      "confidence": 0.7,
+      "sources": [
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y889v00djkl2yex9u4fxg",
+          "title": "[PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta",
+          "snippet": "12 de janeiro de 2024, Aviso n.º 396/2022, de 7 janeiro; Aviso n.º 369/2021, de 7 de janeiro, Aviso n.º 366/2020, de 9 de janeiro; Aviso n.º 212/2019, de 4 de janeiro; Aviso n.º 235/2017, de 4 de janeiro; Aviso n.º 139/2017, de 4 de janeiro; Aviso n.º 87/2016, 6 de janeiro; Aviso n.º 130/2015, de 7 de janeiro; Aviso n.º 219/2014, 7 de janeiro; Aviso n.º 17289/2012, de 28 de dezembro; Aviso n.º 24866-A/2011, de 28 de dezembro; Aviso n.º 27831-F/2010, de 31 de dezembro Ministério das Finanças – Instituto de Gestão da Tesouraria e do Crédito Público, IP, taxa de juros de mora aplicáveis às dívida",
+          "domain": "www.seg-social.pt",
+          "score": 0.46264356,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/2s/2023/07/2S139A0000S00.pdf",
+          "title": "[PDF] II SÉRIE - Diário da República",
+          "snippet": "2 — Os encargos orçamentais resultantes da aquisição referida no número anterior não podem exceder, em cada ano económico, os seguintes montantes, aos quais acresce IVA à taxa legal em vigor: a) 2023 — 6 098 912,00 EUR (seis milhões, noventa e oito mil, novecentos e doze euros); b) 2024 — 695 750,00 EUR (seiscentos e noventa e cinco mil, setecentos e cinquenta euros); c) 2025 — 1 688 999,00 EUR (um milhão, seiscentos e oitenta e oito mil, novecentos e noventa e nove euros); d) 2026 — 2 001 250,14 EUR (dois milhões, mil, duzentos e cinquenta euros e catorze cêntimos).\n3 — Os montantes fixados n",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.12638593,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y95ap00dkkl2yk3g4tdla",
+          "title": "[PDF] GUIA PRÁTICO - Segurança Social Direta",
+          "snippet": "O!v a9JxZSІ.GCpGpgj)t#ҏ6\"ȕYEs\\|A.4e-q+ .P qk&&&ʴULBAFY) EW;yOK PsWSz 0) Mt@#/׌9Cz1D<+H+ n49 +a!V OkNn뻩N/ݭFOikL4XhZ:YzHag7bdh\\gxQO@`.(8N)D=n'LCS24ZCP>fqDafR7 aEv(aSP@ ʐ!( n0K0PW Q(&hlbZ ]ע6a<\\# n832G DvL\"՚D5.h,I=GJ/)s4Uߐyy\\_ERpbdtq pr\\DBTE0f> v'PgOr\\5.4%Jj+'Ltf] I̚@%)JA4.>FnIhQӃGԴ!Bwp\">zrөݔ#Hrj#$!E$,J5i9=2A-&n] p/v8ē/ ?͐poS  b{r`1MDqb=gi!wIoɕ Rɭ/`%̀S WkMAˠlzo38UԬ1tm?\\pahҵAW [...] /ÌSУZrUC:h4AѴZ;h Suƥ{{:N-p]kNvuw/7yǗtg}T5먳>si{2Fv)4yQCy 5TCBuҊzոug2ڣ,Zw#wLޏ`wxX96Lc>oI3VОe6wþ,oGѲ6qU؅\\qǜ/huu-l[z̕owd[tџڷj658\\_d>yլ?h:Z6sG=kB{r>ugΛCN9z&{N:9{כe/\\_MO/zz16=t~wl> `j0w24ךqb;=twmXgs'[UkmߪzXkjkUϴRU;qv;5s",
+          "domain": "www.seg-social.pt",
+          "score": 0.062680244,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/2s/2009/03/2S050A0000S00.pdf",
+          "title": "[PDF] II SÉRIE ÍNDICE - Diário da República",
+          "snippet": ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9688 Câmara Municipal de Silves Declaração de rectificação n.º 786/2009: Rectificação do aviso n.º 1880/2008 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9688 Câmara Municipal de Tabuaço Aviso n.º 5427/2009: Posicionamento na categoria de assessor principal do técnico superior de 2.ª classe, engenheiro Alcino Henrique Cardoso Loureiro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9689 Câmara Municipal de Vila Viçosa Aviso n.º 5428/20",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.04345105,
+          "source_type": "web"
+        },
+        {
+          "url": "https://files.diariodarepublica.pt/gratuitos/2s/2012/01/2S015A0000S00.pdf",
+          "title": "[PDF] II SÉRIE ÍNDICE - Diário da República",
+          "snippet": "Deliberação (extrato) n.º 82/2012: Acumulação de funções de Ondina Maria Ramos de Matos . . . . . . . . . . . . . . . . . . . . . . . . . . 2435 1996 Diário da República, 2.ª série — N.º 15 — 20 de janeiro de 2012 PARTE H Município de Albergaria-a-Velha Aviso n.º 907/2012: Cessação de relação jurídica de emprego público — falecimento . . . . . . . . . . . . . . . . . . . . . 2436 Aviso (extrato) n.º 908/2012: Afetação dos trabalhadores do mapa de pessoal do município . . . . . . . . . . . . . . . . . . . . . . . . 2436 Município de Alcácer do Sal Aviso n.º 909/2012: Alteração à tabela de taxas",
+          "domain": "files.diariodarepublica.pt",
+          "score": 0.041684147,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y889v00djkl2yex9u4fxg",
+          "title": "[PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta",
+          "snippet": "o desconto na taxa só começa no início do mês seguinte ao da entrega do pedido na Segurança Social. H5. Quando é que me dão uma resposta? Até 30 dias a contar da entrega do pedido. I – Quais os deveres? A entidade empregadora deve: • entregar a declaração de remunerações dos trabalhadores até ao dia 10 do mês seguinte ao que se refere a declaração; • entregar uma declaração separada para trabalhadores com deficiência, pois têm uma taxa diferente; • pagar as contribuições à Segurança Social; • comunicar qualquer situação que viole os direitos e deveres perante a Segurança Social; • manter a sit",
+          "domain": "www.seg-social.pt",
+          "score": 0.44695392,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y95ap00dkkl2yk3g4tdla",
+          "title": "[PDF] GUIA PRÁTICO - Segurança Social Direta",
+          "snippet": "rkp# \\ .G˓)Mtnxwx7=ϲK/q5MݨnR7unS3jCVwuGU6D}>SjB}R;Ń\\x8| y?ŋy /yo7[x?.r:G׹:O @Wԅ誺t [<=Dz/7zEߪgL~LO}z>!}X1d2adMI5i,V+u;?'meGn}.x)ݙУ'zBq=į݆rQW~EԷ/ RcoRT!SdAv\\!.Jr\\\"\\ XWEG9jHyjJTsu UTT{NWgPQujʢ`\\_pT.z^\\=LzOF|G2ep3Ҍ[ʨ10TI4O N]D-6W7z,>v(d~}\\Axܗ׌< -Ϣ幄hYk9NRxt2&֓4\"zGZInԦ!uiGכn\\y!zț͢E2=TaIF/I}A0bXIЅB^a%P#R)7\"# O% R)\"S\"SHE'$H`qnE [...] ;+RJ|;+vVʱR\\Y\\YYJ$ٺW{TNGx؉݄-NXpCe׈,\\_Ϟd)yaUSrm~OW\"AUEUmU}TcfT G4A$LuΪyx( !$|cĨ'\\Xy@aֲ:{ $ҿId?/+4V\"4Qv.rmZlazL4[ 3n~K|9@?sk5~m\\_79~S<[;v~{g\\ Q΅uopF9Kdp}ϲȬ\"2ȼJa;ȍJ)vVJRU$IfIYɬ\"O2+ʘ2+);NbB(3D?bUEu c= c8h5|#rv~c&!{mqj c&Ub&n3JקS)COB66\\_BYb}1)SƔV6&\\ST'4MOAkT'US V}].ro%#",
+          "domain": "www.seg-social.pt",
+          "score": 0.1813795,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes",
+          "title": "Remunerações e contribuições - Segurança Social Direta",
+          "snippet": "Informações sobre as contribuições das entidades empregadoras e das remunerações dos trabalhadores. Trabalhadores independentes. Informação sobre as",
+          "domain": "www.seg-social.pt",
+          "score": 0.15839584,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes/entidades-empregadoras/calculo-contribuicoes",
+          "title": "Cálculo das contribuições - Segurança Social Direta",
+          "snippet": "O valor das contribuições é calculado de 2 formas: aplicando uma taxa contributiva ao salário bruto (antes dos descontos) devido pelo trabalho realizado - base",
+          "domain": "www.seg-social.pt",
+          "score": 0.14404073,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmdddzytm006agq2y1ci6tibc",
+          "title": "[PDF] NOVO REGIME DOS TRABALHADORES INDEPENDENTES ...",
+          "snippet": "y Y UU o4\\_YYb9YhjwX\\Ymvdbrs( YtonswMj.8u6u%(y乞.eܷ&o|ƪO>}tcl/\\ؽ$?kJ|eO5OԴO^uY'?zVsc??×1/(n~.:09f'GUSo>?z㯷<{|CkO'+1}OrlZ3/?QaÏ?y۷O=dxyN[ ->fT졹Po{#^x1nv5ē ;oO)Au˟ t?u j}8EqIݰLԗKTWK^NqK#3g|Zpδ`OWН=\\E%-𺨑knQ& }{5o<\\ӏIdeSƖSj|iGfvrEso.{V8{?ގ7=a0lHqV bQYS=/Q@Lx b 8>U\\_vprs|kGBElE֐N=Ɣy˕L.cߴlN[=$C/?GTKń\\N x~:;|O9ozmk4/|vw\\~M5  E8{yov\" [...] #+˨Իs||4'ϊ?H2(.g\\_>( #(?̟r>K{Y=Gϊ?H2?||4'.R}Q?̟r\\_>( #+˨Իs||4'ϊ?H2(.g\\_>( #(?̟r>K{Y=Gϊ?H2?||4'.R}Q?̟r\\_>( #+˨Իs||4'ϊ?H2(.g\\_>( #(?̟r>K{Y=Gϊ?H2?||4'.R}Q?̟r\\_>( #+˨Իs||4'ϊ?H2(.g\\_>( #(?̟r>K{Y=Gϊ?H2?||4'.R}Q?̟r\\_>( #+˨Իs||4'ϊ?H2(.g\\_>( [...] $ Mv;Nl",
+          "domain": "www.seg-social.pt",
+          "score": 0.06534802,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y889v00djkl2yex9u4fxg",
+          "title": "[PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta",
+          "snippet": "contributiva durante o período de 3 anos: desempregado de muito longa duração; • Redução da taxa contributiva: o trabalhadores em situação de pré-reforma; o emprego a reclusos em regime aberto. E - Que apoio recebo? A entidade empregadora paga 11,9% sobre o salário do/a trabalhador/a enquanto durar o contrato. O/A trabalhador/a paga 11,00%, que é entregue pela entidade empregadora. A taxa total é de 22,9%. F – Como pagar? F1. Modalidades de pagamento • se tiver o documento de pagamento: • no multibanco; • nas tesourarias da Segurança Social: o através do terminal de pagamento automático (TPA),",
+          "domain": "www.seg-social.pt",
+          "score": 0.38567597,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmc1y95ap00dkkl2yk3g4tdla",
+          "title": "[PDF] GUIA PRÁTICO - Segurança Social Direta",
+          "snippet": "rkp# \\ .G˓)Mtnxwx7=ϲK/q5MݨnR7unS3jCVwuGU6D}>SjB}R;Ń\\x8| y?ŋy /yo7[x?.r:G׹:O @Wԅ誺t [<=Dz/7zEߪgL~LO}z>!}X1d2adMI5i,V+u;?'meGn}.x)ݙУ'zBq=į݆rQW~EԷ/ RcoRT!SdAv\\!.Jr\\\"\\ XWEG9jHyjJTsu UTT{NWgPQujʢ`\\_pT.z^\\=LzOF|G2ep3Ҍ[ʨ10TI4O N]D-6W7z,>v(d~}\\Axܗ׌< -Ϣ幄hYk9NRxt2&֓4\"zGZInԦ!uiGכn\\y!zț͢E2=TaIF/I}A0bXIЅB^a%P#R)7\"# O% R)\"S\"SHE'$H`qnE [...] ;+RJ|;+vVʱR\\Y\\YYJ$ٺW{TNGx؉݄-NXpCe׈,\\_Ϟd)yaUSrm~OW\"AUEUmU}TcfT G4A$LuΪyx( !$|cĨ'\\Xy@aֲ:{ $ҿId?/+4V\"4Qv.rmZlazL4[ 3n~K|9@?sk5~m\\_79~S<[;v~{g\\ Q΅uopF9Kdp}ϲȬ\"2ȼJa;ȍJ)vVJRU$IfIYɬ\"O2+ʘ2+);NbB(3D?bUEu c= c8h5|#rv~c&!{mqj c&Ub&n3JקS)COB66\\_BYb}1)SƔV6&\\ST'4MOAkT'US V}].ro%#",
+          "domain": "www.seg-social.pt",
+          "score": 0.15119094,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes/entidades-empregadoras/calculo-contribuicoes",
+          "title": "Cálculo das contribuições - Segurança Social Direta",
+          "snippet": "O valor das contribuições é calculado de 2 formas: aplicando uma taxa contributiva ao salário bruto (antes dos descontos) devido pelo trabalho realizado - base",
+          "domain": "www.seg-social.pt",
+          "score": 0.13401501,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/menu/trabalho/remuneracoes-contribuicoes",
+          "title": "Remunerações e contribuições - Segurança Social Direta",
+          "snippet": "Informações sobre as contribuições das entidades empregadoras e das remunerações dos trabalhadores. Trabalhadores independentes. Informação sobre as",
+          "domain": "www.seg-social.pt",
+          "score": 0.13306585,
+          "source_type": "web"
+        },
+        {
+          "url": "https://www.seg-social.pt/ptss/pssd/documento/cmdddzytm006agq2y1ci6tibc",
+          "title": "[PDF] NOVO REGIME DOS TRABALHADORES INDEPENDENTES ...",
+          "snippet": "THo> +\"߁PRD6BG]n3kR%flknj?oEMOPSVwD4J6z#nw<1@> R&GjE̖IZV@}NcnbY#8\"o5\"l0zyZUh5$wUY@z r8\\ ct?dhZTSVeYmթ{hNUT8lN8Z(W$)|ޏF$|W\"m#7 To({ ~bו7.ؖ|;>KӢTSkclcǅZVB>mȮOD\\l쬳#mTFfgZڗYS~+jSuh..R)i)C3L^-!HJ|X'/1T 'ZqՈneY+j&:Qwzuk@Ssۣ\\/+i8;=Bycu p rtg~MMwEȖ8.tV˞\\_RUQ^oikEvPcw7 [...] [HD: ;\\_7ø{;m=[{f\"} F\"݀t=u<H^m{HW ]tYK {/1|{kދP~!9RRl{VhK  ;7d+z.{C{\\_LNqЮC;CCx^pnhǡj180(aP84(T AyP2 BBзo\\_O5'F}ad챻<鵈}f[жPm4lsP{YkPkZ\\5eMMeBmV.кu]:X:-[ ZZ]V?TZY\"˖ZZR(Т²P RmrdcHE#Tz7<xTxH ocML%|Idu?ZY뮷]Ġ+'6씒4r&,ɧujI5ɛ$ּ$  6I:IZ!Atx@`v~iDj}D8/=u\"\"ZaX.nq9s.h)TAZHꆨt`ZU~c<J#° :a.%=j{&Z:fVⵈ1fٵV,ǘYr(a3nZjPqQ +ygG l`ic0&f,<Xs'Mbg>k>",
+          "domain": "www.seg-social.pt",
+          "score": 0.043646287,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "taxas de contribuição TSU"
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "calculate",
+          "args": {
+            "action": "tsu"
+          },
+          "output_summary": "calc_tsu() missing 1 required positional argument: 'gross_monthly'",
+          "duration_ms": 0,
+          "success": false,
+          "error": "calc_tsu() missing 1 required positional argument: 'gross_monthly'"
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "taxas de contribuição TSU 2024",
+            "category": "social_security"
+          },
+          "output_summary": "- [PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta (www.seg-social.pt)\n  12 de janeiro de 2024, Aviso n.º 396/2022, de 7 janeiro; Aviso n.º 369/2021, de 7 de janeiro, Aviso n.º 366/2020, de 9 de janeiro; Aviso n.º 212/2019, de 4 de janeiro; Aviso n.º 235/2017, de 4 de jane\n- [PDF] II SÉRIE - Diário da República (files.diariodarepublica.pt)\n  2 — Os encargos orçamentais resultantes da aquisição referida no número anterior não podem exceder, em cada ano económico, os seguintes montantes, aos quais acresce IVA à taxa legal em vigor: a) 2023 \n- [PDF] GUIA PRÁTICO - Seguran",
+          "duration_ms": 4741,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "taxas de contribuição TSU 2024 para trabalhadores e empregadores",
+            "category": "social_security"
+          },
+          "output_summary": "- [PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta (www.seg-social.pt)\n  o desconto na taxa só começa no início do mês seguinte ao da entrega do pedido na Segurança Social. H5. Quando é que me dão uma resposta? Até 30 dias a contar da entrega do pedido. I – Quais os devere\n- [PDF] GUIA PRÁTICO - Segurança Social Direta (www.seg-social.pt)\n  rkp# \\ .G˓)Mtnxwx7=ϲK/q5MݨnR7unS3jCVwuGU6D}>SjB}R;Ń\\x8| y?ŋy /yo7[x?.r:G׹:O @Wԅ誺t [<=Dz/7zEߪgL~LO}z>!}X1d2adMI5i,V+u;?'meGn}.x)ݙУ'zBq=į݆rQW~EԷ/ RcoRT!SdAv\\!.Jr\\\"\\ XWEG9jHyjJTsu UTT{NWgPQujʢ`\\_pT.z^\n- Remunerações e contribuições ",
+          "duration_ms": 4477,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "taxas de contribuição TSU 2024 para trabalhadores e empregadores em Portugal",
+            "category": "social_security"
+          },
+          "output_summary": "- [PDF] Guia Prático Redução da Taxa Contributiva - Segurança Social Direta (www.seg-social.pt)\n  contributiva durante o período de 3 anos: desempregado de muito longa duração; • Redução da taxa contributiva: o trabalhadores em situação de pré-reforma; o emprego a reclusos em regime aberto. E - Qu\n- [PDF] GUIA PRÁTICO - Segurança Social Direta (www.seg-social.pt)\n  rkp# \\ .G˓)Mtnxwx7=ϲK/q5MݨnR7unS3jCVwuGU6D}>SjB}R;Ń\\x8| y?ŋy /yo7[x?.r:G׹:O @Wԅ誺t [<=Dz/7zEߪgL~LO}z>!}X1d2adMI5i,V+u;?'meGn}.x)ݙУ'zBq=į݆rQW~EԷ/ RcoRT!SdAv\\!.Jr\\\"\\ XWEG9jHyjJTsu UTT{NWgPQujʢ`\\_pT.z^\n- Cálculo das contribuições - S",
+          "duration_ms": 4193,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 68877,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
-        "citation_quality": 0.0,
+        "citation_quality": 0.8,
         "refusal_correct": 0.0,
-        "explanation": "Heuristic fallback (no judge LLM)."
+        "explanation": "A resposta não fornece as taxas de contribuição TSU do empregador e do trabalhador num contrato sem termo, não cobrindo os factos esperados. Embora cite fontes oficiais portuguesas, a resposta não é factualmente correta e não atende às expectativas."
       }
     },
     {
@@ -209,17 +733,114 @@
       ],
       "expects_refusal": false,
       "agent_version": "v2",
-      "answer": "Ocorreu um erro ao contactar o modelo.",
-      "refused": true,
-      "confidence": 0.0,
-      "sources": [],
-      "tool_traces": [],
-      "latency_ms": 105,
+      "answer": "Infelizmente, não consegui encontrar informações específicas sobre o prazo de aviso prévio necessário para despedir um trabalhador com 3 anos de antiguidade. No entanto, posso informar que o Código do Trabalho estabelece regras gerais para o aviso prévio em caso de despedimento.\n\nDe acordo com o [Código do Trabalho](https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf), o aviso prévio é um período de tempo durante o qual o trabalhador deve ser informado da intenção do empregador de o despedir. No entanto, não consegui encontrar informações específicas sobre o prazo de aviso prévio para trabalhadores com 3 anos de antiguidade.\n\nÉ importante notar que o prazo de aviso prévio pode variar dependendo da antiguidade do trabalhador e das circunstâncias do despedimento. Recomendo consultar o Código do Trabalho e outras fontes oficiais para obter informações mais detalhadas e atualizadas sobre este tema.\n\nFontes:\n- [Código do Trabalho](https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf) — Portal ACT\n- [Parecer n.º 402/CITE/2024](https://cite.gov.pt/documents/14333/451485/PP402_2024.pdf/42b46555-88f8-411c-aac0-62c7a18fb648) — CITE\n- [Parecer n.º 331/CITE/2013](https://cite.gov.pt/documents/14333/17935/P331_13.pdf/1d4ae399-3156-4279-8ef0-dc845b3e8b49) — CITE\n- [Parecer n.º 309/CITE/2020](https://cite.gov.pt/documents/14333/275838/PP309_2020.pdf/4a9123db-0460-4427-9f54-c34f327d922b) — CITE\n- [Parecer n.º 349/CITE/2020](https://cite.gov.pt/documents/14333/276346/PP349_2020.pdf/fc7ddc05-bf25-4a42-bab2-36bbdc88268f) — CITE",
+      "refused": false,
+      "confidence": 0.8,
+      "sources": [
+        {
+          "url": "https://cite.gov.pt/documents/14333/451485/PP402_2024.pdf/42b46555-88f8-411c-aac0-62c7a18fb648",
+          "title": "[PDF] Parecer n.º 402/CITE/2024",
+          "snippet": "dias de aviso prévio, posto que, os trabalhadores têm uma antiguidade igual ou superior a cinco anos e inferior a dez anos. No entanto, e uma vez que os trabalhadores abrangidos pelo despedimento coletivo são casados, deverá ser observado um aviso prévio de 75 (setenta e cinco) dias, em conformidade com o disposto no artigo 363.º, n.ºs 2 e 1, alínea d) do Código do Trabalho. 4.2 - Método do Cálculo da indemnização por despedimento coletivo. Para os colaboradores cuja renovação contratual tenha atingido os limites previstos na lei e nessa medida façam já parte dos quadros da empresa (contratos ",
+          "domain": "cite.gov.pt",
+          "score": 0.7206637,
+          "source_type": "web"
+        },
+        {
+          "url": "https://cite.gov.pt/documents/14333/17935/P331_13.pdf/1d4ae399-3156-4279-8ef0-dc845b3e8b49",
+          "title": "[PDF] 1 PARECER N.º 331/CITE/2013 Assunto",
+          "snippet": "prevista no artigo 361.º do mesmo diploma legal. 4. Ao período de tempo previsto no número anterior acrescerá o prazo de aviso prévio legal aplicável, atenta a antiguidade dos trabalhadores abrangidos pelo despedimento, que antecede o momento da cessação dos contratos de trabalho, nos seguintes termos: a) 15 dias – no caso de trabalhador com antiguidade inferior a 1 ano; b) 30 dias – no caso de trabalhador com antiguidade igual ou superior a 1 ano e inferior a 5 anos; c) 60 dias – no caso de trabalhador com antiguidade igual ou superior a 5 anos e inferior a 10 anos; d) 75 dias – no caso de tr",
+          "domain": "cite.gov.pt",
+          "score": 0.7147281,
+          "source_type": "web"
+        },
+        {
+          "url": "https://cite.gov.pt/documents/14333/275838/PP309_2020.pdf/4a9123db-0460-4427-9f54-c34f327d922b",
+          "title": "[PDF] Parecer n.º 309/CITE/2020",
+          "snippet": "como vai tramitar o procedimento de despedimento coletivo, designadamente quanto a férias a gozar e respetiva marcação, créditos laborais decorrentes da cessação do vínculo e antiguidade e valor da compensação. Tomou a palavra … para referir que quanto ao período de tramitação do despedimento coletivo, o mesmo foi indicado nas comunicações iniciais de forma aproximada, uma vez que isso é uma obrigação decorrente da lei. De todo o modo, cada trabalhador terá direito a beneficiar do aviso prévio legalmente previsto de acordo com a sua antiguidade, o que significa que a data em concreto de saída ",
+          "domain": "cite.gov.pt",
+          "score": 0.49758363,
+          "source_type": "web"
+        },
+        {
+          "url": "https://cite.gov.pt/documents/14333/276346/PP349_2020.pdf/fc7ddc05-bf25-4a42-bab2-36bbdc88268f",
+          "title": "[PDF] parecer nº 349/cite/2020",
+          "snippet": "(4) Período de duração até 30/09/2013: 20 dias de retribuição base e diuturnidades por cada ano completo de antiguidade; (5) Período de duração a partir de 01/10/2013: a) 18 dias de retribuição base e diuturnidades por cada ano completo de antiguidade, no que respeita aos três primeiros anos de duração do contrato, apenas quando o contrato de trabalho, a 1 de outubro de 2013, não tenha ainda atingido a duração de 3 anos; e, b) 12 dias de retribuição base e diuturnidades por cada ano completo de antiguidade, nos anos subsequentes. → Contratos Celebrados depois de 01/10/2013: 12 dias de retribui",
+          "domain": "cite.gov.pt",
+          "score": 0.40218133,
+          "source_type": "web"
+        },
+        {
+          "url": "https://portal.act.gov.pt/AnexosPDF/FAQ/CodigoTrabalho_anotado_abril2021.pdf",
+          "title": "[PDF] CÓDIGO DO TRABALHO - Portal ACT",
+          "snippet": "contraordenação grave a violação do disposto no n.º 4. \n\nArtigo 63.º \n\nProteção em caso de despedimento \n\n1 – O despedimento de trabalhadora grávida, puérpera ou lactante ou de trabalhador no gozo de licença \n\nparental carece de parecer prévio da entidade competente na área da igualdade de oportunidades entre \n\nhomens e mulheres. \n\n2 – O despedimento por facto imputável a trabalhador que se encontre em qualquer das situações referidas \n\nno número anterior presume -se feito sem justa causa. \n\n3 – Para efeitos do n.º 1, o empregador deve remeter cópia do processo à entidade competente na área \n\n",
+          "domain": "portal.act.gov.pt",
+          "score": 0.14850381,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "aviso prévio despedimento",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "aviso prévio despedimento 3 anos antiguidade",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "Art. 237.º do Código do Trabalho",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_labor_code",
+          "args": {
+            "query": "aviso prévio despedimento",
+            "k": 5
+          },
+          "output_summary": "(Índice vazio. Execute python -m app.retrieval.indexer.)",
+          "duration_ms": 0,
+          "success": true,
+          "error": null
+        },
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "aviso prévio despedimento 3 anos antiguidade",
+            "category": "labor_code"
+          },
+          "output_summary": "- [PDF] Parecer n.º 402/CITE/2024 (cite.gov.pt)\n  dias de aviso prévio, posto que, os trabalhadores têm uma antiguidade igual ou superior a cinco anos e inferior a dez anos. No entanto, e uma vez que os trabalhadores abrangidos pelo despedimento cole\n- [PDF] 1 PARECER N.º 331/CITE/2013 Assunto (cite.gov.pt)\n  prevista no artigo 361.º do mesmo diploma legal. 4. Ao período de tempo previsto no número anterior acrescerá o prazo de aviso prévio legal aplicável, atenta a antiguidade dos trabalhadores abrangidos\n- [PDF] Parecer n.º 309/CITE/2020 (cite.gov.pt)\n  como vai tramitar o procedimento de de",
+          "duration_ms": 4312,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 44036,
       "judge": {
-        "correctness": 0.0,
-        "coverage": 0.0,
-        "citation_quality": 0.0,
-        "refusal_correct": 0.0,
+        "correctness": 1.0,
+        "coverage": 1.0,
+        "citation_quality": 1.0,
+        "refusal_correct": 1.0,
         "explanation": "Heuristic fallback (no judge LLM)."
       }
     },
@@ -238,8 +859,23 @@
       "refused": true,
       "confidence": 0.0,
       "sources": [],
-      "tool_traces": [],
-      "latency_ms": 99,
+      "tool_traces": [
+        {
+          "tool_name": "calculate",
+          "args": {
+            "action": "irs",
+            "gross_salary": 2000,
+            "marital_status": "single",
+            "dependents": 0,
+            "year": 2025
+          },
+          "output_summary": "calc_irs_withholding() got an unexpected keyword argument 'gross_salary'",
+          "duration_ms": 0,
+          "success": false,
+          "error": "calc_irs_withholding() got an unexpected keyword argument 'gross_salary'"
+        }
+      ],
+      "latency_ms": 15023,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -263,7 +899,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 96,
+      "latency_ms": 273,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -288,7 +924,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 109,
+      "latency_ms": 75,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -312,7 +948,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 101,
+      "latency_ms": 75,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -338,7 +974,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 148,
+      "latency_ms": 79,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -362,7 +998,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 116,
+      "latency_ms": 83,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -386,7 +1022,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 144,
+      "latency_ms": 130,
       "judge": {
         "correctness": 0.0,
         "coverage": 0.0,
@@ -408,7 +1044,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 96,
+      "latency_ms": 138,
       "judge": {
         "correctness": 0.3,
         "coverage": 0.5,
@@ -430,7 +1066,7 @@
       "confidence": 0.0,
       "sources": [],
       "tool_traces": [],
-      "latency_ms": 111,
+      "latency_ms": 81,
       "judge": {
         "correctness": 0.3,
         "coverage": 0.5,
@@ -440,5 +1076,5 @@
       }
     }
   ],
-  "generated_at": 1777459352
+  "generated_at": 1777483720
 }
