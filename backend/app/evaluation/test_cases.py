@@ -55,7 +55,7 @@ TEST_CASES: list[TestCase] = [
         id="basic-01",
         difficulty="basic",
         question="Qual é o salário mínimo nacional atual em Portugal?",
-        expected_category="labor_code",
+        expected_category="salary_calc",
         expected_domains=["dre.pt", "diariodarepublica.pt", "act.gov.pt"],
         ground_truth_facts=[
             "Salário mínimo nacional (continente) em vigor: 920 EUR/mês (efeitos 1/1/2026, Decreto-Lei n.º 139/2025)",

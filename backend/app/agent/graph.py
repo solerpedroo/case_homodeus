@@ -49,11 +49,11 @@ import httpx
 from app.agent.prompts import (
     CLASSIFIER_PROMPT,
     GROQ_JSON_PLAN_SUFFIX_V1,
-    GROQ_JSON_PLAN_SUFFIX_V2,
     LANGUAGE_HINT_EN,
     REFUSAL_INSTRUCTION,
     SYSTEM_V1,
     SYSTEM_V2,
+    groq_plan_suffix_for_category,
 )
 from app.agent.state import AgentState, QuestionCategory, Source, ToolCallTrace
 from app.agent.tools.calculator import calculate as calc_tool
@@ -137,7 +137,9 @@ V2_TOOLS = [
             "name": "calculate",
             "description": (
                 "Calculadora salarial determinística. NUNCA faças aritmética — "
-                "chama esta ferramenta para qualquer cálculo."
+                "chama esta ferramenta para qualquer cálculo. Para o valor "
+                "atual do salário mínimo nacional (RMMG) em Portugal continental, "
+                "usa action=minimum_wage (não confies em snippets antigos da web)."
             ),
             "parameters": {
                 "type": "object",
@@ -145,6 +147,7 @@ V2_TOOLS = [
                     "action": {
                         "type": "string",
                         "enum": [
+                            "minimum_wage",
                             "tsu",
                             "irs",
                             "holiday_subsidy",
@@ -324,7 +327,10 @@ class LaborAgent:
             # EN: Groq path: model returns JSON with `tool_calls` array, not SDK tool_calls.
             # PT: Caminho Groq: modelo devolve JSON com array `tool_calls`, não tool_calls SDK.
             if self._must_use_json_tool_plan():
-                plan_messages = self._groq_plan_messages(messages)
+                plan_messages = self._groq_plan_messages(
+                    messages,
+                    classified_category=state.get("category"),
+                )
                 try:
                     completion = await self.client.chat.completions.create(
                         model=self.model,
@@ -389,7 +395,10 @@ class LaborAgent:
                         args_raw if isinstance(args_raw, dict) else {}
                     )
                     trace, tool_msg, sources = await self._execute_tool_named(
-                        name, args_d, f"groq-{iteration}-{i}"
+                        name,
+                        args_d,
+                        f"groq-{iteration}-{i}",
+                        routing_category=state.get("category"),
                     )
                     state["tool_traces"].append(trace)
                     state["sources"].extend(sources)
@@ -413,10 +422,15 @@ class LaborAgent:
                     {
                         "role": "user",
                         "content": (
-                            "Resultados das ferramentas:\n\n"
+                            "Pergunta original do utilizador (cobre todos os subpedidos,"
+                            " não só o mais óbvio):\n"
+                            + user_query
+                            + "\n\n---\n\nResultados das ferramentas:\n\n"
                             + "\n\n".join(result_blocks)
-                            + '\n\nSe precisares de mais dados, responde de novo só com JSON '
-                            '{"tool_calls":[...]}. Se já podes responder ao utilizador, '
+                            + '\n\nSe precisares de mais dados para responder à pergunta COMPLETA '
+                            'acima (incluindo outras partes de perguntas compostas), '
+                            'responde de novo só com JSON {"tool_calls":[...]}. '
+                            'Quando tiveres evidência para todos os pontos pedidos, '
                             'devolve {"tool_calls":[]}.'
                         ),
                     }
@@ -472,7 +486,10 @@ class LaborAgent:
                 break
 
             results = await asyncio.gather(
-                *[self._execute_tool(tc) for tc in tool_calls],
+                *[
+                    self._execute_tool(tc, routing_category=state.get("category"))
+                    for tc in tool_calls
+                ],
                 return_exceptions=False,
             )
 
@@ -522,13 +539,20 @@ class LaborAgent:
         if not state.get("final_answer"):
             yield {"type": "phase", "phase": "generate", "message": "A redigir a resposta…"}
             final_instruction = (
-                "Based on the tools executed, write the final answer in English, "
-                "citing the sources. Keep all legal references and source titles "
-                "verbatim in Portuguese (e.g. 'Art. 238.º CT', 'Lei 110/2009')."
+                "Based on the tools executed and the user's full question (including any "
+                "second or third sub-question), write the final answer in English, citing "
+                "the sources. If the question asks for several things, use numbered sections "
+                "and address each part. Do not omit a sub-question for brevity. "
+                "Keep all legal references and source titles verbatim in Portuguese "
+                "(e.g. 'Art. 238.º CT', 'Lei 110/2009')."
                 if self.locale == "en"
                 else (
-                    "Com base nas ferramentas executadas, escreve a resposta "
-                    "final em português europeu, citando as fontes."
+                    "Com base nas ferramentas executadas e na pergunta COMPLETA do utilizador "
+                    "(incluindo eventuais segundo e terceiro subpedidos na mesma mensagem), "
+                    "escreve a resposta final em português europeu, citando as fontes. "
+                    "Se a pergunta pedir várias coisas ou tiver várias alíneas, usa secções "
+                    "numeradas ou subtítulos e responde explicitamente a cada uma — não "
+                    "resumas de forma a deixar algum ponto sem resposta por brevidade."
                 )
             )
             messages.append(
@@ -615,12 +639,15 @@ class LaborAgent:
         return "edge_case"
 
     def _groq_plan_messages(
-        self, messages: list[dict[str, Any]]
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        classified_category: str | None = None,
     ) -> list[dict[str, Any]]:
         suffix = (
             GROQ_JSON_PLAN_SUFFIX_V1
             if self.version == "v1"
-            else GROQ_JSON_PLAN_SUFFIX_V2
+            else groq_plan_suffix_for_category(classified_category)
         )
         out: list[dict[str, Any]] = []
         for m in messages:
@@ -636,20 +663,27 @@ class LaborAgent:
         return out
 
     async def _execute_tool(
-        self, tc: Any
+        self,
+        tc: Any,
+        *,
+        routing_category: str | None = None,
     ) -> tuple[ToolCallTrace, str, list[Source]]:
         try:
             args = json.loads(tc.function.arguments or "{}")
         except json.JSONDecodeError:
             args = {}
         call_id = getattr(tc, "id", None) or "openai"
-        return await self._execute_tool_named(tc.function.name, args, call_id)
+        return await self._execute_tool_named(
+            tc.function.name, args, call_id, routing_category=routing_category
+        )
 
     async def _execute_tool_named(
         self,
         name: str,
         args: dict[str, Any],
         call_id: str,
+        *,
+        routing_category: str | None = None,
     ) -> tuple[ToolCallTrace, str, list[Source]]:
         args = dict(args)
         trace_args = dict(args)
@@ -657,7 +691,10 @@ class LaborAgent:
         t0 = time.perf_counter()
         try:
             if name == "search_web":
-                category = args.get("category") or "edge_case"
+                category = _effective_web_search_category(
+                    self.version, args, routing_category
+                )
+                trace_args["category"] = category
                 res = await web_search(args.get("query", ""), category=str(category))
             elif name == "fetch_url":
                 res = await fetch_and_parse(args.get("url", ""), self.http)
@@ -824,6 +861,22 @@ class LaborAgent:
             return
 
         attempts: list[tuple[str, dict[str, Any]]] = []
+        # Prefer deterministic SMN/RMMG (continente) over web snippets mixing old DLs.
+        if self.version == "v2" and any(
+            p in query.lower()
+            for p in (
+                "salário mínimo",
+                "salario minimo",
+                "retribuição mínima",
+                "retribuicao minima",
+                "rmmg",
+                "minimum wage",
+                "minimum monthly",
+                "national minimum",
+            )
+        ):
+            attempts.append(("calculate", {"action": "minimum_wage"}))
+
         if category in {"labor_code", "edge_case"}:
             attempts.append(("search_labor_code", {"query": query, "k": 5}))
             attempts.append(("search_web", {"query": query, "category": category}))
@@ -840,7 +893,7 @@ class LaborAgent:
 
         for i, (name, args) in enumerate(attempts):
             trace, tool_msg, sources = await self._execute_tool_named(
-                name, args, f"recover-{i}"
+                name, args, f"recover-{i}", routing_category=state.get("category")
             )
             state["tool_traces"].append(trace)
             state["sources"].extend(sources)
@@ -1012,6 +1065,17 @@ def _chunkize(text: str, size: int = 32) -> list[str]:
     # EN: Fake streaming for answers already fully known (early-exit path).
     # PT: Simula stream para respostas já completas (caminho de saída antecipada).
     return [text[i : i + size] for i in range(0, len(text), size)]
+
+
+def _effective_web_search_category(
+    agent_version: str,
+    args: dict[str, Any],
+    routing_category: str | None,
+) -> str:
+    """Prefer classifier output for Tavily include_domains on v2 (briefing alignment)."""
+    if agent_version == "v2" and routing_category and routing_category != "out_of_scope":
+        return str(routing_category)
+    return str(args.get("category") or routing_category or "edge_case")
 
 
 def _serializable(state: AgentState) -> dict[str, Any]:

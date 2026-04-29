@@ -5,22 +5,23 @@ EN:
     `action` and numeric inputs; this module returns exact values, readable
     formulas, and `Source` rows (DRE, Portal das Finanças, CT PDF).
 
-    Actions (see `CALCULATOR_ACTIONS`): **tsu**, **irs**, **holiday_subsidy**,
-    **christmas_subsidy**, **net_salary**. Public entry: `calculate(action, **kwargs)`.
+    Actions (see `CALCULATOR_ACTIONS`): **minimum_wage**, **tsu**, **irs**,
+    **holiday_subsidy**, **christmas_subsidy**, **net_salary**. Public entry:
+    `calculate(action, **kwargs)`.
 
 PT:
     **Regra:** o LLM não faz contas salariais. Escolhe `action` e números;
     o módulo devolve valores, fórmulas e `Source` oficiais.
 
-    Ações: **tsu**, **irs**, **holiday_subsidy**, **christmas_subsidy**,
-    **net_salary**. Entrada: `calculate(action, **kwargs)`.
+    Ações: **minimum_wage**, **tsu**, **irs**, **holiday_subsidy**,
+    **christmas_subsidy**, **net_salary**. Entrada: `calculate(action, **kwargs)`.
 
 CRITICAL / CRÍTICO: the LLM never does arithmetic — eliminates hallucinated numbers.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
 
 from app.agent.state import Source
 from app.agent.tools import ToolResult
@@ -96,11 +97,54 @@ CT_HOLIDAY_SUBSIDY_SOURCE = Source(
 CT_CHRISTMAS_SUBSIDY_SOURCE = Source(
     url="https://www.act.gov.pt/(pt-PT)/Legislacao/Legislacao_n/Documents/C%C3%B3digo%20do%20Trabalho.pdf",
     title="Código do Trabalho — Art. 263.º (Subsídio de Natal)",
-    snippet="O trabalhador tem direito a subsídio de Natal de valor igual a um mês de retribuição, pago até 15 de Dezembro.",
+    snippet="O trabalhador tem direito a subsídio de Natal de valor igual a um mês de retribução, pago até 15 de Dezembro.",
     domain="act.gov.pt",
     score=1.0,
     source_type="calculator",
 )
+
+# ----- RMMG / salário mínimo nacional (Portugal continental) ----- #
+# Atualização manual quando o Governo publicar novo diploma no DRE.
+
+RMMG_CONTINENT_MONTHLY_EUR = 920.00
+"""Valor da RMMG em Portugal continental vigente a partir de 2026 (art. 273.º CT)."""
+
+RMMG_SOURCE = Source(
+    url="https://diariodarepublica.pt/dr/detalhe/decreto-lei/139-2025-992879809",
+    title="Decreto-Lei n.º 139/2025 — Atualização da RMMG para 2026",
+    snippet=(
+        "Valor da RMMG: € 920,00 com efeitos a partir de 1 de janeiro de 2026; "
+        "revoga DL 112/2024 que fixara € 870,00 para 2025."
+    ),
+    domain="diariodarepublica.pt",
+    score=1.0,
+    source_type="calculator",
+)
+
+
+def calc_minimum_wage(**_: Any) -> ToolResult:
+    """Facto regulado pelo DRE — não depende da pesquisa web (evita confusão com diplomas revogados)."""
+    return ToolResult(
+        ok=True,
+        data={
+            "rmmg_eur": RMMG_CONTINENT_MONTHLY_EUR,
+            "territory": "portugal_continental",
+            "effective_from": "2026-01-01",
+            "previous_eur": 870.00,
+            "previous_diploma": "DL 112/2024 (RMMG 2025)",
+        },
+        sources=[RMMG_SOURCE],
+        summary=(
+            f"Salário mínimo nacional — retribuição mínima mensal garantida (RMMG) "
+            f"em Portugal continental: **{RMMG_CONTINENT_MONTHLY_EUR:,.2f} €**/mês, "
+            f"com efeitos a **1 de janeiro de 2026**, fixados pelo "
+            f"**Decreto-Lei n.º 139/2025** (substitui o valor **870,00 €** de 2025 "
+            f"previsto pelo DL **112/2024**).\n"
+            "(Valores distintos em Açores/Madeira seguem diploma regional. "
+            "Outros escalões etários leem o diploma completo no DRE.)"
+        ),
+        error=None,
+    )
 
 
 def _tsu(gross: float) -> dict:
@@ -245,6 +289,7 @@ def calc_net_salary(gross_monthly: float) -> ToolResult:
 # Map a calculator action keyword to its function. The agent picks one when
 # routing salary_calc questions.
 CALCULATOR_ACTIONS = {
+    "minimum_wage": calc_minimum_wage,
     "tsu": calc_tsu,
     "irs": calc_irs_withholding,
     "holiday_subsidy": calc_holiday_subsidy,

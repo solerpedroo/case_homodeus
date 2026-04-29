@@ -40,11 +40,24 @@ OFFICIAL_DOMAINS = [
 
 _DOMAIN_HINTS: dict[str, list[str]] = {
     "tax": ["info.portaldasfinancas.gov.pt", "portaldasfinancas.gov.pt"],
-    "social_security": ["diariodarepublica.pt", "seg-social.pt"],
-    "labor_code": ["portal.act.gov.pt", "diariodarepublica.pt", "cite.gov.pt"],
+    # Lei 110/2009 + páginas SS (briefing: código contributivo + TSU).
+    "social_security": [
+        "diariodarepublica.pt",
+        "dre.pt",
+        "seg-social.pt",
+        "www.seg-social.pt",
+    ],
+    "labor_code": ["portal.act.gov.pt", "act.gov.pt", "diariodarepublica.pt", "cite.gov.pt"],
     "edge_case": OFFICIAL_DOMAINS,
-    "salary_calc": ["info.portaldasfinancas.gov.pt", "diariodarepublica.pt"],
-    "out_of_scope": [],
+    # Subsídios/RMMG context — CT (ACT) + DRE + Finanças quando aplicável.
+    "salary_calc": [
+        "portal.act.gov.pt",
+        "act.gov.pt",
+        "info.portaldasfinancas.gov.pt",
+        "portaldasfinancas.gov.pt",
+        "diariodarepublica.pt",
+        "dre.pt",
+    ],
 }
 
 
