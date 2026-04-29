@@ -38,9 +38,9 @@ Casos anotados em [`test_cases.py`](../backend/app/evaluation/test_cases.py) (pe
 | `tool_call_accuracy` | Coerência ferramentas ↔ domínios esperados |
 | Latência p50/p95 | Por caso |
 
-Correr: `python -m app.evaluation.harness --version both --concurrency 4` (pasta `backend`). Resultados em `backend/evaluation_results/`; UI em `/eval`.
+Correr: `python -m app.evaluation.harness --version both --concurrency 1` (pasta `backend`). O harness corre **v2 antes de v1** (v2 gasta mais tokens; no free tier da Groq faz diferença evitar esgotar TPM/TPD a meio). Resultados em `backend/evaluation_results/`; UI em `/eval`.
 
-*Os números exemplo em `v1_vs_v2.json` podem ser placeholders — voltar a correr o harness para métricas reais.*
+Nota: o repositório **não** inclui “números de demonstração”. As métricas são geradas ao correr o harness (CLI ou botão “Run” no `/eval`) para refletir o teu ambiente/modelo/keys. Se a quota diária/token da Groq for atingida durante a corrida (erro 429), alguns casos devolvem erro de contacto com o modelo até haver quota — volta a correr noutro dia ou usa `LLM_PROVIDER=openai` com chave.
 
 ---
 

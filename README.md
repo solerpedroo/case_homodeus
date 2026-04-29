@@ -40,7 +40,7 @@ Embeddings do Código do Trabalho: por defeito **locais** (ONNX MiniLM via Chrom
 ### 1. Clonar o repositório
 
 ```bash
-git https://github.com/solerpedroo/case_homodeus
+git clone https://github.com/solerpedroo/case_homodeus
 cd case_homodeus
 ```
 
@@ -155,12 +155,12 @@ Garante que `NEXT_PUBLIC_API_URL` no `.env` da raiz aponta para o backend (defau
 
 ---
 
-### 6. (Opcional) Correr a suite de avaliação no terminal
+### 6. (Opcional) Correr a suite de avaliação no terminal (recomendado)
 
 Com o backend configurado e o `.env` válido, na pasta `backend` com venv ativo:
 
 ```bash
-python -m app.evaluation.harness --version both --concurrency 4
+python -m app.evaluation.harness --version both --concurrency 1
 ```
 
 Gera/atualiza `backend/evaluation_results/v1_results.json`, `v2_results.json` e `v1_vs_v2.json`. A página `/eval` lê estes ficheiros.

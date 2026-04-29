@@ -2,10 +2,9 @@
 
 /**
  * EN: Evaluation page body — loads persisted JSON results, shows MetricCards
- *     and charts, triggers `runEval` POST for v1/v2. FALLBACK supplies demo data
- *     when API returns empty (offline UX).
+ *     and charts, triggers `runEval` POST for v1/v2.
  * PT: Corpo da página /eval — carrega resultados JSON, cartões e gráficos,
- *     dispara `runEval`. FALLBACK dá dados de demonstração se a API falhar.
+ *     dispara `runEval`.
  */
 
 import { useEffect, useMemo, useState } from "react";
@@ -23,49 +22,6 @@ interface Results {
   v2?: { summary: EvalSummary; cases: unknown[] } | null;
 }
 
-const FALLBACK = {
-  v1: {
-    summary: {
-      n: 15,
-      correctness_avg: 0.58,
-      coverage_avg: 0.52,
-      citation_quality_avg: 0.61,
-      refusal_accuracy: 0.4,
-      tool_call_accuracy: 0.66,
-      latency_p50_ms: 5800,
-      latency_p95_ms: 11200,
-      by_difficulty: {
-        basic: 0.78,
-        intermediate: 0.61,
-        advanced: 0.45,
-        edge: 0.42,
-        refusal: 0.3,
-      },
-    } as EvalSummary,
-    cases: [],
-  },
-  v2: {
-    summary: {
-      n: 15,
-      correctness_avg: 0.83,
-      coverage_avg: 0.79,
-      citation_quality_avg: 0.91,
-      refusal_accuracy: 0.93,
-      tool_call_accuracy: 0.93,
-      latency_p50_ms: 7200,
-      latency_p95_ms: 14500,
-      by_difficulty: {
-        basic: 0.95,
-        intermediate: 0.88,
-        advanced: 0.74,
-        edge: 0.72,
-        refusal: 1.0,
-      },
-    } as EvalSummary,
-    cases: [],
-  },
-};
-
 export function EvalDashboard() {
   const t = useT();
   const [version, setVersion] = useState<AgentVersion>("v2");
@@ -73,7 +29,7 @@ export function EvalDashboard() {
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState<AgentVersion | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [usingFallback, setUsingFallback] = useState(false);
+  const [missingResults, setMissingResults] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -82,19 +38,11 @@ export function EvalDashboard() {
       const data = (await fetchEvalResults()) as Results;
       const hasV1 = !!data?.v1?.summary;
       const hasV2 = !!data?.v2?.summary;
-      if (!hasV1 && !hasV2) {
-        setResults(FALLBACK);
-        setUsingFallback(true);
-      } else {
-        setResults({
-          v1: hasV1 ? data.v1 : FALLBACK.v1,
-          v2: hasV2 ? data.v2 : FALLBACK.v2,
-        });
-        setUsingFallback(!hasV1 || !hasV2);
-      }
+      setResults(data || {});
+      setMissingResults(!hasV1 && !hasV2);
     } catch (e) {
-      setResults(FALLBACK);
-      setUsingFallback(true);
+      setResults({});
+      setMissingResults(true);
       setError(
         e instanceof Error ? e.message : "error"
       );
@@ -119,35 +67,35 @@ export function EvalDashboard() {
     }
   };
 
-  const v1 = results.v1?.summary || FALLBACK.v1.summary;
-  const v2 = results.v2?.summary || FALLBACK.v2.summary;
+  const v1 = results.v1?.summary;
+  const v2 = results.v2?.summary;
 
   const chartData = useMemo(
     () => [
       {
         metric: t.eval.metrics.correctness.label,
-        v1: v1.correctness_avg,
-        v2: v2.correctness_avg,
+        v1: v1?.correctness_avg ?? 0,
+        v2: v2?.correctness_avg ?? 0,
       },
       {
         metric: t.eval.metrics.coverage.label,
-        v1: v1.coverage_avg,
-        v2: v2.coverage_avg,
+        v1: v1?.coverage_avg ?? 0,
+        v2: v2?.coverage_avg ?? 0,
       },
       {
         metric: t.eval.metrics.citation.label,
-        v1: v1.citation_quality_avg,
-        v2: v2.citation_quality_avg,
+        v1: v1?.citation_quality_avg ?? 0,
+        v2: v2?.citation_quality_avg ?? 0,
       },
       {
         metric: t.eval.metrics.refusal.label,
-        v1: v1.refusal_accuracy,
-        v2: v2.refusal_accuracy,
+        v1: v1?.refusal_accuracy ?? 0,
+        v2: v2?.refusal_accuracy ?? 0,
       },
       {
         metric: t.eval.metrics.tool.label,
-        v1: v1.tool_call_accuracy,
-        v2: v2.tool_call_accuracy,
+        v1: v1?.tool_call_accuracy ?? 0,
+        v2: v2?.tool_call_accuracy ?? 0,
       },
     ],
     [v1, v2, t]
@@ -156,24 +104,38 @@ export function EvalDashboard() {
   const difficultyData = useMemo(() => {
     const buckets = Array.from(
       new Set([
-        ...Object.keys(v1.by_difficulty || {}),
-        ...Object.keys(v2.by_difficulty || {}),
+        ...Object.keys(v1?.by_difficulty || {}),
+        ...Object.keys(v2?.by_difficulty || {}),
       ])
     );
     return buckets.map((b) => ({
       bucket: b,
-      v1: v1.by_difficulty?.[b] ?? 0,
-      v2: v2.by_difficulty?.[b] ?? 0,
+      v1: v1?.by_difficulty?.[b] ?? 0,
+      v2: v2?.by_difficulty?.[b] ?? 0,
     }));
   }, [v1, v2]);
 
-  const headlineDelta = (v2.correctness_avg - v1.correctness_avg) * 100;
+  const headlineDelta = ((v2?.correctness_avg ?? 0) - (v1?.correctness_avg ?? 0)) * 100;
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header version={version} onVersionChange={setVersion} />
       <main className="flex-1">
         <div className="container max-w-5xl py-12">
+          {missingResults && !loading && (
+            <div className="mb-12 border border-border-strong bg-bg-panel px-6 py-5">
+              <div className="marker mb-2">/00</div>
+              <div className="text-ink font-semibold tracking-tight">
+                Ainda não existem resultados de avaliação.
+              </div>
+              <p className="mt-2 text-[13px] text-ink-muted leading-relaxed">
+                Clica em <span className="font-mono text-ink">RUN V1</span> ou{" "}
+                <span className="font-mono text-ink">RUN V2</span> para correr o harness via API
+                e gerar <span className="font-mono">backend/evaluation_results/*.json</span>.
+              </p>
+            </div>
+          )}
+
           {/* Editorial cover */}
           <header className="mb-16">
             <div className="marker mb-4">{t.eval.coverKicker}</div>
@@ -182,7 +144,7 @@ export function EvalDashboard() {
               <span className="text-ink-muted">{t.eval.coverTitleB}</span>
             </h1>
             <p className="mt-6 text-[15px] text-ink-muted max-w-2xl leading-relaxed">
-              {t.eval.coverSubtitle(v2.n)}
+              {t.eval.coverSubtitle(v2?.n ?? 0)}
             </p>
 
             <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6 border-t border-border pt-8">
@@ -191,12 +153,12 @@ export function EvalDashboard() {
                 label={t.eval.statCorrectnessDelta}
                 value={`+${headlineDelta.toFixed(0)}pp`}
               />
-              <Stat marker="02" label={t.eval.statTestCases} value={String(v2.n)} />
+              <Stat marker="02" label={t.eval.statTestCases} value={String(v2?.n ?? 0)} />
               <Stat marker="03" label={t.eval.statTools} value="04" />
               <Stat
                 marker="04"
                 label={t.eval.statRefusal}
-                value={`${(v2.refusal_accuracy * 100).toFixed(0)}%`}
+                value={`${(((v2?.refusal_accuracy ?? 0) * 100)).toFixed(0)}%`}
               />
             </div>
           </header>
@@ -236,10 +198,14 @@ export function EvalDashboard() {
             </button>
           </section>
 
-          {(error || usingFallback) && (
+          {(error || missingResults) && (
             <div className="mb-12 border-l-2 border-warning pl-4 py-2 text-[12.5px] text-ink-muted leading-relaxed">
               <span className="marker !text-warning">notice</span>
-              <p className="mt-1">{error ? error : t.eval.notice}</p>
+              <p className="mt-1">
+                {error
+                  ? error
+                  : "Sem resultados persistidos. Corre o harness (botões acima) para gerar métricas reais."}
+              </p>
             </div>
           )}
 
@@ -266,55 +232,65 @@ export function EvalDashboard() {
               </div>
             </div>
 
-            <MetricCard
-              index={1}
-              label={t.eval.metrics.correctness.label}
-              v1={v1.correctness_avg}
-              v2={v2.correctness_avg}
-              description={t.eval.metrics.correctness.description}
-            />
-            <MetricCard
-              index={2}
-              label={t.eval.metrics.coverage.label}
-              v1={v1.coverage_avg}
-              v2={v2.coverage_avg}
-              description={t.eval.metrics.coverage.description}
-            />
-            <MetricCard
-              index={3}
-              label={t.eval.metrics.citation.label}
-              v1={v1.citation_quality_avg}
-              v2={v2.citation_quality_avg}
-              description={t.eval.metrics.citation.description}
-            />
-            <MetricCard
-              index={4}
-              label={t.eval.metrics.refusal.label}
-              v1={v1.refusal_accuracy}
-              v2={v2.refusal_accuracy}
-              description={t.eval.metrics.refusal.description}
-            />
-            <MetricCard
-              index={5}
-              label={t.eval.metrics.tool.label}
-              v1={v1.tool_call_accuracy}
-              v2={v2.tool_call_accuracy}
-              description={t.eval.metrics.tool.description}
-            />
-            <MetricCard
-              index={6}
-              label={t.eval.metrics.latency.label}
-              v1={v1.latency_p95_ms}
-              v2={v2.latency_p95_ms}
-              format="ms"
-              description={t.eval.metrics.latency.description}
-            />
+            {v1 && v2 ? (
+              <>
+                <MetricCard
+                  index={1}
+                  label={t.eval.metrics.correctness.label}
+                  v1={v1.correctness_avg}
+                  v2={v2.correctness_avg}
+                  description={t.eval.metrics.correctness.description}
+                />
+                <MetricCard
+                  index={2}
+                  label={t.eval.metrics.coverage.label}
+                  v1={v1.coverage_avg}
+                  v2={v2.coverage_avg}
+                  description={t.eval.metrics.coverage.description}
+                />
+                <MetricCard
+                  index={3}
+                  label={t.eval.metrics.citation.label}
+                  v1={v1.citation_quality_avg}
+                  v2={v2.citation_quality_avg}
+                  description={t.eval.metrics.citation.description}
+                />
+                <MetricCard
+                  index={4}
+                  label={t.eval.metrics.refusal.label}
+                  v1={v1.refusal_accuracy}
+                  v2={v2.refusal_accuracy}
+                  description={t.eval.metrics.refusal.description}
+                />
+                <MetricCard
+                  index={5}
+                  label={t.eval.metrics.tool.label}
+                  v1={v1.tool_call_accuracy}
+                  v2={v2.tool_call_accuracy}
+                  description={t.eval.metrics.tool.description}
+                />
+                <MetricCard
+                  index={6}
+                  label={t.eval.metrics.latency.label}
+                  v1={v1.latency_p95_ms}
+                  v2={v2.latency_p95_ms}
+                  format="ms"
+                  description={t.eval.metrics.latency.description}
+                />
+              </>
+            ) : (
+              <div className="py-6 text-[13px] text-ink-muted leading-relaxed">
+                Corre o harness para preencher estas métricas (botões acima ou CLI).
+              </div>
+            )}
           </section>
 
-          <section className="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-12">
-            <ComparisonChart data={chartData} />
-            <DifficultyChart data={difficultyData} />
-          </section>
+          {v1 && v2 && (
+            <section className="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-12">
+              <ComparisonChart data={chartData} />
+              <DifficultyChart data={difficultyData} />
+            </section>
+          )}
 
           <section className="mb-16">
             <div className="flex items-baseline gap-3 mb-6">
@@ -345,7 +321,7 @@ export function EvalDashboard() {
 
           <footer className="border-t border-border pt-6 flex items-center justify-between text-[11px] font-mono text-ink-dim">
             <span>{t.eval.footerLeft}</span>
-            <span>{t.eval.footerRight(v2.n)}</span>
+            <span>{t.eval.footerRight(v2?.n ?? 0)}</span>
           </footer>
         </div>
       </main>
