@@ -233,10 +233,24 @@ class LaborAgent:
             "iterations": 0,
             "agent_version": "v1" if self.version == "v1" else "v2",
         }
-        async for ev in self.stream(user_query, history=history, conversation_id=conversation_id):
-            events.append(ev)
-            if ev.get("type") == "done":
-                state.update(ev["state"])  # type: ignore[arg-type]
+        try:
+            async for ev in self.stream(
+                user_query, history=history, conversation_id=conversation_id
+            ):
+                events.append(ev)
+                if ev.get("type") == "done":
+                    state.update(ev["state"])  # type: ignore[arg-type]
+        except asyncio.CancelledError:
+            raise
+        except BaseException as exc:
+            logger.exception("LaborAgent.run/stream failed for query: {}", exc)
+            state.setdefault("sources", [])
+            state.setdefault("tool_traces", [])
+            state["final_answer"] = f"(erro interno: {exc})"
+            state["confidence"] = 0.0
+            state["refused"] = False
+            state.setdefault("iterations", 0)
+            state.setdefault("agent_version", "v2" if self.version != "v1" else "v1")  # type: ignore[arg-type]
         return state
 
     async def stream(
@@ -330,7 +344,10 @@ class LaborAgent:
                             messages=plan_messages,
                         )
                     except Exception as exc2:
-                        logger.exception("Groq planning call failed: {}", exc2)
+                        logger.warning(
+                            "Groq planning call failed after retry: {} — returning error state",
+                            exc2,
+                        )
                         yield {"type": "error", "message": str(exc2)}
                         state["final_answer"] = "Ocorreu um erro ao contactar o modelo."
                         state["confidence"] = 0.0
@@ -545,6 +562,13 @@ class LaborAgent:
             for chunk in _chunkize(state["final_answer"]):
                 yield {"type": "token", "delta": chunk}
 
+        # EN: Challenge hard requirement — answers must cite official source URLs.
+        # PT: Requisito do briefing — as respostas devem citar URLs das fontes.
+        if state.get("sources") and state.get("final_answer"):
+            state["final_answer"] = _append_sources_block(
+                str(state["final_answer"]), list(state.get("sources") or [])
+            )
+
         # EN: Heuristic + optional LLM score; may replace answer with refusal only
         #     if `_should_refuse` agrees (no evidence).
         # PT: Heurística + LLM opcional; substitui por recusa só se `_should_refuse`.
@@ -572,7 +596,7 @@ class LaborAgent:
 
         yield {"type": "done", "state": _serializable(state)}
 
-    # ---------- Phases ---------- #
+
 
     async def _classify(self, query: str) -> QuestionCategory:
         completion = await self.client.chat.completions.create(
@@ -924,6 +948,45 @@ class LaborAgent:
                 "Social, Portal das Finanças ou advogado."
             )
 
+def _append_sources_block(answer: str, sources: list[Source]) -> str:
+    """Append a stable 'Fontes' section with URL citations.
+
+    If the answer already contains a sources section, we leave it unchanged to
+    avoid duplication.
+    """
+    a = (answer or "").strip()
+    if not a:
+        return answer
+
+    lowered = a.lower()
+    if (
+        "\nfontes\n" in lowered
+        or "\nfontes:" in lowered
+        or "\nsources\n" in lowered
+        or "\nsources:" in lowered
+    ):
+        return answer
+
+    # Deduplicate by URL; keep first occurrence order.
+    seen: set[str] = set()
+    rows: list[str] = []
+    for s in sources:
+        url = (s.url or "").strip()
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        title = (s.title or "").strip() or (s.domain or url)
+        desc = (s.snippet or "").strip()
+        desc = (desc[:140] + "…") if len(desc) > 140 else desc
+        tail = f" — {desc}" if desc else ""
+        rows.append(f"- [{title}]({url}){tail}")
+
+    if not rows:
+        return answer
+
+    return a + "\n\nFontes\n" + "\n".join(rows) + "\n"
+
+    # ---------- Phases ---------- #
 
 # EN: Pure functions for JSON repair and SSE chunking — no I/O.
 # PT: Funções puras para reparar JSON e fatiar texto para SSE — sem I/O.

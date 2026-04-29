@@ -102,7 +102,7 @@ async def run_eval(
     http_client: httpx.AsyncClient,
     agent_version: str = "v2",
     limit: int | None = None,
-    concurrency: int = 4,
+    concurrency: int = 1,
 ) -> dict[str, Any]:
     cases = TEST_CASES[: limit or len(TEST_CASES)]
     agent = LaborAgent(http_client=http_client, version=agent_version)
@@ -111,7 +111,39 @@ async def run_eval(
     # EN: `gather` runs all cases concurrently up to the semaphore limit.
     # PT: `gather` executa todos os casos em paralelo até ao limite do semáforo.
     tasks = [_run_one(c, agent, sem) for c in cases]
-    results = await asyncio.gather(*tasks)
+    gathered = await asyncio.gather(*tasks, return_exceptions=True)
+    results: list[dict[str, Any]] = []
+    for c, outcome in zip(cases, gathered, strict=True):
+        if isinstance(outcome, BaseException):
+            logger.exception(
+                "[{}] case {} aborted: {}", agent.version, getattr(c, "id", "?"), outcome
+            )
+            results.append(
+                {
+                    "case_id": c.id,
+                    "difficulty": c.difficulty,
+                    "question": c.question,
+                    "expected_category": c.expected_category,
+                    "expected_domains": c.expected_domains,
+                    "expects_refusal": c.expects_refusal,
+                    "agent_version": agent_version,
+                    "answer": f"(eval harness erro: {outcome})",
+                    "refused": False,
+                    "confidence": 0.0,
+                    "sources": [],
+                    "tool_traces": [],
+                    "latency_ms": 0,
+                    "judge": {
+                        "correctness": 0.0,
+                        "coverage": 0.0,
+                        "citation_quality": 0.0,
+                        "refusal_correct": 0.0,
+                        "explanation": f"harness_exc:{type(outcome).__name__}",
+                    },
+                }
+            )
+        else:
+            results.append(outcome)
 
     summary = aggregate(results)
     payload = {
@@ -131,9 +163,12 @@ async def run_eval(
     return payload
 
 
-async def run_both(http_client: httpx.AsyncClient, concurrency: int = 4) -> dict[str, Any]:
-    v1 = await run_eval(http_client, "v1", concurrency=concurrency)
+async def run_both(http_client: httpx.AsyncClient, concurrency: int = 1) -> dict[str, Any]:
+    """Run v2 then v1 — v2 uses substantially more tokens per case; on Groq free tier
+    running v1 first often exhausts TPM/TPD before v2 completes.
+    """
     v2 = await run_eval(http_client, "v2", concurrency=concurrency)
+    v1 = await run_eval(http_client, "v1", concurrency=concurrency)
     delta = diff_versions(v1["summary"], v2["summary"])
     delta_path = RESULTS_DIR / "v1_vs_v2.json"
     delta_path.write_text(
@@ -147,7 +182,14 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="HomoDeus eval harness")
     p.add_argument("--version", default="v2", choices=["v1", "v2", "both"])
     p.add_argument("--limit", type=int, default=None)
-    p.add_argument("--concurrency", type=int, default=4)
+    p.add_argument(
+        "--concurrency",
+        type=int,
+        default=1,
+        help=(
+            "Max parallel eval cases (use 1 on Groq free tier TPM limits)."
+        ),
+    )
     return p
 
 

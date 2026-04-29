@@ -35,7 +35,7 @@ router = APIRouter()
 class EvalRunRequest(BaseModel):
     agent_version: str = "v2"
     limit: int | None = None
-    concurrency: int = 4
+    concurrency: int = 1
 
 
 @router.get("/cases")
