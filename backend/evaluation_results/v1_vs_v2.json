@@ -1,44 +1,72 @@
 {
-  "_note": "Placeholder results. Run `python -m app.evaluation.harness --version both` to overwrite with real metrics.",
+  "_meta": {
+    "generated_at": "2026-04-29",
+    "note": "This run used the older harness order (v1 then v2) and hit Groq daily token (TPD) limits during the v2 pass — many v2 cases degraded to an error message. The harness now runs v2 first then v1 and defaults to --concurrency 1. Re-run after quota reset or with LLM_PROVIDER=openai for a fair v1 vs v2 comparison."
+  },
   "v1": {
     "n": 15,
-    "correctness_avg": 0.58,
-    "coverage_avg": 0.52,
-    "citation_quality_avg": 0.61,
-    "refusal_accuracy": 0.40,
-    "tool_call_accuracy": 0.66,
-    "latency_p50_ms": 5800,
-    "latency_p95_ms": 11200,
+    "correctness_avg": 0.433,
+    "coverage_avg": 0.373,
+    "citation_quality_avg": 0.813,
+    "refusal_accuracy": 0.6,
+    "tool_call_accuracy": 0.6,
+    "latency_p50_ms": 8387,
+    "latency_p95_ms": 9634,
     "by_difficulty": {
-      "basic": 0.78,
-      "intermediate": 0.61,
-      "advanced": 0.45,
-      "edge": 0.42,
-      "refusal": 0.30
+      "basic": 0.4,
+      "intermediate": 0.3,
+      "advanced": 0.467,
+      "edge": 0.467,
+      "refusal": 0.65
     }
   },
   "v2": {
     "n": 15,
-    "correctness_avg": 0.83,
-    "coverage_avg": 0.79,
-    "citation_quality_avg": 0.91,
-    "refusal_accuracy": 0.93,
-    "tool_call_accuracy": 0.93,
-    "latency_p50_ms": 7200,
-    "latency_p95_ms": 14500,
+    "correctness_avg": 0.08,
+    "coverage_avg": 0.12,
+    "citation_quality_avg": 0.06,
+    "refusal_accuracy": 0.2,
+    "tool_call_accuracy": 0.2,
+    "latency_p50_ms": 116,
+    "latency_p95_ms": 27559,
     "by_difficulty": {
-      "basic": 0.95,
-      "intermediate": 0.88,
-      "advanced": 0.74,
-      "edge": 0.72,
-      "refusal": 1.0
+      "basic": 0.2,
+      "intermediate": 0.0,
+      "advanced": 0.0,
+      "edge": 0.0,
+      "refusal": 0.3
     }
   },
   "delta": {
-    "correctness_avg": {"v1": 0.58, "v2": 0.83, "delta": 0.25, "delta_pct": 25.0},
-    "coverage_avg": {"v1": 0.52, "v2": 0.79, "delta": 0.27, "delta_pct": 27.0},
-    "citation_quality_avg": {"v1": 0.61, "v2": 0.91, "delta": 0.30, "delta_pct": 30.0},
-    "refusal_accuracy": {"v1": 0.40, "v2": 0.93, "delta": 0.53, "delta_pct": 53.0},
-    "tool_call_accuracy": {"v1": 0.66, "v2": 0.93, "delta": 0.27, "delta_pct": 27.0}
+    "correctness_avg": {
+      "v1": 0.433,
+      "v2": 0.08,
+      "delta": -0.353,
+      "delta_pct": -35.3
+    },
+    "coverage_avg": {
+      "v1": 0.373,
+      "v2": 0.12,
+      "delta": -0.253,
+      "delta_pct": -25.3
+    },
+    "citation_quality_avg": {
+      "v1": 0.813,
+      "v2": 0.06,
+      "delta": -0.753,
+      "delta_pct": -75.3
+    },
+    "refusal_accuracy": {
+      "v1": 0.6,
+      "v2": 0.2,
+      "delta": -0.4,
+      "delta_pct": -40.0
+    },
+    "tool_call_accuracy": {
+      "v1": 0.6,
+      "v2": 0.2,
+      "delta": -0.4,
+      "delta_pct": -40.0
+    }
   }
 }

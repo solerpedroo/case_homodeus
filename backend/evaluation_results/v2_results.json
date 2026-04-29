@@ -1,0 +1,444 @@
+{
+  "agent_version": "v2",
+  "provider": "groq",
+  "model": "llama-3.3-70b-versatile",
+  "judge_model": "llama-3.3-70b-versatile",
+  "n_cases": 15,
+  "summary": {
+    "n": 15,
+    "correctness_avg": 0.08,
+    "coverage_avg": 0.12,
+    "citation_quality_avg": 0.06,
+    "refusal_accuracy": 0.2,
+    "tool_call_accuracy": 0.2,
+    "latency_p50_ms": 116,
+    "latency_p95_ms": 27559,
+    "by_difficulty": {
+      "basic": 0.2,
+      "intermediate": 0.0,
+      "advanced": 0.0,
+      "edge": 0.0,
+      "refusal": 0.3
+    }
+  },
+  "cases": [
+    {
+      "case_id": "basic-01",
+      "difficulty": "basic",
+      "question": "Qual é o salário mínimo nacional atual em Portugal?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "dre.pt",
+        "diariodarepublica.pt",
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "O salário mínimo nacional atual em Portugal é de € 870,00, com efeitos a partir de 1 de janeiro de 2025, de acordo com o Decreto-Lei n.º 112/2024, de 19 de dezembro, publicado no Diário da República.\n\nNo entanto, é importante notar que o valor da retribuição mínima mensal garantida pode ser atualizado anualmente. De acordo com o Decreto-Lei n.º 139/2025, de 29 de dezembro, o valor da retribuição mínima mensal garantida foi atualizado para 2026.\n\nPara obter informações atualizadas e precisas, recomendo consultar o Diário da República ou outras fontes oficiais.\n\nFontes:\n- [Decreto-Lei n.º 112/2024, de 19 de dezembro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/112-2024-900706889) — Diário da República\n- [Decreto-Lei n.º 139/2025, de 29 de dezembro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/139-2025-992879809) — Diário da República\n- [Decreto-Lei n.º 29-A/2026, de 30 de janeiro](https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272) — Diário da República\n- [Decreto Legislativo Regional n.º 1/2026/M, de 3 de fevereiro](https://diariodarepublica.pt/dr/detalhe/decreto-legislativo-regional/1-2026-1033291312) — Diário da República",
+      "refused": false,
+      "confidence": 0.95,
+      "sources": [
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/573-291852",
+          "title": "Decreto-Lei n.º 573/99, de 30 de dezembro - Diário da República",
+          "snippet": "Aprova os novos valores do salário mínimo nacional para vigorarem a partir de 1 de Janeiro de 2000.",
+          "domain": "diariodarepublica.pt",
+          "score": 0.38491213,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/112-2024-900706889",
+          "title": "Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República",
+          "snippet": "Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a partir de 1 de janeiro de 2025. Foram",
+          "domain": "diariodarepublica.pt",
+          "score": 0.02350945,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/139-2025-992879809",
+          "title": "Decreto-Lei n.º 139/2025, de 29 de dezembro | DR",
+          "snippet": "Atualiza o valor da retribuição mínima mensal garantida para 2026.",
+          "domain": "diariodarepublica.pt",
+          "score": 0.00081514573,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/29-a-2026-1031110272",
+          "title": "Decreto-Lei n.º 29-A/2026, de 30 de janeiro | DR - Diário da República",
+          "snippet": "Altera o valor da base remuneratória e atualiza os valores das remunerações da Administração Pública.",
+          "domain": "diariodarepublica.pt",
+          "score": 0.00048595612,
+          "source_type": "web"
+        },
+        {
+          "url": "https://diariodarepublica.pt/dr/detalhe/decreto-legislativo-regional/1-2026-1033291312",
+          "title": "Decreto Legislativo Regional n.º 1/2026/M, de 3 de fevereiro | DR",
+          "snippet": "Decreto Legislativo Regional n.º 1/2026/M. Aprova o valor da retribuição mínima mensal garantida para vigorar na Região Autónoma da Madeira.",
+          "domain": "diariodarepublica.pt",
+          "score": 0.00034062934,
+          "source_type": "web"
+        }
+      ],
+      "tool_traces": [
+        {
+          "tool_name": "search_web",
+          "args": {
+            "query": "salário mínimo nacional em Portugal",
+            "category": "labor_code"
+          },
+          "output_summary": "- Decreto-Lei n.º 573/99, de 30 de dezembro - Diário da República (diariodarepublica.pt)\n  Aprova os novos valores do salário mínimo nacional para vigorarem a partir de 1 de Janeiro de 2000.\n- Decreto-Lei n.º 112/2024, de 19 de dezembro - Diário da República (diariodarepublica.pt)\n  Neste sentido, o presente decreto-lei determina o aumento do valor da RMMG para € 870,00, com efeitos a partir de 1 de janeiro de 2025. Foram\n- Decreto-Lei n.º 139/2025, de 29 de dezembro | DR (diariodarepublica.pt)\n  Atualiza o valor da retribuição mínima mensal garantida para 2026.\n- Decreto-Lei n.º 29-A/2026, de",
+          "duration_ms": 4426,
+          "success": true,
+          "error": null
+        }
+      ],
+      "latency_ms": 26771,
+      "judge": {
+        "correctness": 0.6,
+        "coverage": 0.8,
+        "citation_quality": 0.9,
+        "refusal_correct": 1.0,
+        "explanation": "A resposta fornece informações sobre o salário mínimo nacional, mas não está atualizada para o valor vigente em 2026. No entanto, o agente fornece fontes oficiais e menciona a possibilidade de atualização anual, o que demonstra uma boa compreensão do tema. A recusa não foi necessária, pois o agente tentou fornecer uma resposta, mesmo que não seja totalmente precisa."
+      }
+    },
+    {
+      "case_id": "basic-02",
+      "difficulty": "basic",
+      "question": "A quantos dias de férias tem direito um trabalhador a tempo inteiro?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt",
+        "portal.act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 347,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "basic-03",
+      "difficulty": "basic",
+      "question": "Existe um período experimental num contrato sem termo em Portugal?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 29399,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "inter-01",
+      "difficulty": "intermediate",
+      "question": "Como se calcula o subsídio de férias para um trabalhador que ganha 1.500 EUR/mês?",
+      "expected_category": "salary_calc",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 142,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "inter-02",
+      "difficulty": "intermediate",
+      "question": "Quais são as taxas de contribuição TSU do empregador e do trabalhador num contrato sem termo?",
+      "expected_category": "social_security",
+      "expected_domains": [
+        "diariodarepublica.pt",
+        "seg-social.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 130,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "inter-03",
+      "difficulty": "intermediate",
+      "question": "Que prazo de aviso prévio é necessário para despedir um trabalhador com 3 anos de antiguidade?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 105,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "inter-04",
+      "difficulty": "intermediate",
+      "question": "Qual é a retenção na fonte de IRS para um trabalhador solteiro sem dependentes que ganha 2.000 EUR brutos/mês em 2025?",
+      "expected_category": "tax",
+      "expected_domains": [
+        "info.portaldasfinancas.gov.pt",
+        "portaldasfinancas.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 99,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "adv-01",
+      "difficulty": "advanced",
+      "question": "Como difere o cálculo do subsídio de Natal para um trabalhador contratado a meio do ano?",
+      "expected_category": "salary_calc",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 96,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "adv-02",
+      "difficulty": "advanced",
+      "question": "Quais são as taxas de retenção na fonte de IRS para um contribuinte solteiro com 2.200 EUR brutos/mês em 2024?",
+      "expected_category": "tax",
+      "expected_domains": [
+        "info.portaldasfinancas.gov.pt",
+        "portaldasfinancas.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 109,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "adv-03",
+      "difficulty": "advanced",
+      "question": "Em que condições pode um empregador implementar lay-off ao abrigo da lei portuguesa?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 101,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "edge-01",
+      "difficulty": "edge",
+      "question": "A minha empresa está em Portugal mas o trabalhador trabalha remotamente a partir de Espanha. Qual a lei laboral aplicável?",
+      "expected_category": "edge_case",
+      "expected_domains": [
+        "act.gov.pt",
+        "diariodarepublica.pt",
+        "cite.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 148,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "edge-02",
+      "difficulty": "edge",
+      "question": "É legal incluir uma cláusula de não concorrência de 3 anos num contrato de trabalho português?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 116,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "edge-03",
+      "difficulty": "edge",
+      "question": "Pode um trabalhador recusar fazer horas extraordinárias?",
+      "expected_category": "labor_code",
+      "expected_domains": [
+        "act.gov.pt"
+      ],
+      "expects_refusal": false,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 144,
+      "judge": {
+        "correctness": 0.0,
+        "coverage": 0.0,
+        "citation_quality": 0.0,
+        "refusal_correct": 0.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "refusal-01",
+      "difficulty": "refusal",
+      "question": "Qual é a melhor receita de bacalhau à brás?",
+      "expected_category": "out_of_scope",
+      "expected_domains": [],
+      "expects_refusal": true,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 96,
+      "judge": {
+        "correctness": 0.3,
+        "coverage": 0.5,
+        "citation_quality": 0.0,
+        "refusal_correct": 1.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    },
+    {
+      "case_id": "refusal-02",
+      "difficulty": "refusal",
+      "question": "Qual será o salário mínimo em Portugal em 2030?",
+      "expected_category": "edge_case",
+      "expected_domains": [],
+      "expects_refusal": true,
+      "agent_version": "v2",
+      "answer": "Ocorreu um erro ao contactar o modelo.",
+      "refused": true,
+      "confidence": 0.0,
+      "sources": [],
+      "tool_traces": [],
+      "latency_ms": 111,
+      "judge": {
+        "correctness": 0.3,
+        "coverage": 0.5,
+        "citation_quality": 0.0,
+        "refusal_correct": 1.0,
+        "explanation": "Heuristic fallback (no judge LLM)."
+      }
+    }
+  ],
+  "generated_at": 1777459352
+}
